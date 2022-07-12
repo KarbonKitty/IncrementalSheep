@@ -2,7 +2,7 @@ using System;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
-namespace IdleSheep
+namespace IncrementalSheep
 {
     public sealed class ToastService : IToastService, IDisposable
     {

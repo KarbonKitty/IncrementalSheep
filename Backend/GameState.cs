@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IdleSheep;
+namespace IncrementalSheep;
 
 public class GameState
 {

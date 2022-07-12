@@ -1,6 +1,6 @@
 using System;
 
-namespace IdleSheep
+namespace IncrementalSheep
 {
     public interface IToastService
     {

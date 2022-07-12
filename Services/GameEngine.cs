@@ -1,7 +1,7 @@
 using Microsoft.JSInterop;
 using System.Text.Json;
 
-namespace IdleSheep;
+namespace IncrementalSheep;
 
 public class GameEngine : IGameEngine
 {

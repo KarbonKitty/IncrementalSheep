@@ -1,4 +1,4 @@
-# Idle Sheep
+# Incremental Sheep
 
 Incremental game inspired by classics such as Kittens Game and Evolve
 
