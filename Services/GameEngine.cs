@@ -16,7 +16,8 @@ public class GameEngine : IGameEngine
         State = new GameState
         {
             LastTick = DateTime.Now,
-            LastDiff = 0
+            LastDiff = 0,
+            Buildings = new [] { new Building(BuildingId.WoodGatherer, "Wood gatherer", "Description of wood gatherer", 10, 1) }
         };
     }
 
@@ -32,7 +33,9 @@ public class GameEngine : IGameEngine
         var gameStateDto = new GameStateDto
         {
             LastTick = State.LastTick.Ticks,
-            LastDiff = State.LastDiff
+            LastDiff = State.LastDiff,
+            SelectedBuilding = State.SelectedBuilding?.Id,
+            Buildings = State.Buildings
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }

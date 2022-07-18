@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-
 namespace IncrementalSheep;
 
 public class GameState
 {
     public DateTime LastTick { get; set; }
     public double LastDiff { get; set; }
+    public Building[] Buildings { get; set; }
+    public Building? SelectedBuilding { get; set; }
 }

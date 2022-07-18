@@ -14,8 +14,14 @@
     </div>
 
     <div class="branches">
-        <div class="selectButton"><p>Hunting</p></div>
-        <div class="selectButton"><p>Gathering</p></div>
+    </div>
+
+    <div class="buildings">
+        <div class="selectButton" @onclick="@(e => SelectBuilding(BuildingId.WoodGatherer))"><p>Wood gatherer</p></div>
+    </div>
+
+    <div class="details">
+        <p>@(Engine.State.SelectedBuilding?.Name ?? "Please select a building")</p>
     </div>
 </div>
 
@@ -44,16 +50,23 @@
         LoadGame();
     }
 
-    private void LoopStep(object sender, ElapsedEventArgs e)
+    private void LoopStep(object? sender, ElapsedEventArgs e)
     {
         Engine.ProcessTime(e.SignalTime);
         this.StateHasChanged();
     }
 
-    private async void AutoSave(object sender, ElapsedEventArgs e)
+    private async void AutoSave(object? sender, ElapsedEventArgs e)
     {
         await this.SaveGame();
         ToastService.ShowToast("Game saved!");
+    }
+
+    private void SelectBuilding(BuildingId buildingId)
+    {
+        Console.WriteLine(Engine.State.Buildings.Length);
+        Console.WriteLine(Engine.State.Buildings.First().Name);
+        Engine.State.SelectedBuilding = Engine.State.Buildings.Single(b => b.Id == buildingId);
     }
 
     private async Task SaveGame()
