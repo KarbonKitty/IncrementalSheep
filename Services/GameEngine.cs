@@ -26,6 +26,8 @@ public class GameEngine : IGameEngine
         var deltaT = newTime - State.LastTick;
         State.LastDiff = deltaT.TotalMilliseconds;
         State.LastTick = newTime;
+
+        ProduceCash(deltaT);
     }
 
     public async ValueTask SaveGame()
@@ -51,5 +53,14 @@ public class GameEngine : IGameEngine
             LastTick = new DateTime(gameStateDto.LastTick),
             LastDiff = gameStateDto.LastDiff
         };
+    }
+
+    private void ProduceCash(TimeSpan deltaT)
+    {
+        foreach (var building in State.Buildings)
+        {
+            var cashProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
+            State.Cash += cashProduced;
+        }
     }
 }

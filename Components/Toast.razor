@@ -5,7 +5,7 @@
 @code {
     [Inject] private IToastService toastService { get; set; }
 
-    private string Message { get; set; }
+    private string Message { get; set; } = string.Empty;
     private bool IsVisible { get; set; }
 
     protected override void OnInitialized()

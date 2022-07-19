@@ -1,11 +1,11 @@
 .branches {
-    grid-area: "branches"
+    grid-area: branches
 }
 
 .buildings {
-    grid-area: "objects"
+    grid-area: objects
 }
 
 .details {
-    grid-area: "details"
+    grid-area: details
 }

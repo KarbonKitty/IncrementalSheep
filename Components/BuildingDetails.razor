@@ -1,0 +1,9 @@
+<h2>@(Building?.Name ?? "Please select a building")</h2>
+
+<p>@Building?.Description</p>
+
+<button class="btn">Buy</button>
+
+@code {
+    [Parameter] public Building? Building { get; set; }
+}

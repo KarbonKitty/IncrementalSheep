@@ -9,6 +9,7 @@
     </div>
 
     <div class="sidebar">
+        <div><p>Cash: @Engine.State.Cash$</p></div>
         <button class="btn" @onclick="SaveGame">Save game</button>
         <button class="btn" @onclick="LoadGame">Load game</button>
     </div>
@@ -21,7 +22,7 @@
     </div>
 
     <div class="details">
-        <p>@(Engine.State.SelectedBuilding?.Name ?? "Please select a building")</p>
+        <BuildingDetails Building=@Engine.State.SelectedBuilding />
     </div>
 </div>
 
