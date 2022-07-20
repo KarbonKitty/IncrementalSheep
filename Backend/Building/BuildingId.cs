@@ -2,5 +2,6 @@ namespace IncrementalSheep;
 
 public enum BuildingId
 {
-    WoodGatherer
+    WoodGatherer,
+    Factory
 }

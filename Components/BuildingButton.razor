@@ -1,0 +1,13 @@
+<div class="selectButton" @onclick="@(e => SelectBuilding(Building.Id))">
+    <p>@Building.Name</p>
+</div>
+
+@code {
+    [Inject] protected GameEngine Engine { get; set; }
+    [Parameter] public Building Building { get; set; }
+
+    private void SelectBuilding(BuildingId buildingId)
+    {
+        Engine.State.SelectedBuilding = Engine.State.Buildings.Single(b => b.Id == buildingId);
+    }
+}

@@ -18,7 +18,10 @@
     </div>
 
     <div class="buildings">
-        <div class="selectButton" @onclick="@(e => SelectBuilding(BuildingId.WoodGatherer))"><p>Wood gatherer</p></div>
+        @foreach (var building in Engine.State.Buildings)
+        {
+            <BuildingButton Building=@building />
+        }
     </div>
 
     <div class="details">
@@ -61,13 +64,6 @@
     {
         await this.SaveGame();
         ToastService.ShowToast("Game saved!");
-    }
-
-    private void SelectBuilding(BuildingId buildingId)
-    {
-        Console.WriteLine(Engine.State.Buildings.Length);
-        Console.WriteLine(Engine.State.Buildings.First().Name);
-        Engine.State.SelectedBuilding = Engine.State.Buildings.Single(b => b.Id == buildingId);
     }
 
     private async Task SaveGame()

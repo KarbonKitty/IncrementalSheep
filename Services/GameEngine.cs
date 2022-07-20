@@ -17,7 +17,10 @@ public class GameEngine : IGameEngine
         {
             LastTick = DateTime.Now,
             LastDiff = 0,
-            Buildings = new [] { new Building(BuildingId.WoodGatherer, "Wood gatherer", "Description of wood gatherer", 10, 1) }
+            Buildings = new [] {
+                new Building(BuildingId.WoodGatherer, "Wood gatherer", "Description of wood gatherer", 10, 1),
+                new Building(BuildingId.Factory, "Factory", "Factory description", 2000, 15)
+            }
         };
     }
 
