@@ -39,8 +39,9 @@ public class GameEngine : IGameEngine
         {
             LastTick = State.LastTick.Ticks,
             LastDiff = State.LastDiff,
+            Cash = State.Cash,
             SelectedBuilding = State.SelectedBuilding?.Id,
-            Buildings = State.Buildings
+            Buildings = State.Buildings.Select(b => b.SaveToDto()).ToArray()
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -54,8 +55,15 @@ public class GameEngine : IGameEngine
         State = new GameState
         {
             LastTick = new DateTime(gameStateDto.LastTick),
-            LastDiff = gameStateDto.LastDiff
+            LastDiff = gameStateDto.LastDiff,
+            Cash = gameStateDto.Cash,
+            Buildings = gameStateDto.Buildings.Select(b => new Building(b)).ToArray()
         };
+
+        if (gameStateDto.SelectedBuilding is not null)
+        {
+            State.SelectedBuilding = State.Buildings.Single(b => b.Id == gameStateDto.SelectedBuilding);
+        }
     }
 
     private void ProduceCash(TimeSpan deltaT)

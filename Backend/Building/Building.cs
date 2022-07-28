@@ -18,4 +18,17 @@ public class Building
         ProductionPerSecond = baseProduction;
         NumberBuilt = 0;
     }
+
+    public Building(BuildingDto dto)
+    {
+        Id = dto.Id;
+        Name = dto.Name;
+        Description = dto.Description;
+        Price = dto.Price;
+        ProductionPerSecond = dto.ProductionPerSecond;
+        NumberBuilt = dto.NumberBuilt;
+    }
+
+    public BuildingDto SaveToDto()
+        => new(Id, Name, Description, Price, ProductionPerSecond, NumberBuilt);
 }
