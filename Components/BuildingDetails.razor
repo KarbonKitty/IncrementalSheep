@@ -2,8 +2,20 @@
 
 <p>@Building?.Description</p>
 
-<button class="btn">Buy</button>
+<p><strong>@Building?.Price $</strong></p>
+
+<button class="btn" @onclick="Buy">Buy</button>
 
 @code {
+    [Inject] public GameEngine Engine { get; set; }
+
     [Parameter] public Building? Building { get; set; }
+
+    private void Buy(object? sender)
+    {
+        if (Building is not null)
+        {
+            Engine.TryBuy(Building);
+        }
+    }
 }

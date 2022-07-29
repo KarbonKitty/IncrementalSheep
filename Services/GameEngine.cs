@@ -17,6 +17,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = DateTime.Now,
             LastDiff = 0,
+            Cash = 100,
             Buildings = new [] {
                 new Building(BuildingId.WoodGatherer, "Wood gatherer", "Description of wood gatherer", 10, 1),
                 new Building(BuildingId.Factory, "Factory", "Factory description", 2000, 15)
@@ -31,6 +32,18 @@ public class GameEngine : IGameEngine
         State.LastTick = newTime;
 
         ProduceCash(deltaT);
+    }
+
+    public bool CanAfford(double price) => price <= State.Cash;
+
+    public bool TryBuy(Building building) {
+        var canAfford = CanAfford(building.Price);
+        if (canAfford) {
+            State.Cash -= building.Price;
+            building.NumberBuilt++;
+            return true;
+        }
+        return false;
     }
 
     public async ValueTask SaveGame()
