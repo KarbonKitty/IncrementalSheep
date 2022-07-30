@@ -9,7 +9,7 @@
     </div>
 
     <div class="sidebar">
-        <div><p>Cash: @Engine.State.Cash$</p></div>
+        <div><p>Cash: @Engine.State.Cash.FormatAsMoney()$</p></div>
         <button class="btn" @onclick="SaveGame">Save game</button>
         <button class="btn" @onclick="LoadGame">Load game</button>
     </div>

@@ -2,7 +2,7 @@
 
 <p>@Building?.Description</p>
 
-<p><strong>@Building?.Price $</strong></p>
+<p><strong>Price: @Building?.Price.FormatAsMoney() $</strong></p>
 
 <button class="btn" @onclick="Buy">Buy</button>
 
