@@ -6,5 +6,5 @@ public class GameStateDto
     public double LastDiff { get; set; }
     public double Cash { get; set; }
     public BuildingId? SelectedBuilding { get; set; }
-    public BuildingDto[] Buildings { get; set; }
+    public BuildingState[] Buildings { get; set; }
 }

@@ -18,10 +18,7 @@ public class GameEngine : IGameEngine
             LastTick = DateTime.Now,
             LastDiff = 0,
             Cash = 100,
-            Buildings = new [] {
-                new Building(BuildingId.WoodGatherer, "Wood gatherer", "Description of wood gatherer", 10, 1),
-                new Building(BuildingId.Factory, "Factory", "Factory description", 2000, 15)
-            }
+            Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
     }
 
@@ -54,7 +51,7 @@ public class GameEngine : IGameEngine
             LastDiff = State.LastDiff,
             Cash = State.Cash,
             SelectedBuilding = State.SelectedBuilding?.Id,
-            Buildings = State.Buildings.Select(b => b.SaveToDto()).ToArray()
+            Buildings = State.Buildings.Select(b => b.SaveState()).ToArray()
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -70,7 +67,7 @@ public class GameEngine : IGameEngine
             LastTick = new DateTime(gameStateDto.LastTick),
             LastDiff = gameStateDto.LastDiff,
             Cash = gameStateDto.Cash,
-            Buildings = gameStateDto.Buildings.Select(b => new Building(b)).ToArray()
+            Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
         };
 
         if (gameStateDto.SelectedBuilding is not null)
