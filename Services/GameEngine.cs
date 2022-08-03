@@ -17,7 +17,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = DateTime.Now,
             LastDiff = 0,
-            Cash = 100,
+            Resources = new ResourceValue(ResourceId.Wood, 100),
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
     }
@@ -31,12 +31,12 @@ public class GameEngine : IGameEngine
         ProduceCash(deltaT);
     }
 
-    public bool CanAfford(double price) => price <= State.Cash;
+    public bool CanAfford(ResourceValue price) => price <= State.Resources;
 
     public bool TryBuy(Building building) {
         var canAfford = CanAfford(building.Price);
         if (canAfford) {
-            State.Cash -= building.Price;
+            State.Resources -= building.Price;
             building.NumberBuilt++;
             return true;
         }
@@ -49,7 +49,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = State.LastTick.Ticks,
             LastDiff = State.LastDiff,
-            Cash = State.Cash,
+            Resources = State.Resources.AllResources,
             SelectedBuilding = State.SelectedBuilding?.Id,
             Buildings = State.Buildings.Select(b => b.SaveState()).ToArray()
         };
@@ -66,7 +66,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = new DateTime(gameStateDto.LastTick),
             LastDiff = gameStateDto.LastDiff,
-            Cash = gameStateDto.Cash,
+            Resources = new ResourceValue(gameStateDto.Resources),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
         };
 
@@ -80,8 +80,8 @@ public class GameEngine : IGameEngine
     {
         foreach (var building in State.Buildings)
         {
-            var cashProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
-            State.Cash += cashProduced;
+            var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
+            State.Resources += resourcesProduced;
         }
     }
 }

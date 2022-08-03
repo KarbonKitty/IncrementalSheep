@@ -5,17 +5,17 @@ public class Building
     public BuildingId Id { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
-    public double BasePrice { get; init; }
-    public double ProductionPerSecond { get; init; }
+    public ResourceValue BasePrice { get; init; }
+    public ResourceValue ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
-    public double Price => BasePrice * Math.Pow(1.15, NumberBuilt);
+    public ResourceValue Price => BasePrice * Math.Pow(1.15, NumberBuilt);
 
     public Building(
         BuildingId id,
         string name,
         string description,
-        double basePrice,
-        double baseProduction)
+        ResourceValue basePrice,
+        ResourceValue baseProduction)
     {
         Id = id;
         Name = name;
