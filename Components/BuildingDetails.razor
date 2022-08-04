@@ -3,13 +3,9 @@
 <p>@Building?.Description</p>
 
 @if (Building is not null) {
-    <p><strong>Price:</strong></p>
-    <ul>
-    @foreach (var resource in Building.Price.AllResources)
-    {
-        <li>@resource.Key: @resource.Value.FormatAsMoney()</li>
-    }
-    </ul>
+    <ResourceList Header="Production per second" Resources=@Building.ProductionPerSecond />
+
+    <ResourceList Header="Price" Resources=@Building.Price />
 }
 
 <button class="btn" @onclick="Buy">Buy</button>
