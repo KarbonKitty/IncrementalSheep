@@ -25,8 +25,12 @@ public class GameEngine : IGameEngine
     public void ProcessTime(DateTime newTime)
     {
         var deltaT = newTime - State.LastTick;
+        if (deltaT.TotalMilliseconds > 1000)
+        {
+            deltaT = TimeSpan.FromMilliseconds(1000);
+        }
         State.LastDiff = deltaT.TotalMilliseconds;
-        State.LastTick = newTime;
+        State.LastTick += deltaT;
 
         ProduceCash(deltaT);
     }

@@ -36,7 +36,7 @@ namespace IncrementalSheep
             }
         }
 
-        private void HideToast(object source, ElapsedEventArgs args)
+        private void HideToast(object? source, ElapsedEventArgs args)
         {
             OnHide?.Invoke();
         }
