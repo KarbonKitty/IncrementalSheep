@@ -2,7 +2,15 @@
 
 <p>@Building?.Description</p>
 
-@* <p><strong>Price: @Building?.Price.FormatAsMoney() $</strong></p> *@
+@if (Building is not null) {
+    <p><strong>Price:</strong></p>
+    <ul>
+    @foreach (var resource in Building.Price.AllResources)
+    {
+        <li>@resource.Key: @resource.Value.FormatAsMoney()</li>
+    }
+    </ul>
+}
 
 <button class="btn" @onclick="Buy">Buy</button>
 
