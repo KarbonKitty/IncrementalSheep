@@ -54,6 +54,7 @@ a:active {
   border-radius: 4px;
   font-size: 16px;
   padding: 6px 12px 6px 12px;
+  height: 28px;
   text-decoration: none;
   cursor: pointer;
   color: var(--base2);
@@ -83,13 +84,12 @@ a:active {
 
 .container {
   display: grid;
-  grid-template-columns: 20rem 1fr 1fr 1fr;
-  grid-template-rows: 4rem minmax(12rem, 60vh) minmax(6rem, 30vh);
+  grid-template-columns: 15rem 1fr 1fr 1fr;
+  grid-template-rows: 4rem minmax(12rem, 80vh);
   column-gap: 2rem;
   grid-template-areas:
     "header header header header"
-    "sidebar branches objects upgrades"
-    "sidebar details details details"
+    "sidebar branches objects details"
 }
 
 .title {

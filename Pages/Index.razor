@@ -5,7 +5,11 @@
     <Toast />
 
     <div class="title">
-        <h1>IncrementalSheep</h1>
+        <h2>IncrementalSheep</h2>
+        <div class="topbar-buttons">
+            <a href="#" @onclick="SaveGame">Save game</a>
+            <a href="#" @onclick="LoadGame">Load game</a>
+        </div>
     </div>
 
     <div class="sidebar">
@@ -13,8 +17,6 @@
         {
             <div><p>@resource.Key: @resource.Value.FormatAsMoney()</p></div>
         }
-        <button class="btn" @onclick="SaveGame">Save game</button>
-        <button class="btn" @onclick="LoadGame">Load game</button>
     </div>
 
     <div class="branches">

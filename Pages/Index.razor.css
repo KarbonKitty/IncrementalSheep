@@ -1,11 +1,30 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topbar-buttons {
+    display: flex;
+    margin: auto 0;
+}
+
+.topbar-buttons>a {
+    padding: 0 1rem;
+}
+
 .branches {
+    background-color: var(--base02);
     grid-area: branches
 }
 
 .buildings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-area: objects
 }
 
 .details {
+    background-color: var(--base02);
     grid-area: details
 }
