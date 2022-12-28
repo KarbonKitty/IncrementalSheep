@@ -6,6 +6,7 @@
 
     <div class="title">
         <h2>IncrementalSheep</h2>
+        <p>@Engine.State.SelectedBranch</p>
         <div class="topbar-buttons">
             <a href="#" @onclick="SaveGame">Save game</a>
             <a href="#" @onclick="LoadGame">Load game</a>
@@ -20,6 +21,8 @@
     </div>
 
     <div class="branches">
+        <BranchButton Branch=@Branch.Population Text="Sheep management" />
+        <BranchButton Branch=@Branch.Buildings Text="Camp" />
     </div>
 
     <div class="buildings">

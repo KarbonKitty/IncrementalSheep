@@ -1,0 +1,14 @@
+<div class="selectButton" @onclick="@(e => SelectBranch(Branch))">
+    <p>@Text</p>
+</div>
+
+@code {
+    [Inject] protected GameEngine Engine { get; set; }
+    [Parameter] public Branch Branch { get; init; }
+    [Parameter] public string Text { get; init; }
+
+    private void SelectBranch(Branch branch)
+    {
+        Engine.State.SelectedBranch = Branch;
+    }
+}

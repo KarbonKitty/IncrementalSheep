@@ -7,4 +7,7 @@ public class GameState
     public ResourceValue Resources { get; set; }
     public Building[] Buildings { get; set; }
     public Building? SelectedBuilding { get; set; }
+    public List<Sheep> Sheep { get; set; }
+    public Branch SelectedBranch { get; set; }
+    public SheepJob[] Jobs { get; set; }
 }

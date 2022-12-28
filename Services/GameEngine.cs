@@ -18,6 +18,8 @@ public class GameEngine : IGameEngine
             LastTick = DateTime.Now,
             LastDiff = 0,
             Resources = new ResourceValue(ResourceId.Wood, 100),
+            Sheep = new List<Sheep>(),
+            Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
     }
@@ -32,10 +34,11 @@ public class GameEngine : IGameEngine
         State.LastDiff = deltaT.TotalMilliseconds;
         State.LastTick += deltaT;
 
-        ProduceCash(deltaT);
+        ProduceResources(deltaT);
     }
 
-    public bool CanAfford(ResourceValue price) => price <= State.Resources;
+    public bool CanAfford(ResourceValue price)
+        => price <= State.Resources;
 
     public bool TryBuy(Building building) {
         var canAfford = CanAfford(building.Price);
@@ -54,6 +57,7 @@ public class GameEngine : IGameEngine
             LastTick = State.LastTick.Ticks,
             LastDiff = State.LastDiff,
             Resources = State.Resources.AllResources,
+            Sheep = State.Sheep.Select(s => s.SaveState()).ToArray(),
             SelectedBuilding = State.SelectedBuilding?.Id,
             Buildings = State.Buildings.Select(b => b.SaveState()).ToArray()
         };
@@ -68,7 +72,7 @@ public class GameEngine : IGameEngine
         var gameStateDto = JsonSerializer.Deserialize<GameStateDto>(serializedState);
         State = new GameState
         {
-            LastTick = new DateTime(gameStateDto.LastTick),
+            LastTick = new DateTime(gameStateDto!.LastTick),
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceValue(gameStateDto.Resources),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
@@ -80,11 +84,16 @@ public class GameEngine : IGameEngine
         }
     }
 
-    private void ProduceCash(TimeSpan deltaT)
+    private void ProduceResources(TimeSpan deltaT)
     {
         foreach (var building in State.Buildings)
         {
             var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
+            State.Resources += resourcesProduced;
+        }
+        foreach (var sheep in State.Sheep)
+        {
+            var resourcesProduced = sheep.Job.ProductionPerSecond * deltaT.TotalSeconds;
             State.Resources += resourcesProduced;
         }
     }
