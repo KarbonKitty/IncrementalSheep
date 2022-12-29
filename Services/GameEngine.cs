@@ -22,6 +22,12 @@ public class GameEngine : IGameEngine
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
+
+        /* A bunch of test sheep */
+
+        State.Sheep.Add(new Sheep(1, "Sheep 1", State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
+        State.Sheep.Add(new Sheep(2, "Sheep 2", State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
+        State.Sheep.Add(new Sheep(3, "Sheep 3", State.Jobs.Single(j => j.Id == SheepJobId.Hunter)));
     }
 
     public void ProcessTime(DateTime newTime)
@@ -75,8 +81,11 @@ public class GameEngine : IGameEngine
             LastTick = new DateTime(gameStateDto!.LastTick),
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceValue(gameStateDto.Resources),
+            Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
         };
+
+        State.Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, State.Jobs.Single(j => j.Id == s.JobId))).ToList();
 
         if (gameStateDto.SelectedBuilding is not null)
         {

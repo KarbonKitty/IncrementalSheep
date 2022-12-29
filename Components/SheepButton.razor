@@ -1,0 +1,13 @@
+<div class="selectButton" @onclick="@(e => SelectSheep(Sheep.Id))">
+    <p>@Sheep.Name (@Sheep.Job.Name)</p>
+</div>
+
+@code {
+    [Inject] protected GameEngine Engine { get; set; }
+    [Parameter] public Sheep Sheep { get; set; }
+
+    private void SelectSheep(int sheepId)
+    {
+        Engine.State.SelectedSheep = Engine.State.Sheep.Single(s => s.Id == sheepId);
+    }
+}

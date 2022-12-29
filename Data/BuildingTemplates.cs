@@ -9,6 +9,7 @@ public static class Templates
     };
     public static readonly Dictionary<SheepJobId, SheepJob> Jobs = new()
     {
-        { SheepJobId.Gatherer, new(SheepJobId.Gatherer, "Food gatherer", "Description of food gatherer", new(ResourceId.Food, 0.25)) }
+        { SheepJobId.Gatherer, new(SheepJobId.Gatherer, "Food gatherer", "Description of food gatherer", new(ResourceId.Food, 0.25)) },
+        { SheepJobId.Hunter, new(SheepJobId.Hunter, "Hunter", "Description of hunter", new ResourceValue(ResourceId.Food, 0.5)) }
     };
 }

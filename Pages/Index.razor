@@ -6,7 +6,6 @@
 
     <div class="title">
         <h2>IncrementalSheep</h2>
-        <p>@Engine.State.SelectedBranch</p>
         <div class="topbar-buttons">
             <a href="#" @onclick="SaveGame">Save game</a>
             <a href="#" @onclick="LoadGame">Load game</a>
@@ -26,9 +25,19 @@
     </div>
 
     <div class="buildings">
-        @foreach (var building in Engine.State.Buildings)
+        @if (Engine.State.SelectedBranch == Branch.Population)
         {
-            <BuildingButton Building=@building />
+            @foreach (var sheep in Engine.State.Sheep)
+            {
+                <SheepButton Sheep=@sheep />
+            }
+        }
+        @if (Engine.State.SelectedBranch == Branch.Buildings)
+        {
+            @foreach (var building in Engine.State.Buildings)
+            {
+                <BuildingButton Building=@building />
+            }
         }
     </div>
 
