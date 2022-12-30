@@ -42,7 +42,15 @@
     </div>
 
     <div class="details">
-        <BuildingDetails Building=@Engine.State.SelectedBuilding />
+        @switch (Engine.State.SelectedBranch)
+        {
+            case Branch.Buildings:
+                <BuildingDetails Building=@Engine.State.SelectedBuilding />
+            break;
+            case Branch.Population:
+                <SheepDetails Sheep=@Engine.State.SelectedSheep />
+            break;
+        }
     </div>
 </div>
 

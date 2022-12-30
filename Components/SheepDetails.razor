@@ -1,0 +1,12 @@
+<h2>@(Sheep?.Name ?? "Please select a sheep")</h2>
+
+<p>@Sheep?.Job.Name</p>
+
+@if (Sheep is not null) {
+    // TODO
+}
+
+@code {
+    [Inject] public GameEngine Engine { get; set; }
+    [Parameter] public Sheep? Sheep { get; set; }
+}
