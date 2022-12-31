@@ -3,8 +3,12 @@
 <p>@Sheep?.Job.Name</p>
 
 @if (Sheep is not null) {
-    // TODO
+    <p>@Sheep.Job.Description</p>
+
+    <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
 }
+
+@* TODO: display job switcher *@
 
 @code {
     [Inject] public GameEngine Engine { get; set; }
