@@ -1,7 +1,7 @@
 namespace IncrementalSheep;
 
 public enum ResourceId {
+    Food,
     Wood,
-    Stone,
-    Food
+    HuntPoints
 }
