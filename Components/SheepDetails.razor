@@ -6,9 +6,14 @@
     <p>@Sheep.Job.Description</p>
 
     <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
-}
 
-@* TODO: display job switcher *@
+    @foreach (var job in Engine.State.Jobs)
+    {
+        <div class="selectButton" @onclick="@(() => Sheep.SwitchJobs(job))">
+            <p>@job.Name</p>
+        </div>
+    }
+}
 
 @code {
     [Inject] public GameEngine Engine { get; set; }
