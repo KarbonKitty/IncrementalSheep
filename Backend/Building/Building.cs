@@ -9,20 +9,24 @@ public class Building
     public ResourceValue ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
     public ResourceValue Price => BasePrice * Math.Pow(1.15, NumberBuilt);
+    public bool IsBuildable { get; private set; }
 
     public Building(
         BuildingId id,
         string name,
         string description,
         ResourceValue basePrice,
-        ResourceValue baseProduction)
+        ResourceValue baseProduction,
+        int numberBuilt = 0,
+        bool isBuildable = false)
     {
         Id = id;
         Name = name;
         Description = description;
         BasePrice = basePrice;
         ProductionPerSecond = baseProduction;
-        NumberBuilt = 0;
+        NumberBuilt = numberBuilt;
+        IsBuildable = isBuildable;
     }
 
     public Building(BuildingTemplate template, BuildingState state)
@@ -38,6 +42,7 @@ public class Building
         BasePrice = template.BasePrice;
         ProductionPerSecond = template.ProductionPerSecond;
         NumberBuilt = state.NumberBuilt;
+        IsBuildable = template.IsBuildable;
     }
 
     public BuildingState SaveState()

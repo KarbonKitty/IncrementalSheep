@@ -4,11 +4,14 @@
 
 @if (Building is not null) {
     <ResourceList Header="Production per second" Resources=@Building.ProductionPerSecond />
-
-    <ResourceList Header="Price" Resources=@Building.Price />
 }
 
-<button class="btn" @onclick="Buy">Buy</button>
+@if (Building is not null && Building.IsBuildable)
+{
+    <ResourceList Header="Price" Resources=@Building.Price />
+
+    <button class="btn" @onclick="Buy">Buy</button>
+}
 
 @code {
     [Inject] public GameEngine Engine { get; set; }

@@ -5,5 +5,6 @@ public record BuildingTemplate(
     string Name,
     string Description,
     ResourceValue BasePrice,
-    ResourceValue ProductionPerSecond
+    ResourceValue ProductionPerSecond,
+    bool IsBuildable
 );

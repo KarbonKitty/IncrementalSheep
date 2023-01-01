@@ -23,6 +23,10 @@ public class GameEngine : IGameEngine
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
 
+        // Green pastures starting building
+
+        State.Buildings.Single(b => b.Id == BuildingId.GreenPastures).NumberBuilt = 1;
+
         /* A bunch of test sheep */
 
         State.Sheep.Add(new Sheep(1, "Sheep 1", State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
@@ -47,8 +51,9 @@ public class GameEngine : IGameEngine
         => price <= State.Resources;
 
     public bool TryBuy(Building building) {
+        var isBuildable = building.IsBuildable;
         var canAfford = CanAfford(building.Price);
-        if (canAfford) {
+        if (isBuildable && canAfford) {
             State.Resources -= building.Price;
             building.NumberBuilt++;
             return true;
