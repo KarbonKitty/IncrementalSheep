@@ -9,6 +9,7 @@
         <div class="topbar-buttons">
             <a href="#" @onclick="SaveGame">Save game</a>
             <a href="#" @onclick="LoadGame">Load game</a>
+            <a href="#" @onclick="ClearSave">Remove save</a>
         </div>
     </div>
 
@@ -95,6 +96,12 @@
     {
         await Engine.SaveGame();
         ToastService.ShowToast("Game manually saved");
+    }
+
+    private async Task ClearSave()
+    {
+        await Engine.ClearSave();
+        ToastService.ShowToast("Save cleared");
     }
 
     private async Task LoadGame()

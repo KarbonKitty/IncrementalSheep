@@ -70,6 +70,9 @@ public class GameEngine : IGameEngine
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
 
+    public async ValueTask ClearSave()
+        => await JS.InvokeVoidAsync("localStorage.removeItem", "data");
+
     public async ValueTask<string> GetSavedGameString()
         => await JS.InvokeAsync<string>("localStorage.getItem", "data");
 
