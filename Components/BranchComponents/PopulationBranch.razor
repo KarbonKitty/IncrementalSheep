@@ -1,0 +1,12 @@
+<RecruitButton />
+
+@foreach (var sheep in Sheep)
+{
+    <SheepButton Sheep=@sheep />
+}
+
+@code
+{
+    [Inject] public GameEngine Engine { get; set; }
+    [Parameter] public List<Sheep> Sheep { get; set; }
+}

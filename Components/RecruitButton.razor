@@ -1,0 +1,9 @@
+<div class="selectButton newSheepButton" @onclick=@(() => Engine.RecruitNewSheep())>
+    <p>Recruit new sheep (@Price.AllResources[ResourceId.Food].FormatAsMoney())</p>
+</div>
+
+@code
+{
+    [Inject] public GameEngine Engine { get; set; }
+    public ResourceValue Price => Engine.NewSheepCost;
+}

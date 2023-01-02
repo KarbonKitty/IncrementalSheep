@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using System.Timers
+@using IncrementalSheep.Components.BranchComponents
 
 <div class="container">
     <Toast />
@@ -28,10 +29,7 @@
     <div class="buildings">
         @if (Engine.State.SelectedBranch == Branch.Population)
         {
-            @foreach (var sheep in Engine.State.Sheep)
-            {
-                <SheepButton Sheep=@sheep />
-            }
+            <PopulationBranch Sheep=@Engine.State.Sheep />
         }
         @if (Engine.State.SelectedBranch == Branch.Buildings)
         {
