@@ -47,7 +47,14 @@
                 <BuildingDetails Building=@Engine.State.SelectedBuilding />
             break;
             case Branch.Population:
-                <SheepDetails Sheep=@Engine.State.SelectedSheep />
+                if (Engine.State.SelectedSheep is null)
+                {
+                    <RecruitmentDetails />
+                }
+                else
+                {
+                    <SheepDetails Sheep=@Engine.State.SelectedSheep />
+                }
             break;
         }
     </div>

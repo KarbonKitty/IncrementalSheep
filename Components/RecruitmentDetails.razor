@@ -1,0 +1,14 @@
+<h2>Recruit new sheep</h2>
+
+<p>To convince new sheep to join your tribe, you need to offer them food.</p>
+
+<p>New sheep will start as food gatherers by default.</p>
+
+<ResourceList Header="Price" Resources=@Engine.NewSheepPrice />
+
+<button class="btn" @onclick=@(() => Engine.RecruitNewSheep())>Recruit</button>
+
+@code
+{
+    [Inject] public GameEngine Engine { get; set; }
+}

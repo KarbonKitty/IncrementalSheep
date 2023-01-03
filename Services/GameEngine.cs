@@ -7,10 +7,10 @@ public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
 
-    public ResourceValue NewSheepCost => NewSheepBaseCost * Math.Pow(State.Sheep.Count, 1.15);
+    public ResourceValue NewSheepPrice => NewSheepBasePrice * Math.Pow(State.Sheep.Count, 1.15);
 
     private readonly IJSRuntime JS;
-    private readonly ResourceValue NewSheepBaseCost = new(ResourceId.Food, 100);
+    private readonly ResourceValue NewSheepBasePrice = new(ResourceId.Food, 100);
     public GameEngine(IJSRuntime js)
     {
         JS = js;
@@ -38,7 +38,7 @@ public class GameEngine : IGameEngine
 
     public void RecruitNewSheep()
     {
-        var canAfford = NewSheepCost <= State.Resources;
+        var canAfford = NewSheepPrice <= State.Resources;
         if (!canAfford)
         {
             return;
