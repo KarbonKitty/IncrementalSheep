@@ -7,7 +7,7 @@ public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
 
-    public ResourceValue NewSheepPrice => NewSheepBasePrice * Math.Pow(State.Sheep.Count, 1.15);
+    public ResourceValue NewSheepPrice => NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
     private readonly IJSRuntime JS;
     private readonly ResourceValue NewSheepBasePrice = new(ResourceId.Food, 100);
@@ -19,7 +19,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = DateTime.Now,
             LastDiff = 0,
-            Resources = new ResourceValue(ResourceId.Wood, 100),
+            Resources = new ResourceValue(ResourceId.Food, 100),
             Sheep = new List<Sheep>(),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
@@ -28,12 +28,6 @@ public class GameEngine : IGameEngine
         // Green pastures starting building
 
         State.Buildings.Single(b => b.Id == BuildingId.GreenPastures).NumberBuilt = 1;
-
-        /* A bunch of test sheep */
-
-        State.Sheep.Add(new Sheep(1, "Sheep 1", State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
-        State.Sheep.Add(new Sheep(2, "Sheep 2", State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
-        State.Sheep.Add(new Sheep(3, "Sheep 3", State.Jobs.Single(j => j.Id == SheepJobId.Hunter)));
     }
 
     public void RecruitNewSheep()
@@ -43,8 +37,11 @@ public class GameEngine : IGameEngine
         {
             return;
         }
-        var lastId = State.Sheep.Max(s => s.Id);
-        State.Sheep.Add(new Sheep(lastId + 1, $"Sheep {lastId + 1}", State.Jobs[0]));
+        var lastId = State.Sheep.Any() ? State.Sheep.Max(s => s.Id) : 1;
+        State.Sheep.Add(new Sheep(
+            lastId + 1,
+            SheepNames.Names[DateTime.Now.Ticks % SheepNames.Names.Length],
+            State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
     }
 
     public void ProcessTime(DateTime newTime)
