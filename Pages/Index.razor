@@ -24,19 +24,24 @@
     <div class="branches">
         <BranchButton Branch=@Branch.Population Text="Sheep management" />
         <BranchButton Branch=@Branch.Buildings Text="Camp" />
+        <BranchButton Branch=@Branch.Hunting Text="Hunting" />
     </div>
 
     <div class="buildings">
-        @if (Engine.State.SelectedBranch == Branch.Population)
+        @switch (Engine.State.SelectedBranch)
         {
-            <PopulationBranch Sheep=@Engine.State.Sheep />
-        }
-        @if (Engine.State.SelectedBranch == Branch.Buildings)
-        {
-            @foreach (var building in Engine.State.Buildings)
-            {
-                <BuildingButton Building=@building />
-            }
+            case Branch.Population:
+                <PopulationBranch Sheep=@Engine.State.Sheep />
+                break;
+            case Branch.Buildings:
+                foreach (var building in Engine.State.Buildings)
+                {
+                    <BuildingButton Building=@building />
+                }
+                break;
+            case Branch.Hunting:
+                <HuntingBranch Hunts=@Engine.State.Hunts />
+                break;
         }
     </div>
 
@@ -56,6 +61,9 @@
                     <SheepDetails Sheep=@Engine.State.SelectedSheep />
                 }
             break;
+            case Branch.Hunting:
+                <HuntDetails Hunt=@Engine.State.SelectedHunt />
+                break;
         }
     </div>
 </div>

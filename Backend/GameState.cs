@@ -6,9 +6,11 @@ public class GameState
     public double LastDiff { get; set; }
     public ResourceValue Resources { get; set; }
     public Building[] Buildings { get; set; }
-    public Building? SelectedBuilding { get; set; }
     public List<Sheep> Sheep { get; set; }
-    public Sheep? SelectedSheep { get; set; }
+    public List<Hunt> Hunts { get; set; }
     public Branch SelectedBranch { get; set; }
+    public Building? SelectedBuilding { get; set; }
+    public Sheep? SelectedSheep { get; set; }
+    public Hunt? SelectedHunt { get; set; }
     public SheepJob[] Jobs { get; set; }
 }

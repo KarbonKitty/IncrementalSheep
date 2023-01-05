@@ -1,0 +1,9 @@
+@foreach (var hunt in Hunts)
+{
+    <HuntButton Hunt=@hunt />
+}
+
+@code
+{
+    [Parameter] public List<Hunt> Hunts { get; set; }
+}

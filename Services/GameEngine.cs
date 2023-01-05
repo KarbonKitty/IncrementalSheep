@@ -21,6 +21,7 @@ public class GameEngine : IGameEngine
             LastDiff = 0,
             Resources = new ResourceValue(ResourceId.Food, 100),
             Sheep = new List<Sheep>(),
+            Hunts = HuntData.Data.ConvertAll(h => new Hunt(h.Item1, h.Item2)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
         };
@@ -100,6 +101,7 @@ public class GameEngine : IGameEngine
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceValue(gameStateDto.Resources),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
+            Hunts = HuntData.Data.ConvertAll(d => new Hunt(d.Item1, d.Item2)),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
         };
 

@@ -1,0 +1,13 @@
+<div class="selectButton" @onclick="@(() => SelectHunt(Hunt.Id))">
+    <p>@Hunt.Name</p>
+</div>
+
+@code {
+    [Inject] protected GameEngine Engine { get; set; }
+    [Parameter] public Hunt Hunt { get; set; }
+
+    private void SelectHunt(HuntId huntId)
+    {
+        Engine.State.SelectedHunt = Engine.State.Hunts.Single(h => h.Id == huntId);
+    }
+}
