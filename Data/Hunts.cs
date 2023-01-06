@@ -2,8 +2,8 @@ namespace IncrementalSheep;
 
 public static class HuntData
 {
-    public static List<(HuntId, string)> Data = new List<(HuntId, string)>
+    public static List<HuntTemplate> Data = new()
     {
-        (HuntId.SquirrelHunt, "Squirrel hunting")
+        new(HuntId.SquirrelHunt, "Squirrel Hunt", "Description of squirrel hunt", new(ResourceId.HuntPoints, 100), new(ResourceId.Food, 50))
     };
 }
