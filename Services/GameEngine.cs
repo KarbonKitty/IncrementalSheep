@@ -37,10 +37,12 @@ public class GameEngine : IGameEngine
         {
             return;
         }
+        var rand = new Random();
+        State.Resources -= NewSheepPrice;
         var lastId = State.Sheep.Any() ? State.Sheep.Max(s => s.Id) : 1;
         State.Sheep.Add(new Sheep(
             lastId + 1,
-            SheepNames.Names[DateTime.Now.Ticks % SheepNames.Names.Length],
+            SheepNames.Names[rand.Next(State.Sheep.Count)],
             State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
     }
 
