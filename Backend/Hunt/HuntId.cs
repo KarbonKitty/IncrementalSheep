@@ -2,5 +2,7 @@ namespace IncrementalSheep;
 
 public enum HuntId
 {
-    SquirrelHunt
+    SquirrelHunt,
+    DeerHunt,
+    MammothHunt
 }

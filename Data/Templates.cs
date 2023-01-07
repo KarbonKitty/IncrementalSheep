@@ -13,4 +13,11 @@ public static class Templates
         { SheepJobId.Gatherer, new(SheepJobId.Gatherer, "Food gatherer", "Description of food gatherer", new(ResourceId.Food, 0.25)) },
         { SheepJobId.Hunter, new(SheepJobId.Hunter, "Hunter", "Description of hunter", new ResourceValue(ResourceId.HuntPoints, 0.35)) }
     };
+
+    public static readonly List<HuntTemplate> Hunts = new()
+    {
+        new(HuntId.SquirrelHunt, "Squirrel Hunt", "Description of squirrel hunt", new(ResourceId.HuntPoints, 100), new(ResourceId.Food, 50)),
+        new(HuntId.DeerHunt, "Deer Hunt", "Description of deer hunt", new(ResourceId.HuntPoints, 400), new(ResourceId.Food, 300)),
+        new(HuntId.MammothHunt, "Mammoth Hunt", "Description of mammoth hunt", new(ResourceId.HuntPoints, 1000), new(ResourceId.Food, 1000))
+    };
 }
