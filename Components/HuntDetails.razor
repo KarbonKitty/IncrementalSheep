@@ -1,0 +1,23 @@
+<h2>@(Hunt?.Name ?? "Please select a hunt")</h2>
+
+<p>@Hunt?.Description</p>
+
+@if (Hunt is not null) {
+    <ResourceList Header="Price" Resources=@Hunt.Price />
+    <ResourceList Header="Rewards" Resources=@Hunt.Reward />
+
+    <button class="btn" @onclick="RunHunt">Hunt</button>
+}
+
+@code {
+    [Inject] public GameEngine Engine { get; set; }
+    [Parameter] public Hunt? Hunt { get; set; }
+
+    private void RunHunt(object? sender)
+    {
+        if (Hunt is not null)
+        {
+            Engine.TryHunt(Hunt);
+        }
+    }
+}
