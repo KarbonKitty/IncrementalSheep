@@ -48,7 +48,4 @@ public class ResourceValue
 
     public static bool operator >(ResourceValue left, ResourceValue right)
         => Enum.GetValues<ResourceId>().All(id => left[id] > right[id]);
-
-    // public static ResourceValue operator *(ResourceValue left, ResourceValue right)
-    //     => new(left.AllResources.Select(kvp => (id: kvp.Key, val: kvp.Value * right[kvp.Key])).ToDictionary(t => t.id, t => t.val));
 }
