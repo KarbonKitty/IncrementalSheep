@@ -4,7 +4,7 @@ public class GameState
 {
     public DateTime LastTick { get; set; }
     public double LastDiff { get; set; }
-    public ResourceValue Resources { get; set; }
+    public ResourceWarehouse Resources { get; set; }
     public Building[] Buildings { get; set; }
     public List<Sheep> Sheep { get; set; }
     public List<Hunt> Hunts { get; set; }

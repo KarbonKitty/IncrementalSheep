@@ -17,7 +17,7 @@
     <div class="sidebar">
         @foreach (var resource in Engine.State.Resources.AllResources)
         {
-            <div><p>@resource.Key: @resource.Value.FormatAsMoney()</p></div>
+            <div><p>@resource.Key: @resource.Value.amount.FormatAsMoney() @if(resource.Value.storage is not null) { @($" / {resource.Value.storage?.FormatAsMoney()}") }</p></div>
         }
     </div>
 

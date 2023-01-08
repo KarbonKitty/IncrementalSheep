@@ -19,7 +19,14 @@ public class GameEngine : IGameEngine
         {
             LastTick = DateTime.Now,
             LastDiff = 0,
-            Resources = new ResourceValue(ResourceId.Food, 100),
+            Resources = new ResourceWarehouse(
+                new Dictionary<ResourceId, (double, double?)>
+                {
+                    { ResourceId.Food, (100, null) },
+                    { ResourceId.HuntPoints, (0, 100) },
+                    { ResourceId.Wood, (100, 200) }
+                }
+            ),
             Sheep = new List<Sheep>(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
@@ -33,7 +40,7 @@ public class GameEngine : IGameEngine
 
     public void RecruitNewSheep()
     {
-        var canAfford = NewSheepPrice <= State.Resources;
+        var canAfford = State.Resources >= NewSheepPrice;
         if (!canAfford)
         {
             return;
@@ -61,7 +68,7 @@ public class GameEngine : IGameEngine
     }
 
     public bool CanAfford(ResourceValue price)
-        => price <= State.Resources;
+        => State.Resources >= price;
 
     public bool TryBuy(Building building) {
         var isBuildable = building.IsBuildable;
@@ -113,7 +120,7 @@ public class GameEngine : IGameEngine
         {
             LastTick = new DateTime(gameStateDto!.LastTick),
             LastDiff = gameStateDto.LastDiff,
-            Resources = new ResourceValue(gameStateDto.Resources),
+            Resources = new ResourceWarehouse(gameStateDto.Resources),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
