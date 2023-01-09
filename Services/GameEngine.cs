@@ -21,11 +21,11 @@ public class GameEngine : IGameEngine
             LastTick = DateTime.Now,
             LastDiff = 0,
             Resources = new ResourceWarehouse(
-                new Dictionary<ResourceId, (double, double?)>
+                new Dictionary<ResourceId, ResourceWithStorage>
                 {
-                    { ResourceId.Food, (100, null) },
-                    { ResourceId.HuntPoints, (0, 100) },
-                    { ResourceId.Wood, (100, 200) }
+                    { ResourceId.Food, new(100, null) },
+                    { ResourceId.HuntPoints, new(0, 100) },
+                    { ResourceId.Wood, new(100, 200) }
                 }
             ),
             Sheep = new List<Sheep>(),

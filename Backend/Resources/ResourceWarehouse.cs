@@ -2,18 +2,18 @@ namespace IncrementalSheep;
 
 public class ResourceWarehouse
 {
-    private readonly Dictionary<ResourceId, (double amount, double? storage)> innerResources;
+    private readonly Dictionary<ResourceId, ResourceWithStorage> innerResources;
 
-    public double this[ResourceId id] => innerResources.GetValueOrDefault(id).amount;
+    public double this[ResourceId id] => innerResources.GetValueOrDefault(id)?.Amount ?? 0;
 
-    public IReadOnlyDictionary<ResourceId, (double amount, double? storage)> AllResources => innerResources;
+    public IReadOnlyDictionary<ResourceId, ResourceWithStorage> AllResources => innerResources;
 
-    public ResourceWarehouse(IReadOnlyDictionary<ResourceId, (double, double?)> data)
+    public ResourceWarehouse(IReadOnlyDictionary<ResourceId, ResourceWithStorage> data)
     {
-        innerResources = new Dictionary<ResourceId, (double amount, double? storage)>();
+        innerResources = new Dictionary<ResourceId, ResourceWithStorage>();
         foreach (var (id, (amount, storage)) in data)
         {
-            innerResources[id] = (amount, storage);
+            innerResources[id] = new(amount, storage);
         }
     }
 
@@ -21,28 +21,28 @@ public class ResourceWarehouse
     {
         foreach (var (id, val) in addition.AllResources)
         {
-            if (innerResources[id].storage is null)
+            if (innerResources[id].Storage is null)
             {
-                innerResources[id] = (innerResources[id].amount + val, null);
+                innerResources[id] = new(innerResources[id].Amount + val, null);
             }
             else
             {
                 double newValue;
                 if (respectStorage)
                 {
-                    newValue = Math.Min(innerResources[id].amount + val, innerResources[id].storage!.Value);
+                    newValue = Math.Min(innerResources[id].Amount + val, innerResources[id].Storage!.Value);
                 }
                 else
                 {
-                    newValue = innerResources[id].amount + val;
+                    newValue = innerResources[id].Amount + val;
                 }
-                innerResources[id] = (newValue, innerResources[id].storage);
+                innerResources[id] = new(newValue, innerResources[id].Storage);
             }
         }
     }
 
     public static ResourceWarehouse operator -(ResourceWarehouse left, ResourceValue right)
-        => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] - right[id], str: left.AllResources[id].storage)).ToDictionary(t => t.id, t => (t.val, t.str)));
+        => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] - right[id], str: left.AllResources[id].Storage)).ToDictionary(t => t.id, t => new ResourceWithStorage(t.val, t.str)));
 
     public static bool operator <=(ResourceWarehouse left, ResourceValue right)
         => Enum.GetValues<ResourceId>().All(id => left[id] <= right[id]);
