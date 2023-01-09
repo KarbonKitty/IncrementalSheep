@@ -11,6 +11,7 @@ public class GameEngine : IGameEngine
 
     private readonly IJSRuntime JS;
     private readonly ResourceValue NewSheepBasePrice = new(ResourceId.Food, 100);
+
     public GameEngine(IJSRuntime js)
     {
         JS = js;
@@ -70,7 +71,8 @@ public class GameEngine : IGameEngine
     public bool CanAfford(ResourceValue price)
         => State.Resources >= price;
 
-    public bool TryBuy(Building building) {
+    public bool TryBuy(Building building)
+    {
         var isBuildable = building.IsBuildable;
         var canAfford = CanAfford(building.Price);
         if (isBuildable && canAfford) {
@@ -87,7 +89,7 @@ public class GameEngine : IGameEngine
         if (canAfford)
         {
             State.Resources -= hunt.Price;
-            State.Resources += hunt.Reward;
+            State.Resources.Add(hunt.Reward);
             return true;
         }
         return false;
@@ -136,15 +138,17 @@ public class GameEngine : IGameEngine
 
     private void ProduceResources(TimeSpan deltaT)
     {
+        var totalProducedResources = new ResourceValue();
         foreach (var building in State.Buildings)
         {
             var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
-            State.Resources += resourcesProduced;
+            totalProducedResources += resourcesProduced;
         }
         foreach (var sheep in State.Sheep)
         {
             var resourcesProduced = sheep.Job.ProductionPerSecond * deltaT.TotalSeconds;
-            State.Resources += resourcesProduced;
+            totalProducedResources += resourcesProduced;
         }
+        State.Resources.Add(totalProducedResources);
     }
 }
