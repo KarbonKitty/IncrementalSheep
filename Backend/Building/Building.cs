@@ -1,22 +1,25 @@
 namespace IncrementalSheep;
 
-public class Building
+public class Building : ICanStore
 {
     public BuildingId Id { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
-    public ResourceValue BasePrice { get; init; }
-    public ResourceValue ProductionPerSecond { get; init; }
+    public SimplePrice BasePrice { get; init; }
+    public SimplePrice ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
-    public ResourceValue Price => BasePrice * Math.Pow(1.15, NumberBuilt);
+    public SimplePrice Price => BasePrice * Math.Pow(1.15, NumberBuilt);
     public bool IsBuildable { get; private set; }
+
+    public SimplePrice? AdditionalStorage { get; }
 
     public Building(
         BuildingId id,
         string name,
         string description,
-        ResourceValue basePrice,
-        ResourceValue baseProduction,
+        SimplePrice basePrice,
+        SimplePrice baseProduction,
+        SimplePrice? additionalStorage = null,
         int numberBuilt = 0,
         bool isBuildable = false)
     {
@@ -25,6 +28,7 @@ public class Building
         Description = description;
         BasePrice = basePrice;
         ProductionPerSecond = baseProduction;
+        AdditionalStorage = additionalStorage;
         NumberBuilt = numberBuilt;
         IsBuildable = isBuildable;
     }
@@ -42,6 +46,7 @@ public class Building
         BasePrice = template.BasePrice;
         ProductionPerSecond = template.ProductionPerSecond;
         NumberBuilt = state.NumberBuilt;
+        AdditionalStorage = template.AdditionalStorage;
         IsBuildable = template.IsBuildable;
     }
 

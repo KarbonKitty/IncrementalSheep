@@ -6,15 +6,15 @@ public class Hunt
     public string Name { get; }
     public string Description { get; }
 
-    public ResourceValue Price { get; }
-    public ResourceValue Reward { get; }
+    public SimplePrice Price { get; }
+    public SimplePrice Reward { get; }
 
     public Hunt(
         HuntId id,
         string name,
         string description,
-        ResourceValue price,
-        ResourceValue reward
+        SimplePrice price,
+        SimplePrice reward
     )
     {
         Id = id;

@@ -17,7 +17,7 @@ public class ResourceWarehouse
         }
     }
 
-    public void Add(ResourceValue addition, bool respectStorage = true)
+    public void Add(SimplePrice addition, bool respectStorage = true)
     {
         foreach (var (id, val) in addition.AllResources)
         {
@@ -41,18 +41,26 @@ public class ResourceWarehouse
         }
     }
 
-    public static ResourceWarehouse operator -(ResourceWarehouse left, ResourceValue right)
+    public void AddStorage(SimplePrice addition)
+    {
+        foreach (var (resId, additionalStorage) in addition.AllResources)
+        {
+            innerResources[resId] = new(innerResources[resId].Amount, innerResources[resId].Storage + additionalStorage);
+        }
+    }
+
+    public static ResourceWarehouse operator -(ResourceWarehouse left, SimplePrice right)
         => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] - right[id], str: left.AllResources[id].Storage)).ToDictionary(t => t.id, t => new ResourceWithStorage(t.val, t.str)));
 
-    public static bool operator <=(ResourceWarehouse left, ResourceValue right)
+    public static bool operator <=(ResourceWarehouse left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] <= right[id]);
 
-    public static bool operator >=(ResourceWarehouse left, ResourceValue right)
+    public static bool operator >=(ResourceWarehouse left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] >= right[id]);
 
-    public static bool operator <(ResourceWarehouse left, ResourceValue right)
+    public static bool operator <(ResourceWarehouse left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] < right[id]);
 
-    public static bool operator >(ResourceWarehouse left, ResourceValue right)
+    public static bool operator >(ResourceWarehouse left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] > right[id]);
 }

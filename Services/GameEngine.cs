@@ -7,10 +7,10 @@ public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
 
-    public ResourceValue NewSheepPrice => NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
+    public SimplePrice NewSheepPrice => NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
     private readonly IJSRuntime JS;
-    private readonly ResourceValue NewSheepBasePrice = new(ResourceId.Food, 100);
+    private readonly SimplePrice NewSheepBasePrice = new(ResourceId.Food, 100);
 
     public GameEngine(IJSRuntime js)
     {
@@ -23,7 +23,7 @@ public class GameEngine : IGameEngine
             Resources = new ResourceWarehouse(
                 new Dictionary<ResourceId, ResourceWithStorage>
                 {
-                    { ResourceId.Food, new(100, null) },
+                    { ResourceId.Food, new(100, 300) },
                     { ResourceId.HuntPoints, new(0, 100) },
                     { ResourceId.Wood, new(100, 200) }
                 }
@@ -68,7 +68,7 @@ public class GameEngine : IGameEngine
         ProduceResources(deltaT);
     }
 
-    public bool CanAfford(ResourceValue price)
+    public bool CanAfford(SimplePrice price)
         => State.Resources >= price;
 
     public bool TryBuy(Building building)
@@ -78,6 +78,7 @@ public class GameEngine : IGameEngine
         if (isBuildable && canAfford) {
             State.Resources -= building.Price;
             building.NumberBuilt++;
+            State.Resources.AddStorage(building.AdditionalStorage);
             return true;
         }
         return false;
@@ -138,7 +139,7 @@ public class GameEngine : IGameEngine
 
     private void ProduceResources(TimeSpan deltaT)
     {
-        var totalProducedResources = new ResourceValue();
+        var totalProducedResources = new SimplePrice();
         foreach (var building in State.Buildings)
         {
             var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
