@@ -69,6 +69,7 @@
 </div>
 
 @code {
+    [Inject] private SaveGameProcessor SaveGameProcessor { get; set; }
     [Inject] protected GameEngine Engine { get; set; }
     [Inject] private IToastService ToastService { get; set; }
     protected Timer gameTimer;
@@ -107,22 +108,23 @@
 
     private async Task SaveGame()
     {
-        await Engine.SaveGame();
+        await SaveGameProcessor.SaveGame(Engine.State);
         ToastService.ShowToast("Game manually saved");
     }
 
     private async Task ClearSave()
     {
-        await Engine.ClearSave();
+        await SaveGameProcessor.ClearSave();
         ToastService.ShowToast("Save cleared");
     }
 
     private async Task LoadGame()
     {
-        var serializedState = await Engine.GetSavedGameString();
+        var serializedState = await SaveGameProcessor.GetSavedGameString();
         if (serializedState is not null)
         {
-            Engine.LoadGame(serializedState);
+            var state = SaveGameProcessor.LoadGame(serializedState);
+            Engine.State = state;
             ToastService.ShowToast("Game loaded");
         }
     }

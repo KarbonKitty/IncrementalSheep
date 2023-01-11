@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using IncrementalSheep;
 
-namespace Company.WebApplication1;
+namespace IncrementalSheep;
 
 public static class Program
 {
@@ -13,6 +12,7 @@ public static class Program
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
         builder.Services.AddScoped<IToastService, ToastService>();
+        builder.Services.AddSingleton(typeof(SaveGameProcessor));
         builder.Services.AddSingleton(typeof(GameEngine));
 
         await builder.Build().RunAsync();

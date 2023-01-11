@@ -1,6 +1,3 @@
-using Microsoft.JSInterop;
-using System.Text.Json;
-
 namespace IncrementalSheep;
 
 public class GameEngine : IGameEngine
@@ -9,13 +6,10 @@ public class GameEngine : IGameEngine
 
     public SimplePrice NewSheepPrice => NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
-    private readonly IJSRuntime JS;
     private readonly SimplePrice NewSheepBasePrice = new(ResourceId.Food, 100);
 
-    public GameEngine(IJSRuntime js)
+    public GameEngine()
     {
-        JS = js;
-
         State = new GameState
         {
             LastTick = DateTime.Now,
@@ -94,47 +88,6 @@ public class GameEngine : IGameEngine
             return true;
         }
         return false;
-    }
-
-    public async ValueTask SaveGame()
-    {
-        var gameStateDto = new GameStateDto
-        {
-            LastTick = State.LastTick.Ticks,
-            LastDiff = State.LastDiff,
-            Resources = State.Resources.AllResources,
-            Sheep = State.Sheep.Select(s => s.SaveState()).ToArray(),
-            SelectedBuilding = State.SelectedBuilding?.Id,
-            Buildings = State.Buildings.Select(b => b.SaveState()).ToArray()
-        };
-        await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
-    }
-
-    public async ValueTask ClearSave()
-        => await JS.InvokeVoidAsync("localStorage.removeItem", "data");
-
-    public async ValueTask<string> GetSavedGameString()
-        => await JS.InvokeAsync<string>("localStorage.getItem", "data");
-
-    public void LoadGame(string serializedState)
-    {
-        var gameStateDto = JsonSerializer.Deserialize<GameStateDto>(serializedState);
-        State = new GameState
-        {
-            LastTick = new DateTime(gameStateDto!.LastTick),
-            LastDiff = gameStateDto.LastDiff,
-            Resources = new ResourceWarehouse(gameStateDto.Resources),
-            Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
-            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
-            Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
-        };
-
-        State.Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, State.Jobs.Single(j => j.Id == s.JobId))).ToList();
-
-        if (gameStateDto.SelectedBuilding is not null)
-        {
-            State.SelectedBuilding = State.Buildings.Single(b => b.Id == gameStateDto.SelectedBuilding);
-        }
     }
 
     private void ProduceResources(TimeSpan deltaT)
