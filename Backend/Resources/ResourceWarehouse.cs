@@ -30,7 +30,15 @@ public class ResourceWarehouse
                 double newValue;
                 if (respectStorage)
                 {
-                    newValue = Math.Min(innerResources[id].Amount + val, innerResources[id].Storage!.Value);
+                    var oldValue = innerResources[id].Amount;
+                    if (oldValue > innerResources[id].Storage!.Value)
+                    {
+                        newValue = oldValue;
+                    }
+                    else
+                    {
+                        newValue = Math.Min(innerResources[id].Amount + val, innerResources[id].Storage!.Value);
+                    }
                 }
                 else
                 {
