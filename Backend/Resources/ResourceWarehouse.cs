@@ -49,11 +49,29 @@ public class ResourceWarehouse
         }
     }
 
-    public void AddStorage(SimplePrice addition)
+    public void AddStorage(SimplePrice? addition)
     {
+        if (addition is null)
+        {
+            return;
+        }
+
         foreach (var (resId, additionalStorage) in addition.AllResources)
         {
             innerResources[resId] = new(innerResources[resId].Amount, innerResources[resId].Storage + additionalStorage);
+        }
+    }
+
+    public void RemoveStorage(SimplePrice? subtraction)
+    {
+        if (subtraction is null)
+        {
+            return;
+        }
+
+        foreach (var (resId, removeStorage) in subtraction.AllResources)
+        {
+            innerResources[resId] = new(innerResources[resId].Amount, innerResources[resId].Storage - removeStorage);
         }
     }
 

@@ -90,6 +90,13 @@ public class GameEngine : IGameEngine
         return false;
     }
 
+    public void SwitchJobs(Sheep sheep, SheepJob job)
+    {
+        State.Resources.AddStorage(job.AdditionalStorage);
+        State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
+        sheep.SwitchJobs(job);
+    }
+
     private void ProduceResources(TimeSpan deltaT)
     {
         var totalProducedResources = new SimplePrice();

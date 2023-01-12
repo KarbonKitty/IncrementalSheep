@@ -9,7 +9,7 @@
 
     @foreach (var job in Engine.State.Jobs)
     {
-        <div class="selectButton" @onclick="@(() => Sheep.SwitchJobs(job))">
+        <div class="selectButton" @onclick="@(() => Engine.SwitchJobs(Sheep, job))">
             <p>@job.Name</p>
         </div>
     }
