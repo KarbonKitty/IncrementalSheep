@@ -19,7 +19,7 @@ public class GameEngine : IGameEngine
                 {
                     { ResourceId.Food, new(100, 300) },
                     { ResourceId.HuntPoints, new(0, 100) },
-                    { ResourceId.Wood, new(100, 200) }
+                    { ResourceId.Wood, new(100, null) }
                 }
             ),
             Sheep = new List<Sheep>(),

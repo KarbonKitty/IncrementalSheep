@@ -137,6 +137,11 @@ a:active {
   background: var(--base02);
 }
 
+.resources-warehouse {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;

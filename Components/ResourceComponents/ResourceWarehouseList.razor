@@ -1,0 +1,11 @@
+<p><strong>Resources:</strong></p>
+<ul class="resources-warehouse">
+    @foreach (var (resId, resource) in Warehouse.AllResources)
+    {
+        <li>@resId: @resource.Amount.FormatAsMoney() @if(resource.Storage is not null) { @($" / {resource.Storage?.FormatAsMoney()}") }</li>
+    }
+</ul>
+
+@code {
+    [Parameter] public ResourceWarehouse Warehouse { get; set; }
+}

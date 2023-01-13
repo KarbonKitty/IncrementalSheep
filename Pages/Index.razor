@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using System.Timers
 @using IncrementalSheep.Components.BranchComponents
+@using IncrementalSheep.Components.ResourceComponents
 
 <div class="container">
     <Toast />
@@ -15,10 +16,7 @@
     </div>
 
     <div class="sidebar">
-        @foreach (var resource in Engine.State.Resources.AllResources)
-        {
-            <div><p>@resource.Key: @resource.Value.Amount.FormatAsMoney() @if(resource.Value.Storage is not null) { @($" / {resource.Value.Storage?.FormatAsMoney()}") }</p></div>
-        }
+        <ResourceWarehouseList Warehouse=@Engine.State.Resources />
     </div>
 
     <div class="branches">
