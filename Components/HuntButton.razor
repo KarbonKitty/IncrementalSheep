@@ -3,8 +3,8 @@
 </div>
 
 @code {
-    [Inject] protected GameEngine Engine { get; set; }
-    [Parameter] public Hunt Hunt { get; set; }
+    [Inject] protected GameEngine Engine { get; set; } = default!;
+    [Parameter] public required Hunt Hunt { get; set; }
 
     private void SelectHunt(HuntId huntId)
     {

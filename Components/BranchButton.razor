@@ -3,9 +3,9 @@
 </div>
 
 @code {
-    [Inject] protected GameEngine Engine { get; set; }
+    [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public Branch Branch { get; init; }
-    [Parameter] public string Text { get; init; }
+    [Parameter] public required string Text { get; init; }
 
     private void SelectBranch(Branch branch)
     {

@@ -1,7 +1,7 @@
 namespace IncrementalSheep;
 
 public static class SheepNames {
-    public static string[] Names = {
+    public static readonly string[] Names = {
         "Norman",
         "Cooper",
         "Raymond",

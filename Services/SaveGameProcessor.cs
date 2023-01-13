@@ -35,17 +35,17 @@ public class SaveGameProcessor
     public static GameState LoadGame(string serializedState)
     {
         var gameStateDto = JsonSerializer.Deserialize<GameStateDto>(serializedState);
+        var jobs = Templates.Jobs.Select(t => t.Value).ToArray();
         var state = new GameState
         {
             LastTick = new DateTime(gameStateDto!.LastTick),
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceWarehouse(gameStateDto.Resources),
-            Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
+            Jobs = jobs,
+            Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId))).ToList(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
         };
-
-        state.Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, state.Jobs.Single(j => j.Id == s.JobId))).ToList();
 
         if (gameStateDto.SelectedBuilding is not null)
         {

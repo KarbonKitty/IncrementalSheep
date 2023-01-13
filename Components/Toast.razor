@@ -3,7 +3,7 @@
 </div>
 
 @code {
-    [Inject] private IToastService toastService { get; set; }
+    [Inject] private IToastService toastService { get; set; } = default!;
 
     private string Message { get; set; } = string.Empty;
     private bool IsVisible { get; set; }

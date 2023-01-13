@@ -16,7 +16,7 @@
 }
 
 @code {
-    [Inject] public GameEngine Engine { get; set; }
+    [Inject] public required GameEngine Engine { get; set; }
 
     [Parameter] public Building? Building { get; set; }
 

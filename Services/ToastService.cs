@@ -1,4 +1,4 @@
-using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -6,9 +6,9 @@ namespace IncrementalSheep
 {
     public sealed class ToastService : IToastService, IDisposable
     {
-        public event Action<string> OnShow;
-        public event Action OnHide;
-        private Timer Countdown;
+        public event Action<string>? OnShow;
+        public event Action? OnHide;
+        private Timer? Countdown;
 
         public void Dispose() => Countdown?.Dispose();
 
@@ -26,6 +26,7 @@ namespace IncrementalSheep
             Countdown.Start();
         }
 
+        [MemberNotNull(nameof(Countdown))]
         private void SetCountdown()
         {
             if (Countdown is null)

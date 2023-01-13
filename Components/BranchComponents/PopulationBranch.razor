@@ -7,6 +7,6 @@
 
 @code
 {
-    [Inject] public GameEngine Engine { get; set; }
-    [Parameter] public List<Sheep> Sheep { get; set; }
+    [Inject] public required GameEngine Engine { get; set; }
+    [Parameter] public required List<Sheep> Sheep { get; set; }
 }

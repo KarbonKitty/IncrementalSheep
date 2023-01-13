@@ -12,7 +12,7 @@
 }
 
 @code {
-    [Inject] public GameEngine Engine { get; set; }
+    [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public Hunt? Hunt { get; set; }
 
     private void RunHunt(object? sender)

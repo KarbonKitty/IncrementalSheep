@@ -8,6 +8,6 @@
 </ul>
 
 @code {
-    [Parameter] public SimplePrice Resources { get; set; }
-    [Parameter] public string Header { get; set; }
+    [Parameter] public required SimplePrice Resources { get; set; }
+    [Parameter] public required string Header { get; set; }
 }

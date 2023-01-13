@@ -9,7 +9,7 @@ public class Building : ICanStore
     public SimplePrice ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
     public SimplePrice Price => BasePrice * Math.Pow(1.15, NumberBuilt);
-    public bool IsBuildable { get; private set; }
+    public bool IsBuildable { get; }
 
     public SimplePrice? AdditionalStorage { get; }
 

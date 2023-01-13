@@ -3,8 +3,8 @@
 </div>
 
 @code {
-    [Inject] protected GameEngine Engine { get; set; }
-    [Parameter] public Building Building { get; set; }
+    [Inject] protected GameEngine Engine { get; set; } = default!;
+    [Parameter] public required Building Building { get; set; }
 
     private void SelectBuilding(BuildingId buildingId)
     {

@@ -67,11 +67,11 @@
 </div>
 
 @code {
-    [Inject] private SaveGameProcessor SaveGameProcessor { get; set; }
-    [Inject] protected GameEngine Engine { get; set; }
-    [Inject] private IToastService ToastService { get; set; }
-    protected Timer gameTimer;
-    protected Timer autoSaveTimer;
+    [Inject] private SaveGameProcessor SaveGameProcessor { get; set; } = default!;
+    [Inject] protected GameEngine Engine { get; set; } = default!;
+    [Inject] private IToastService ToastService { get; set; } = default!;
+    protected Timer? gameTimer;
+    protected Timer? autoSaveTimer;
 
     protected override void OnInitialized()
     {
@@ -89,7 +89,9 @@
         autoSaveTimer.Start();
 
         // this doesn't do anything if there is no saved game data
+#pragma warning disable CS4014
         LoadGame();
+#pragma warning restore CS4014
     }
 
     private void LoopStep(object? sender, ElapsedEventArgs e)
