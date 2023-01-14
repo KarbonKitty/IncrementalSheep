@@ -1,9 +1,9 @@
 <p><strong>@Header:</strong></p>
 
 <ul>
-    @foreach (var resource in Resources.AllResources)
+    @foreach (var (id, amnt) in Resources.AllResources)
     {
-        <li>@resource.Key: @resource.Value.FormatAsMoney()</li>
+        <li>@ResourceNames.GetName(id): @amnt.FormatAsMoney()</li>
     }
 </ul>
 
