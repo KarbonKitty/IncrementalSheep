@@ -4,9 +4,7 @@ public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
 
-    public SimplePrice NewSheepPrice => NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
-
-    private readonly SimplePrice NewSheepBasePrice = new(ResourceId.Food, 100);
+    public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
     public GameEngine()
     {
@@ -41,11 +39,11 @@ public class GameEngine : IGameEngine
             return;
         }
         var rand = new Random();
-        State.Resources -= NewSheepPrice;
+        State.Resources.Remove(NewSheepPrice);
         var lastId = State.Sheep.Any() ? State.Sheep.Max(s => s.Id) : 1;
         State.Sheep.Add(new Sheep(
             lastId + 1,
-            SheepNames.Names[rand.Next(State.Sheep.Count)],
+            SheepData.Names[rand.Next(State.Sheep.Count)],
             State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
     }
 
@@ -59,7 +57,10 @@ public class GameEngine : IGameEngine
         State.LastDiff = deltaT.TotalMilliseconds;
         State.LastTick += deltaT;
 
-        ProduceResources(deltaT);
+        var tickProduction = ProduceResources(deltaT);
+        tickProduction -= FeedTheSheep(deltaT);
+
+        State.Resources.Add(tickProduction);
     }
 
     public bool CanAfford(SimplePrice price)
@@ -69,8 +70,9 @@ public class GameEngine : IGameEngine
     {
         var isBuildable = building.IsBuildable;
         var canAfford = CanAfford(building.Price);
-        if (isBuildable && canAfford) {
-            State.Resources -= building.Price;
+        if (isBuildable && canAfford)
+        {
+            State.Resources.Remove(building.Price);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
             return true;
@@ -83,7 +85,7 @@ public class GameEngine : IGameEngine
         var canAfford = CanAfford(hunt.Price);
         if (canAfford)
         {
-            State.Resources -= hunt.Price;
+            State.Resources.Remove(hunt.Price);
             State.Resources.Add(hunt.Reward);
             return true;
         }
@@ -97,7 +99,7 @@ public class GameEngine : IGameEngine
         sheep.SwitchJobs(job);
     }
 
-    private void ProduceResources(TimeSpan deltaT)
+    private SimplePrice ProduceResources(TimeSpan deltaT)
     {
         var totalProducedResources = new SimplePrice();
         foreach (var building in State.Buildings)
@@ -110,6 +112,9 @@ public class GameEngine : IGameEngine
             var resourcesProduced = sheep.Job.ProductionPerSecond * deltaT.TotalSeconds;
             totalProducedResources += resourcesProduced;
         }
-        State.Resources.Add(totalProducedResources);
+        return totalProducedResources;
     }
+
+    private SimplePrice FeedTheSheep(TimeSpan deltaT)
+        => SheepData.SheepBaseConsumption * State.Sheep.Count * deltaT.TotalSeconds;
 }

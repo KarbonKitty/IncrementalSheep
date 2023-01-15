@@ -21,6 +21,13 @@ public class ResourceWarehouse
     {
         foreach (var (id, val) in addition.AllResources)
         {
+            if (val < 0)
+            {
+                var newValue = Math.Max(innerResources[id].Amount + val, 0);
+                innerResources[id] = new(newValue, innerResources[id].Storage);
+                continue;
+            }
+
             if (innerResources[id].Storage is null)
             {
                 innerResources[id] = new(innerResources[id].Amount + val, null);
@@ -49,6 +56,15 @@ public class ResourceWarehouse
         }
     }
 
+    public void Remove(SimplePrice subtraction)
+    {
+        foreach (var (id, val) in subtraction.AllResources)
+        {
+            var newValue = Math.Max(innerResources[id].Amount - val, 0);
+            innerResources[id] = new(newValue, innerResources[id].Storage);
+        }
+    }
+
     public void AddStorage(SimplePrice? addition)
     {
         if (addition is null)
@@ -74,9 +90,6 @@ public class ResourceWarehouse
             innerResources[resId] = new(innerResources[resId].Amount, innerResources[resId].Storage - removeStorage);
         }
     }
-
-    public static ResourceWarehouse operator -(ResourceWarehouse left, SimplePrice right)
-        => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] - right[id], str: left.AllResources[id].Storage)).ToDictionary(t => t.id, t => new ResourceWithStorage(t.val, t.str)));
 
     public static bool operator <=(ResourceWarehouse left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] <= right[id]);

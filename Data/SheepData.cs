@@ -1,6 +1,10 @@
 namespace IncrementalSheep;
 
-public static class SheepNames {
+public static class SheepData {
+    public static readonly SimplePrice NewSheepBasePrice = new(ResourceId.Food, 100);
+
+    public static readonly SimplePrice SheepBaseConsumption = new(ResourceId.Food, 2);
+
     public static readonly string[] Names = {
         "Norman",
         "Cooper",
