@@ -60,6 +60,8 @@ public class GameEngine : IGameEngine
         var tickProduction = ProduceResources(deltaT);
         tickProduction -= FeedTheSheep(deltaT);
 
+        CheckForStarvation(tickProduction, deltaT);
+
         State.Resources.Add(tickProduction);
     }
 
@@ -97,6 +99,28 @@ public class GameEngine : IGameEngine
         State.Resources.AddStorage(job.AdditionalStorage);
         State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
         sheep.SwitchJobs(job);
+    }
+
+    private void CheckForStarvation(SimplePrice tickProduction, TimeSpan deltaT)
+    {
+        if (tickProduction[ResourceId.Food] < 0)
+        {
+            var timeToStarvation = State.Resources[ResourceId.Food] / (-tickProduction[ResourceId.Food] / deltaT.TotalSeconds);
+            if (timeToStarvation < 60)
+            {
+                var firstNonFoodProducer = State.Sheep.Find(s => s.Job.ProductionPerSecond[ResourceId.Food] <= 0);
+                if (firstNonFoodProducer is null)
+                {
+                    var lastSheep = State.Sheep[^1];
+                    State.Resources.RemoveStorage(lastSheep.Job.AdditionalStorage);
+                    State.Sheep.Remove(lastSheep);
+                }
+                else
+                {
+                    firstNonFoodProducer?.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
+                }
+            }
+        }
     }
 
     private SimplePrice ProduceResources(TimeSpan deltaT)
