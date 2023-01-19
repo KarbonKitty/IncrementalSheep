@@ -4,6 +4,9 @@ public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
 
+    public string[] Log { get; } = new string[15];
+    public int LogIndex { get; private set; }
+
     public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
     public GameEngine()
@@ -31,6 +34,16 @@ public class GameEngine : IGameEngine
         State.Buildings.Single(b => b.Id == BuildingId.GreenPastures).NumberBuilt = 1;
     }
 
+    public void PostMessage(string message)
+    {
+        --LogIndex;
+        if (LogIndex < 0)
+        {
+            LogIndex = Log.Length - 1;
+        }
+        Log[LogIndex] = message;
+    }
+
     public void RecruitNewSheep()
     {
         var canAfford = State.Resources >= NewSheepPrice;
@@ -45,6 +58,7 @@ public class GameEngine : IGameEngine
             lastId + 1,
             SheepData.Names[rand.Next(State.Sheep.Count)],
             State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
+        PostMessage($"New sheep named {State.Sheep.Last().Name} joins the tribe!");
     }
 
     public void ProcessTime(DateTime newTime)
@@ -77,6 +91,7 @@ public class GameEngine : IGameEngine
             State.Resources.Remove(building.Price);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
+            PostMessage($"A new {building.Name} has been built");
             return true;
         }
         return false;
@@ -89,6 +104,7 @@ public class GameEngine : IGameEngine
         {
             State.Resources.Remove(hunt.Price);
             State.Resources.Add(hunt.Reward);
+            PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
             return true;
         }
         return false;
@@ -99,6 +115,7 @@ public class GameEngine : IGameEngine
         State.Resources.AddStorage(job.AdditionalStorage);
         State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
         sheep.SwitchJobs(job);
+        PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
     }
 
     private void CheckForStarvation(SimplePrice tickProduction, TimeSpan deltaT)
@@ -114,9 +131,11 @@ public class GameEngine : IGameEngine
                     var lastSheep = State.Sheep[^1];
                     State.Resources.RemoveStorage(lastSheep.Job.AdditionalStorage);
                     State.Sheep.Remove(lastSheep);
+                    PostMessage($"Your sheep are hungry! {lastSheep.Name} decides to leave the tribe!");
                 }
                 else
                 {
+                    PostMessage($"Your sheep are hungry! {firstNonFoodProducer.Name} decides to gather some food for themselves!");
                     firstNonFoodProducer?.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
                 }
             }
