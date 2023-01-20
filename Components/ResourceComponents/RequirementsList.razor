@@ -1,0 +1,10 @@
+<p><strong>@Header:</strong></p>
+
+<ul>
+    <li>Hunters: @Requirements.NumberOfHunters</li>
+</ul>
+
+@code {
+    [Parameter] public required Requirements Requirements { get; set; }
+    [Parameter] public required string Header { get; set; }
+}

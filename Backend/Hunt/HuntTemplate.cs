@@ -5,5 +5,6 @@ public record HuntTemplate(
     string Name,
     string Description,
     SimplePrice Price,
+    Requirements Requirements,
     SimplePrice Reward
 );

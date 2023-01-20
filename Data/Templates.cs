@@ -17,8 +17,8 @@ public static class Templates
 
     public static readonly List<HuntTemplate> Hunts = new()
     {
-        new(HuntId.SquirrelHunt, "Squirrel Hunt", "Description of squirrel hunt", new(ResourceId.HuntPoints, 100), new(ResourceId.Food, 50)),
-        new(HuntId.DeerHunt, "Deer Hunt", "Description of deer hunt", new(ResourceId.HuntPoints, 400), new(ResourceId.Food, 300)),
-        new(HuntId.MammothHunt, "Mammoth Hunt", "Description of mammoth hunt", new(ResourceId.HuntPoints, 1000), new(ResourceId.Food, 1000))
+        new(HuntId.SquirrelHunt, "Squirrel Hunt", "Description of squirrel hunt", new(ResourceId.HuntPoints, 10), new(NumberOfHunters: 1), new(ResourceId.Food, 50)),
+        new(HuntId.DeerHunt, "Deer Hunt", "Description of deer hunt", new(ResourceId.HuntPoints, 10), new(NumberOfHunters: 2), new(ResourceId.Food, 300)),
+        new(HuntId.MammothHunt, "Mammoth Hunt", "Description of mammoth hunt", new(ResourceId.HuntPoints, 10), new(NumberOfHunters: 4), new(ResourceId.Food, 1000))
     };
 }

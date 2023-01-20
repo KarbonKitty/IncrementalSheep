@@ -6,6 +6,9 @@
 
 @if (Hunt is not null) {
     <ResourceList Header="Price" Resources=@Hunt.Price />
+
+    <RequirementsList Header="Requirements" Requirements=@Hunt.Requirements />
+
     <ResourceList Header="Rewards" Resources=@Hunt.Reward />
 
     <button class="btn" @onclick="RunHunt">Hunt</button>

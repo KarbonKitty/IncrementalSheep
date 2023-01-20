@@ -7,6 +7,7 @@ public class Hunt
     public string Description { get; }
 
     public SimplePrice Price { get; }
+    public Requirements Requirements { get; }
     public SimplePrice Reward { get; }
 
     public Hunt(
@@ -14,6 +15,7 @@ public class Hunt
         string name,
         string description,
         SimplePrice price,
+        Requirements requirements,
         SimplePrice reward
     )
     {
@@ -21,6 +23,7 @@ public class Hunt
         Name = name;
         Description = description;
         Price = price;
+        Requirements = requirements;
         Reward = reward;
     }
 
@@ -29,6 +32,7 @@ public class Hunt
         template.Name,
         template.Description,
         template.Price,
+        template.Requirements,
         template.Reward
     ) {}
 }

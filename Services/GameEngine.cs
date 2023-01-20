@@ -82,6 +82,12 @@ public class GameEngine : IGameEngine
     public bool CanAfford(SimplePrice price)
         => State.Resources >= price;
 
+    public bool FulfillsRequirements(Requirements req)
+    {
+        var enoughHunters = State.Sheep.Count(s => s.Job.Id == SheepJobId.Hunter) >= req.NumberOfHunters;
+        return enoughHunters;
+    }
+
     public bool TryBuy(Building building)
     {
         var isBuildable = building.IsBuildable;
@@ -100,12 +106,18 @@ public class GameEngine : IGameEngine
     public bool TryHunt(Hunt hunt)
     {
         var canAfford = CanAfford(hunt.Price);
-        if (canAfford)
+        var fulfillsRequirements = FulfillsRequirements(hunt.Requirements);
+        if (canAfford && fulfillsRequirements)
         {
             State.Resources.Remove(hunt.Price);
             State.Resources.Add(hunt.Reward);
             PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
             return true;
+        }
+        // TODO: handle this by disabling the button
+        else if (canAfford)
+        {
+            PostMessage("Not enough hunters!");
         }
         return false;
     }
