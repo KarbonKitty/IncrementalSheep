@@ -1,11 +1,12 @@
 namespace IncrementalSheep;
 
-public class Hunt
+public class Hunt : ICanBeBuyable
 {
     public HuntId Id { get; }
     public string Name { get; }
     public string Description { get; }
 
+    public bool IsBuyable => true;
     public SimplePrice Price { get; }
     public Requirements Requirements { get; }
     public SimplePrice Reward { get; }

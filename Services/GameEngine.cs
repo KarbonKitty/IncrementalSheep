@@ -79,8 +79,8 @@ public class GameEngine : IGameEngine
         State.Resources.Add(tickProduction);
     }
 
-    public bool CanAfford(SimplePrice price)
-        => State.Resources >= price;
+    public bool CanAfford(ICanBeBuyable buyable)
+        => State.Resources >= buyable.Price;
 
     public bool FulfillsRequirements(Requirements req)
     {
@@ -90,8 +90,8 @@ public class GameEngine : IGameEngine
 
     public bool TryBuy(Building building)
     {
-        var isBuildable = building.IsBuildable;
-        var canAfford = CanAfford(building.Price);
+        var isBuildable = building.IsBuyable;
+        var canAfford = CanAfford(building);
         if (isBuildable && canAfford)
         {
             State.Resources.Remove(building.Price);
@@ -105,7 +105,7 @@ public class GameEngine : IGameEngine
 
     public bool TryHunt(Hunt hunt)
     {
-        var canAfford = CanAfford(hunt.Price);
+        var canAfford = CanAfford(hunt);
         var fulfillsRequirements = FulfillsRequirements(hunt.Requirements);
         if (canAfford && fulfillsRequirements)
         {

@@ -1,3 +1,4 @@
+@using IncrementalSheep.Components.Buttons
 @using IncrementalSheep.Components.ResourceComponents
 
 <h2>@(Building?.Name ?? "Please select a building")</h2>
@@ -8,11 +9,11 @@
     <ResourceList Header="Production per second" Resources=@Building.ProductionPerSecond />
 }
 
-@if (Building is not null && Building.IsBuildable)
+@if (Building is not null && Building.IsBuyable)
 {
     <ResourceList Header="Price" Resources=@Building.Price />
 
-    <button class="btn" @onclick="Buy">Buy</button>
+    <BuyButton Buyable=@Building BuyMethod=@Buy BuyText="Build" />
 }
 
 @code {
