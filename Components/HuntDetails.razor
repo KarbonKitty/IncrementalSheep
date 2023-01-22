@@ -1,3 +1,4 @@
+@using IncrementalSheep.Components.Buttons
 @using IncrementalSheep.Components.ResourceComponents
 
 <h2>@(Hunt?.Name ?? "Please select a hunt")</h2>
@@ -11,7 +12,7 @@
 
     <ResourceList Header="Rewards" Resources=@Hunt.Reward />
 
-    <button class="btn" @onclick="RunHunt">Hunt</button>
+    <BuyButton Buyable=@Hunt BuyMethod=@RunHunt BuyText="Hunt" />
 }
 
 @code {
