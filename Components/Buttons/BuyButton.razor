@@ -1,4 +1,4 @@
-<button class="btn" @onclick="BuyMethod" disabled=@(!Engine.CanAfford(Buyable))>@BuyText</button>
+<button class="btn" @onclick="BuyMethod" disabled=@(!Engine.CanBuy(Buyable))>@BuyText</button>
 
 @code {
     [Inject] public required GameEngine Engine { get; set; }

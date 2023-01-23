@@ -79,6 +79,9 @@ public class GameEngine : IGameEngine
         State.Resources.Add(tickProduction);
     }
 
+    public bool CanBuy(ICanBeBuyable buyable)
+        => CanAfford(buyable) && FulfillsRequirements(buyable.Requirements);
+
     public bool CanAfford(ICanBeBuyable buyable)
         => State.Resources >= buyable.Price;
 
