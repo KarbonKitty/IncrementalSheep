@@ -1,6 +1,6 @@
 namespace IncrementalSheep;
 
-public enum BuildingId
+public enum StructureId
 {
     WoodGatherer,
     GreenPastures,

@@ -33,9 +33,9 @@
                 <PopulationBranch Sheep=@Engine.State.Sheep />
                 break;
             case Branch.Buildings:
-                foreach (var building in Engine.State.Buildings)
+                foreach (var structure in Engine.State.Structures)
                 {
-                    <BuildingButton Building=@building />
+                    <StructureButton Structure=@structure />
                 }
                 break;
             case Branch.Hunting:
@@ -48,7 +48,7 @@
         @switch (Engine.State.SelectedBranch)
         {
             case Branch.Buildings:
-                <BuildingDetails Building=@Engine.State.SelectedBuilding />
+                <StructureDetails Structure=@Engine.State.SelectedStructure />
             break;
             case Branch.Population:
                 if (Engine.State.SelectedSheep is null)

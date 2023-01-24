@@ -1,0 +1,31 @@
+@using IncrementalSheep.Components.Buttons
+@using IncrementalSheep.Components.ResourceComponents
+
+<h2>@(Structure?.Name ?? "Please select a building")</h2>
+
+<p>@Structure?.Description</p>
+
+@if (Structure is not null) {
+    <ResourceList Header="Production per second" Resources=@Structure.ProductionPerSecond />
+}
+
+@if (Structure is Building building)
+{
+    <ResourceList Header="Price" Resources=@building.Price />
+
+    <BuyButton Buyable=@building BuyMethod=@Buy BuyText="Build" />
+}
+
+@code {
+    [Inject] public required GameEngine Engine { get; set; }
+
+    [Parameter] public Structure? Structure { get; set; }
+
+    private void Buy(object? sender)
+    {
+        if (Structure is Building building)
+        {
+            Engine.TryBuy(building);
+        }
+    }
+}

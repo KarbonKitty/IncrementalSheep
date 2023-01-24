@@ -2,11 +2,31 @@ namespace IncrementalSheep;
 
 public static class Templates
 {
-    public static readonly Dictionary<BuildingId, BuildingTemplate> Buildings = new()
+    public static readonly Dictionary<StructureId, StructureTemplate> Buildings = new()
     {
-        { BuildingId.GreenPastures, new(BuildingId.GreenPastures, "Green Pastures", "A land that the sheep grazed on for generations, providing them with free food.", new(ResourceId.Wood, 1), new(ResourceId.Food, 5), null, false) },
-        { BuildingId.FoodTent, new(BuildingId.FoodTent, "Food tent", "Description of food tent", new(ResourceId.Food, 30), new(), new(ResourceId.Food, 50), true) },
-        { BuildingId.WoodGatherer, new(BuildingId.WoodGatherer, "Wood Gatherer", "Descriptions of wood gatherer", new(ResourceId.Wood, 25), new(ResourceId.Wood, 1), null, true) }
+        { StructureId.GreenPastures, new() {
+            Id = StructureId.GreenPastures,
+            Name = "Green Pastures",
+            Description = "A land that the sheep grazed on for generations, providing them with free food.",
+            ProductionPerSecond = new(ResourceId.Food, 5),
+            AdditionalStorage = null
+        } },
+        { StructureId.FoodTent, new BuildingTemplate() {
+            Id = StructureId.FoodTent,
+            Name = "Food tent",
+            Description = "Description of food tent",
+            BasePrice = new(ResourceId.Food, 30),
+            ProductionPerSecond = new(),
+            AdditionalStorage = new(ResourceId.Food, 50)
+        } },
+        { StructureId.WoodGatherer, new BuildingTemplate() {
+            Id = StructureId.WoodGatherer,
+            Name = "Wood Gatherer",
+            Description = "Description of wood gatherer",
+            BasePrice = new(ResourceId.Wood, 25),
+            ProductionPerSecond = new(ResourceId.Wood, 1),
+            AdditionalStorage = null
+        } }
     };
 
     public static readonly Dictionary<SheepJobId, SheepJob> Jobs = new()

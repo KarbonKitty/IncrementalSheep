@@ -20,8 +20,8 @@ public class SaveGameProcessor
             LastDiff = state.LastDiff,
             Resources = state.Resources.AllResources,
             Sheep = state.Sheep.Select(s => s.SaveState()).ToArray(),
-            SelectedBuilding = state.SelectedBuilding?.Id,
-            Buildings = state.Buildings.Select(b => b.SaveState()).ToArray()
+            SelectedStructure = state.SelectedStructure?.Id,
+            Structures = state.Structures.Select(b => b.SaveState()).ToArray()
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -44,12 +44,12 @@ public class SaveGameProcessor
             Jobs = jobs,
             Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId))).ToList(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
-            Buildings = gameStateDto.Buildings.Select(b => new Building(Templates.Buildings[b.Id], b)).ToArray()
+            Structures = gameStateDto.Structures.Select(b => GameEngine.StructureFactory(Templates.Buildings[b.Id], b)).ToArray()
         };
 
-        if (gameStateDto.SelectedBuilding is not null)
+        if (gameStateDto.SelectedStructure is not null)
         {
-            state.SelectedBuilding = state.Buildings.Single(b => b.Id == gameStateDto.SelectedBuilding);
+            state.SelectedStructure = state.Structures.Single(b => b.Id == gameStateDto.SelectedStructure);
         }
 
         return state;

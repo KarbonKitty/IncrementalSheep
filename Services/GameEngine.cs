@@ -26,12 +26,12 @@ public class GameEngine : IGameEngine
             Sheep = new List<Sheep>(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
-            Buildings = Templates.Buildings.Select(b => new Building(b.Value, new BuildingState(b.Key, 0))).ToArray()
+            Structures = Templates.Buildings.Select(b => StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray()
         };
 
         // Green pastures starting building
 
-        State.Buildings.Single(b => b.Id == BuildingId.GreenPastures).NumberBuilt = 1;
+        State.Structures.Single(b => b.Id == StructureId.GreenPastures).NumberBuilt = 1;
     }
 
     public void PostMessage(string message)
@@ -93,9 +93,8 @@ public class GameEngine : IGameEngine
 
     public bool TryBuy(Building building)
     {
-        var isBuildable = building.IsBuyable;
         var canAfford = CanAfford(building);
-        if (isBuildable && canAfford)
+        if (canAfford)
         {
             State.Resources.Remove(building.Price);
             building.NumberBuilt++;
@@ -117,11 +116,6 @@ public class GameEngine : IGameEngine
             PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
             return true;
         }
-        // TODO: handle this by disabling the button
-        else if (canAfford)
-        {
-            PostMessage("Not enough hunters!");
-        }
         return false;
     }
 
@@ -132,6 +126,14 @@ public class GameEngine : IGameEngine
         sheep.SwitchJobs(job);
         PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
     }
+
+    // TODO: move this to a separate helper
+    public static Structure StructureFactory(StructureTemplate template, StructureState state)
+        => template switch
+            {
+                BuildingTemplate bt => new Building(bt, state),
+                _ => new Structure(template, state)
+            };
 
     private void CheckForStarvation(SimplePrice tickProduction, TimeSpan deltaT)
     {
@@ -160,7 +162,7 @@ public class GameEngine : IGameEngine
     private SimplePrice ProduceResources(TimeSpan deltaT)
     {
         var totalProducedResources = new SimplePrice();
-        foreach (var building in State.Buildings)
+        foreach (var building in State.Structures)
         {
             var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
             totalProducedResources += resourcesProduced;

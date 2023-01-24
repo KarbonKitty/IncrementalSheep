@@ -1,6 +1,6 @@
 namespace IncrementalSheep;
 
-public record BuildingState(
-    BuildingId Id,
+public record StructureState(
+    StructureId Id,
     int NumberBuilt
 );
