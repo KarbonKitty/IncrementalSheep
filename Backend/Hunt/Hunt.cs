@@ -1,15 +1,18 @@
 namespace IncrementalSheep;
 
-public class Hunt : ICanBeBuyable
+public class Hunt : IBuyable, ITakeTime
 {
     public HuntId Id { get; }
     public string Name { get; }
     public string Description { get; }
 
-    public bool IsBuyable => true;
     public SimplePrice Price { get; }
     public Requirements Requirements { get; }
     public SimplePrice Reward { get; }
+
+    public TimeSpan Duration { get; }
+
+    public TimeSpan TimeLeft { get; private set; }
 
     public Hunt(
         HuntId id,
@@ -17,7 +20,8 @@ public class Hunt : ICanBeBuyable
         string description,
         SimplePrice price,
         Requirements requirements,
-        SimplePrice reward
+        SimplePrice reward,
+        TimeSpan duration
     )
     {
         Id = id;
@@ -26,6 +30,7 @@ public class Hunt : ICanBeBuyable
         Price = price;
         Requirements = requirements;
         Reward = reward;
+        Duration = duration;
     }
 
     public Hunt(HuntTemplate template) : this(
@@ -34,6 +39,32 @@ public class Hunt : ICanBeBuyable
         template.Description,
         template.Price,
         template.Requirements,
-        template.Reward
+        template.Reward,
+        template.Duration
     ) {}
+
+    public bool Start()
+    {
+        if (TimeLeft != TimeSpan.Zero)
+        {
+            return false;
+        }
+        TimeLeft = Duration;
+        return true;
+    }
+
+    public bool SpendTime(TimeSpan deltaT)
+    {
+        if (TimeLeft > TimeSpan.Zero)
+        {
+            Console.WriteLine($"{Name} time left {TimeLeft}");
+            TimeLeft -= deltaT;
+            if (TimeLeft <= TimeSpan.Zero)
+            {
+                TimeLeft = TimeSpan.Zero;
+                return true;
+            }
+        }
+        return false;
+    }
 }

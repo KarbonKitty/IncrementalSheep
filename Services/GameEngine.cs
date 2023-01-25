@@ -74,15 +74,25 @@ public class GameEngine : IGameEngine
         var tickProduction = ProduceResources(deltaT);
         tickProduction -= FeedTheSheep(deltaT);
 
+        foreach (var hunt in State.Hunts)
+        {
+            var isFinished = hunt.SpendTime(deltaT);
+            if (isFinished)
+            {
+                State.Resources.Add(hunt.Reward);
+                PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
+            }
+        }
+
         CheckForStarvation(tickProduction, deltaT);
 
         State.Resources.Add(tickProduction);
     }
 
-    public bool CanBuy(ICanBeBuyable buyable)
+    public bool CanBuy(IBuyable buyable)
         => CanAfford(buyable) && FulfillsRequirements(buyable.Requirements);
 
-    public bool CanAfford(ICanBeBuyable buyable)
+    public bool CanAfford(IBuyable buyable)
         => State.Resources >= buyable.Price;
 
     public bool FulfillsRequirements(Requirements req)
@@ -109,11 +119,12 @@ public class GameEngine : IGameEngine
     {
         var canAfford = CanAfford(hunt);
         var fulfillsRequirements = FulfillsRequirements(hunt.Requirements);
-        if (canAfford && fulfillsRequirements)
+        var isNotRunning = hunt.TimeLeft <= TimeSpan.Zero;
+        if (canAfford && fulfillsRequirements && isNotRunning)
         {
             State.Resources.Remove(hunt.Price);
-            State.Resources.Add(hunt.Reward);
-            PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
+            hunt.Start();
+            PostMessage($"Your sheep have started the {hunt.Name}");
             return true;
         }
         return false;

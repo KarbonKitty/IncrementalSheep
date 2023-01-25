@@ -2,7 +2,7 @@
 
 @code {
     [Inject] public required GameEngine Engine { get; set; }
-    [Parameter] public required ICanBeBuyable Buyable { get; set; }
+    [Parameter] public required IBuyable Buyable { get; set; }
     [Parameter] public required string BuyText { get; set; }
     [Parameter] public required Action<object?> BuyMethod { get; set; }
 }

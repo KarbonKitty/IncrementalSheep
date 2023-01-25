@@ -6,5 +6,6 @@ public record HuntTemplate(
     string Description,
     SimplePrice Price,
     Requirements Requirements,
-    SimplePrice Reward
+    SimplePrice Reward,
+    TimeSpan Duration
 );

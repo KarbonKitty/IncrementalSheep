@@ -1,6 +1,6 @@
 namespace IncrementalSheep;
 
-public class Building : Structure, ICanBeBuyable
+public class Building : Structure, IBuyable
 {
     public SimplePrice BasePrice { get; init; }
     public SimplePrice Price => BasePrice * Math.Pow(1.15, NumberBuilt);

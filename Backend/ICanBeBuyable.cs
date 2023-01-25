@@ -1,6 +1,6 @@
 namespace IncrementalSheep;
 
-public interface ICanBeBuyable
+public interface IBuyable
 {
     SimplePrice Price { get; }
     Requirements Requirements { get; }
