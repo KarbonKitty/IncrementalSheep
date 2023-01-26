@@ -1,5 +1,5 @@
 <div class="selectButton" @onclick="@(() => SelectHunt(Hunt.Id))">
-    <p>@Hunt.Name</p>
+    <p>@Hunt.Name @(Hunt.TimeLeft != TimeSpan.Zero ? $"({Hunt.TimeLeft.ToString(@"mm\:ss")})" : string.Empty)</p>
 </div>
 
 @code {
