@@ -19,7 +19,7 @@ public class GameEngine : IGameEngine
                 new Dictionary<ResourceId, ResourceWithStorage>
                 {
                     { ResourceId.Food, new(100, 300) },
-                    { ResourceId.HuntPoints, new(0, 100) },
+                    { ResourceId.Folklore, new(0, 10) },
                     { ResourceId.Wood, new(100, null) }
                 }
             ),

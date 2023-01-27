@@ -6,8 +6,9 @@ public static class ResourceNames
     {
         { ResourceId.Food, "Food" },
         { ResourceId.Wood, "Wood" },
-        { ResourceId.HuntPoints, "Hunt points" }
+        { ResourceId.Folklore, "Folklore" }
     };
 
-    public static string GetName(ResourceId id) => NameDict[id];
+    public static string GetName(ResourceId id)
+        => NameDict[id];
 }
