@@ -8,6 +8,8 @@ public class SimplePrice
 
     public IReadOnlyDictionary<ResourceId, double> AllResources => innerResources;
 
+    public bool IsEmpty => innerResources.Count == 0;
+
     public SimplePrice()
     {
         innerResources = new Dictionary<ResourceId, double>();
