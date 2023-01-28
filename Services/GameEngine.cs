@@ -79,8 +79,7 @@ public class GameEngine : IGameEngine
             var isFinished = hunt.SpendTime(deltaT);
             if (isFinished)
             {
-                State.Resources.Add(hunt.Reward);
-                PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
+                FinishHunt(hunt);
             }
         }
 
@@ -94,12 +93,6 @@ public class GameEngine : IGameEngine
 
     public bool CanAfford(IBuyable buyable)
         => State.Resources >= buyable.Price;
-
-    public bool FulfillsRequirements(Requirements req)
-    {
-        var enoughHunters = State.Sheep.Count(s => s.Job.Id == SheepJobId.Hunter) >= req.NumberOfHunters;
-        return enoughHunters;
-    }
 
     public bool TryBuy(Building building)
     {
@@ -123,6 +116,14 @@ public class GameEngine : IGameEngine
         if (canAfford && fulfillsRequirements && isNotRunning)
         {
             State.Resources.Remove(hunt.Price);
+            var unlockedHunters = State
+                .Sheep
+                .Where(s => s.Job.Id == SheepJobId.Hunter && !s.JobState.Locked)
+                .Take(hunt.Requirements.NumberOfHunters);
+            foreach (var hunter in unlockedHunters)
+            {
+                hunter.LockJob();
+            }
             hunt.Start();
             PostMessage($"Your sheep have started the {hunt.Name}");
             return true;
@@ -130,12 +131,18 @@ public class GameEngine : IGameEngine
         return false;
     }
 
-    public void SwitchJobs(Sheep sheep, SheepJob job)
+    public bool SwitchJobs(Sheep sheep, SheepJob job)
     {
+        if (sheep.JobState.Locked)
+        {
+            PostMessage($"{sheep.Name} can't switch jobs now!");
+            return false;
+        }
         State.Resources.AddStorage(job.AdditionalStorage);
         State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
         sheep.SwitchJobs(job);
         PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
+        return true;
     }
 
     // TODO: move this to a separate helper
@@ -146,27 +153,67 @@ public class GameEngine : IGameEngine
                 _ => new Structure(template, state)
             };
 
+    private void FinishHunt(Hunt hunt)
+    {
+        var lockedHunters = State
+            .Sheep
+            .Where(s => s.Job.Id == SheepJobId.Hunter && s.JobState.Locked)
+            .TakeLast(hunt.Requirements.NumberOfHunters);
+        if (lockedHunters.Count() >= hunt.Requirements.NumberOfHunters)
+        {
+            PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
+            State.Resources.Add(hunt.Reward);
+        }
+        else
+        {
+            PostMessage($"Your sheep have returned from tht {hunt.Name}, but some have left in the meantime, so they failed to bring any rewards");
+        }
+        foreach (var hunter in lockedHunters)
+        {
+            hunter.UnlockJob();
+        }
+    }
+
     private void CheckForStarvation(SimplePrice tickProduction, TimeSpan deltaT)
     {
         if (tickProduction[ResourceId.Food] < 0)
         {
-            var timeToStarvation = State.Resources[ResourceId.Food] / (-tickProduction[ResourceId.Food] / deltaT.TotalSeconds);
-            if (timeToStarvation < 60)
+            var foodDebtPerSecond = Math.Abs(tickProduction[ResourceId.Food] / deltaT.TotalSeconds);
+            var timeToStarvation = State.Resources[ResourceId.Food] / foodDebtPerSecond;
+
+            if (timeToStarvation >= 60)
             {
-                var firstNonFoodProducer = State.Sheep.Find(s => s.Job.ProductionPerSecond[ResourceId.Food] <= 0);
-                if (firstNonFoodProducer is null)
-                {
-                    var lastSheep = State.Sheep[^1];
-                    State.Resources.RemoveStorage(lastSheep.Job.AdditionalStorage);
-                    State.Sheep.Remove(lastSheep);
-                    PostMessage($"Your sheep are hungry! {lastSheep.Name} decides to leave the tribe!");
-                }
-                else
-                {
-                    PostMessage($"Your sheep are hungry! {firstNonFoodProducer.Name} decides to gather some food for themselves!");
-                    firstNonFoodProducer?.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
-                }
+                return;
             }
+
+            var sheepThatDontProduceFood = State.Sheep.Where(s => s.Job.ProductionPerSecond[ResourceId.Food] <= 0);
+            var unlockedNonFoodProducer = sheepThatDontProduceFood.FirstOrDefault(s => !s.JobState.Locked);
+
+            if (unlockedNonFoodProducer is not null)
+            {
+                SwitchToFoodGathering(unlockedNonFoodProducer);
+            }
+
+            var firstNonFoodProducer = sheepThatDontProduceFood.FirstOrDefault();
+
+            if (firstNonFoodProducer is null)
+            {
+                var lastSheep = State.Sheep[^1];
+                State.Resources.RemoveStorage(lastSheep.Job.AdditionalStorage);
+                State.Sheep.Remove(lastSheep);
+                PostMessage($"Your sheep are hungry! {lastSheep.Name} decides to leave the tribe!");
+            }
+            else
+            {
+                SwitchToFoodGathering(firstNonFoodProducer);
+            }
+        }
+
+        void SwitchToFoodGathering(Sheep sheep)
+        {
+            PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
+            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
+            sheep.UnlockJob();
         }
     }
 
@@ -184,6 +231,12 @@ public class GameEngine : IGameEngine
             totalProducedResources += resourcesProduced;
         }
         return totalProducedResources;
+    }
+
+    private bool FulfillsRequirements(Requirements req)
+    {
+        var enoughHunters = State.Sheep.Count(s => s.Job.Id == SheepJobId.Hunter && !s.JobState.Locked) >= req.NumberOfHunters;
+        return enoughHunters;
     }
 
     private SimplePrice FeedTheSheep(TimeSpan deltaT)

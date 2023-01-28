@@ -57,7 +57,6 @@ public class Hunt : IBuyable, ITakeTime
     {
         if (TimeLeft > TimeSpan.Zero)
         {
-            Console.WriteLine($"{Name} time left {TimeLeft}");
             TimeLeft -= deltaT;
             if (TimeLeft <= TimeSpan.Zero)
             {

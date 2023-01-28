@@ -7,6 +7,11 @@
 @if (Sheep is not null) {
     <p>@Sheep.Job.Description</p>
 
+    @if (Sheep.JobState.Locked)
+    {
+        <p><strong>Currently working, can't be reassigned</strong></p>
+    }
+
     <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
 
     @foreach (var job in Engine.State.Jobs)

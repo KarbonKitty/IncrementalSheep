@@ -1,5 +1,5 @@
 <div class="selectButton" @onclick="@(e => SelectSheep(Sheep.Id))">
-    <p>@Sheep.Name (@Sheep.Job.Name)</p>
+    <p>@Sheep.Name (@Sheep.Job.Name) @(Sheep.JobState.Locked ? "*" : string.Empty)</p>
 </div>
 
 @code {
