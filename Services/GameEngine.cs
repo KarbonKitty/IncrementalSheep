@@ -56,7 +56,7 @@ public class GameEngine : IGameEngine
         var lastId = State.Sheep.Any() ? State.Sheep.Max(s => s.Id) : 1;
         State.Sheep.Add(new Sheep(
             lastId + 1,
-            SheepData.Names[rand.Next(State.Sheep.Count)],
+            SheepData.Names[rand.Next(SheepData.Names.Length)],
             State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
         PostMessage($"New sheep named {State.Sheep.Last().Name} joins the tribe!");
     }
