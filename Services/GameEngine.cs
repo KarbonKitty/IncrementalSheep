@@ -26,7 +26,7 @@ public class GameEngine : IGameEngine
             Sheep = new List<Sheep>(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
-            Structures = Templates.Buildings.Select(b => StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray()
+            Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray()
         };
 
         // Green pastures starting building
@@ -144,14 +144,6 @@ public class GameEngine : IGameEngine
         PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
         return true;
     }
-
-    // TODO: move this to a separate helper
-    public static Structure StructureFactory(StructureTemplate template, StructureState state)
-        => template switch
-            {
-                BuildingTemplate bt => new Building(bt, state),
-                _ => new Structure(template, state)
-            };
 
     private void FinishHunt(Hunt hunt)
     {

@@ -44,7 +44,7 @@ public class SaveGameProcessor
             Jobs = jobs,
             Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId))).ToList(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
-            Structures = gameStateDto.Structures.Select(b => GameEngine.StructureFactory(Templates.Buildings[b.Id], b)).ToArray()
+            Structures = gameStateDto.Structures.Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b)).ToArray()
         };
 
         if (gameStateDto.SelectedStructure is not null)
