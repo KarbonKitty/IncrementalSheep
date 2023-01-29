@@ -1,0 +1,8 @@
+@foreach (var structure in Structures)
+{
+    <StructureButton Structure=@structure />
+}
+
+@code {
+    [Parameter] public required Structure[] Structures { get; set; }
+}

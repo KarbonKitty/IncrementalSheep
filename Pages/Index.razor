@@ -33,10 +33,7 @@
                 <PopulationBranch Sheep=@Engine.State.Sheep />
                 break;
             case Branch.Buildings:
-                foreach (var structure in Engine.State.Structures)
-                {
-                    <StructureButton Structure=@structure />
-                }
+                <BuildingBranch Structures=@Engine.State.Structures />
                 break;
             case Branch.Hunting:
                 <HuntingBranch Hunts=@Engine.State.Hunts />
