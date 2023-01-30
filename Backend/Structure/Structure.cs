@@ -1,10 +1,8 @@
 namespace IncrementalSheep;
 
-public class Structure : ICanStore
+public class Structure : GameObject, ICanStore
 {
     public StructureId Id { get; init; }
-    public string Name { get; init; }
-    public string Description { get; init; }
 
     public SimplePrice ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
@@ -17,17 +15,15 @@ public class Structure : ICanStore
         string description,
         SimplePrice baseProduction,
         SimplePrice? additionalStorage = null,
-        int numberBuilt = 0)
+        int numberBuilt = 0) : base(name, description)
     {
         Id = id;
-        Name = name;
-        Description = description;
         ProductionPerSecond = baseProduction;
         AdditionalStorage = additionalStorage;
         NumberBuilt = numberBuilt;
     }
 
-    public Structure(StructureTemplate template, StructureState state)
+    public Structure(StructureTemplate template, StructureState state) : base(template.Name, template.Description)
     {
         if (template.Id != state.Id)
         {
@@ -35,8 +31,6 @@ public class Structure : ICanStore
         }
 
         Id = template.Id;
-        Name = template.Name;
-        Description = template.Description;
         ProductionPerSecond = template.ProductionPerSecond;
         NumberBuilt = state.NumberBuilt;
         AdditionalStorage = template.AdditionalStorage;

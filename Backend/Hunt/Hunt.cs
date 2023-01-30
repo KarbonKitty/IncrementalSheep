@@ -1,10 +1,8 @@
 namespace IncrementalSheep;
 
-public class Hunt : IBuyable, ITakeTime
+public class Hunt : GameObject, IBuyable, ITakeTime
 {
     public HuntId Id { get; }
-    public string Name { get; }
-    public string Description { get; }
 
     public SimplePrice Price { get; }
     public Requirements Requirements { get; }
@@ -22,11 +20,9 @@ public class Hunt : IBuyable, ITakeTime
         Requirements requirements,
         SimplePrice reward,
         TimeSpan duration
-    )
+    ) : base(name, description)
     {
         Id = id;
-        Name = name;
-        Description = description;
         Price = price;
         Requirements = requirements;
         Reward = reward;

@@ -1,10 +1,8 @@
 namespace IncrementalSheep;
 
-public class SheepJob : ICanStore
+public class SheepJob : GameObject, ICanStore
 {
     public SheepJobId Id { get; init; }
-    public string Name { get; init; }
-    public string Description { get; init; }
     public SimplePrice ProductionPerSecond { get; init; }
 
     public SimplePrice? AdditionalStorage { get; init; }
@@ -14,11 +12,9 @@ public class SheepJob : ICanStore
         string name,
         string description,
         SimplePrice baseProduction,
-        SimplePrice? additionalStorage)
+        SimplePrice? additionalStorage) : base(name, description)
         {
             Id = id;
-            Name = name;
-            Description = description;
             ProductionPerSecond = baseProduction;
             AdditionalStorage = additionalStorage;
         }
