@@ -1,5 +1,7 @@
 namespace IncrementalSheep;
 
+using System.Linq;
+
 public class GameEngine : IGameEngine
 {
     public GameState State { get; set; }
@@ -8,6 +10,8 @@ public class GameEngine : IGameEngine
     public int LogIndex { get; private set; }
 
     public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
+
+    private IEnumerable<GameObject> AllGameObjects => State.Hunts.Concat<GameObject>(State.Structures).Concat(State.Jobs);
 
     public GameEngine()
     {
@@ -100,6 +104,7 @@ public class GameEngine : IGameEngine
         if (canAfford)
         {
             State.Resources.Remove(building.Price);
+            ProcessUnlocking(building);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
             PostMessage($"A new {building.Name} has been built");
@@ -206,6 +211,18 @@ public class GameEngine : IGameEngine
             PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
             sheep.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
             sheep.UnlockJob();
+        }
+    }
+
+    private void ProcessUnlocking(ICanUnlock unlocker)
+    {
+        if (unlocker.LockToRemove is null)
+        {
+            return;
+        }
+        foreach (var go in AllGameObjects.Where(go => go.Locks.Contains(unlocker.LockToRemove.Value)))
+        {
+            go.RemoveLock(unlocker.LockToRemove.Value);
         }
     }
 

@@ -1,4 +1,4 @@
-@foreach (var structure in Structures)
+@foreach (var structure in Structures.Where(s => !s.IsLocked))
 {
     <StructureButton Structure=@structure />
 }

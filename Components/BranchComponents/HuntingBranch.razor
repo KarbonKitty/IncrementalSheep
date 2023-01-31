@@ -1,4 +1,4 @@
-@foreach (var hunt in Hunts)
+@foreach (var hunt in Hunts.Where(h => !h.IsLocked))
 {
     <HuntButton Hunt=@hunt />
 }

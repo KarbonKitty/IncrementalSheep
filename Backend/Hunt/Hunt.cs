@@ -19,8 +19,9 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         SimplePrice price,
         Requirements requirements,
         SimplePrice reward,
-        TimeSpan duration
-    ) : base(name, description)
+        TimeSpan duration,
+        HashSet<Lock> locks
+    ) : base(name, description, locks)
     {
         Id = id;
         Price = price;
@@ -36,7 +37,8 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         template.Price,
         template.Requirements,
         template.Reward,
-        template.Duration
+        template.Duration,
+        template.Locks
     ) {}
 
     public bool Start()
