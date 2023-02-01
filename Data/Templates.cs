@@ -34,7 +34,8 @@ public static class Templates
     public static readonly Dictionary<SheepJobId, SheepJob> Jobs = new()
     {
         { SheepJobId.Gatherer, new(SheepJobId.Gatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null) },
-        { SheepJobId.Hunter, new(SheepJobId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null) }
+        { SheepJobId.Hunter, new(SheepJobId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null) },
+        { SheepJobId.Elder, new(SheepJobId.Elder, "Elder", "An old and wise sheep, that can teach the tribe about wisdom of the ages. Perhaps this can help with learning something new?", new(ResourceId.Folklore, 0.66), new(ResourceId.Folklore, 100))}
     };
 
     public static readonly List<HuntTemplate> Hunts = new()
