@@ -21,7 +21,8 @@ public class SaveGameProcessor
             Resources = state.Resources.AllResources,
             Sheep = state.Sheep.Select(s => s.SaveState()).ToArray(),
             SelectedStructure = state.SelectedStructure?.Id,
-            Structures = state.Structures.Select(b => b.SaveState()).ToArray()
+            Structures = state.Structures.Select(b => b.SaveState()).ToArray(),
+            Hunts = state.Hunts.Select(h => h.SaveState()).ToArray()
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -42,8 +43,8 @@ public class SaveGameProcessor
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceWarehouse(gameStateDto.Resources),
             Jobs = jobs,
-            Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId))).ToList(),
-            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
+            Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId), s.JobState)).ToList(),
+            Hunts = gameStateDto.Hunts.Select(h => new Hunt(Templates.Hunts.Single(t => t.Id == h.Id), h)).ToList(),
             Structures = gameStateDto.Structures.Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b)).ToArray()
         };
 

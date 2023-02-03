@@ -7,12 +7,12 @@ public class Sheep
     public SheepJob Job { get; private set; }
     public JobState JobState { get; private set; }
 
-    public Sheep(int id, string name, SheepJob job)
+    public Sheep(int id, string name, SheepJob job, JobState? jobState = null)
     {
         Id = id;
         Name = name;
         Job = job;
-        JobState = new(Locked: false);
+        JobState = jobState ?? new(Locked: false);
     }
 
     public void SwitchJobs(SheepJob newJob)
@@ -25,5 +25,5 @@ public class Sheep
         => JobState = new(Locked: false);
 
     public SheepState SaveState()
-        => new(Id, Name, Job.Id);
+        => new(Id, Name, Job.Id, JobState);
 }

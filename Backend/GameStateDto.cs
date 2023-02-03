@@ -9,4 +9,5 @@ public class GameStateDto
     public Branch SelectedBranch { get; set; }
     public required StructureState[] Structures { get; set; }
     public required SheepState[] Sheep { get; set; }
+    public required HuntState[] Hunts { get; set; }
 }

@@ -30,7 +30,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         Duration = duration;
     }
 
-    public Hunt(HuntTemplate template) : this(
+    public Hunt(HuntTemplate template, HuntState state) : this(
         template.Id,
         template.Name,
         template.Description,
@@ -39,7 +39,10 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         template.Reward,
         template.Duration,
         template.Locks
-    ) {}
+    )
+    {
+        TimeLeft = state.TimeLeft;
+    }
 
     public bool Start()
     {
@@ -64,4 +67,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         }
         return false;
     }
+
+    public HuntState SaveState()
+        => new(Id, TimeLeft);
 }

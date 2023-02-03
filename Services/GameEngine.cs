@@ -28,7 +28,7 @@ public class GameEngine : IGameEngine
                 }
             ),
             Sheep = new List<Sheep>(),
-            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
+            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t, new(t.Id, TimeSpan.Zero))),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray()
         };
