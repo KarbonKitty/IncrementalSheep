@@ -101,14 +101,29 @@ public class GameEngine : IGameEngine
 
     public bool TryBuy(Building building)
     {
-        var canAfford = CanAfford(building);
-        if (canAfford)
+        var canBuy = CanBuy(building);
+        if (canBuy)
         {
             State.Resources.Remove(building.Price);
             ProcessUnlocking(building);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
             PostMessage($"A new {building.Name} has been built");
+            return true;
+        }
+        return false;
+    }
+
+    public bool TryBuy(Idea idea)
+    {
+        var canBuy = CanBuy(idea);
+        var isBought = idea.IsBought;
+        if(canBuy && !isBought)
+        {
+            State.Resources.Remove(idea.Price);
+            ProcessUnlocking(idea);
+            idea.Buy();
+            PostMessage($"Your sheep have invented {idea.Name}!");
             return true;
         }
         return false;

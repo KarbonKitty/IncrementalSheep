@@ -1,0 +1,10 @@
+@using IncrementalSheep.Components.Buttons
+
+@foreach (var idea in Ideas)
+{
+    <IdeaButton Idea=@idea />
+}
+
+@code {
+    [Parameter] public required List<Idea> Ideas { get; set; }
+}

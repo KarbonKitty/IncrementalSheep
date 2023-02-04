@@ -13,5 +13,6 @@ public class GameState
     public Structure? SelectedStructure { get; set; }
     public Sheep? SelectedSheep { get; set; }
     public Hunt? SelectedHunt { get; set; }
+    public Idea? SelectedIdea { get; set; }
     public required SheepJob[] Jobs { get; set; }
 }
