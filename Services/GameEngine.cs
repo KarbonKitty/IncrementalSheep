@@ -11,7 +11,11 @@ public class GameEngine : IGameEngine
 
     public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
-    private IEnumerable<GameObject> AllGameObjects => State.Hunts.Concat<GameObject>(State.Structures).Concat(State.Jobs);
+    private IEnumerable<GameObject> AllGameObjects
+        => State.Hunts
+            .Concat<GameObject>(State.Structures)
+            .Concat(State.Jobs)
+            .Concat(State.Ideas);
 
     public GameEngine()
     {
