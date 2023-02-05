@@ -125,9 +125,9 @@ public class GameEngine : IGameEngine
         if(canBuy && !isBought)
         {
             State.Resources.Remove(idea.Price);
-            ProcessUnlocking(idea);
             idea.Buy();
             PostMessage($"Your sheep have invented {idea.Name}!");
+            ProcessUnlocking(idea);
             return true;
         }
         return false;
@@ -242,7 +242,11 @@ public class GameEngine : IGameEngine
         }
         foreach (var go in AllGameObjects.Where(go => go.Locks.Contains(unlocker.LockToRemove.Value)))
         {
-            go.RemoveLock(unlocker.LockToRemove.Value);
+            var (removed, unlocked) = go.RemoveLock(unlocker.LockToRemove.Value);
+            if (removed && unlocked)
+            {
+                PostMessage($"-> {go.Name} has been unlocked!");
+            }
         }
     }
 
