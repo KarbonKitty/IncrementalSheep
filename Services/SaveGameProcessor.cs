@@ -43,15 +43,29 @@ public class SaveGameProcessor
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceWarehouse(gameStateDto.Resources),
             Jobs = jobs,
-            Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId))).ToList(),
+            Sheep = gameStateDto
+                .Sheep
+                .Select(s => new Sheep(
+                    s.Id,
+                    s.Name,
+                    jobs.Single(j => j.Id == s.JobId)))
+                .ToList(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
-            Structures = gameStateDto.Structures.Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b)).ToArray(),
-            Ideas = gameStateDto.Ideas.Select(i => new Idea(Templates.Ideas[i.Id], i)).ToList()
+            Structures = gameStateDto
+                .Structures
+                .Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b))
+                .ToArray(),
+            Ideas = gameStateDto
+                .Ideas
+                .Select(i => new Idea(Templates.Ideas[i.Id], i))
+                .ToList()
         };
 
         if (gameStateDto.SelectedStructure is not null)
         {
-            state.SelectedStructure = state.Structures.Single(b => b.Id == gameStateDto.SelectedStructure);
+            state.SelectedStructure = state
+                .Structures
+                .Single(b => b.Id == gameStateDto.SelectedStructure);
         }
 
         return state;

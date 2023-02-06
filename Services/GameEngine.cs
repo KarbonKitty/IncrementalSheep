@@ -109,7 +109,6 @@ public class GameEngine : IGameEngine
         if (canBuy)
         {
             State.Resources.Remove(building.Price);
-            ProcessUnlocking(building);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
             PostMessage($"A new {building.Name} has been built");

@@ -17,8 +17,7 @@ public static class Templates
             Description = "Description of food tent",
             BasePrice = new(ResourceId.Food, 30),
             ProductionPerSecond = new(),
-            AdditionalStorage = new(ResourceId.Food, 50),
-            LockToRemove = null
+            AdditionalStorage = new(ResourceId.Food, 50)
         } },
         { StructureId.WoodGatherer, new BuildingTemplate() {
             Id = StructureId.WoodGatherer,
@@ -26,8 +25,7 @@ public static class Templates
             Description = "Description of wood gatherer",
             BasePrice = new(ResourceId.Wood, 25),
             ProductionPerSecond = new(ResourceId.Wood, 1),
-            AdditionalStorage = null,
-            LockToRemove = null
+            AdditionalStorage = null
         } }
     };
 
