@@ -1,11 +1,8 @@
-using System;
+namespace IncrementalSheep;
 
-namespace IncrementalSheep
+public interface IToastService
 {
-    public interface IToastService
-    {
-        event Action<string> OnShow;
-        event Action OnHide;
-        void ShowToast(string message);
-    }
+    event Action<string> OnShow;
+    event Action OnHide;
+    void ShowToast(string message);
 }

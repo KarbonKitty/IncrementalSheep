@@ -1,0 +1,28 @@
+@using IncrementalSheep.Components.Buttons
+@using IncrementalSheep.Components.ResourceComponents
+
+<h2>@(Idea?.Name ?? "Please select an item")</h2>
+
+<p>@Idea?.Description</p>
+
+@if (Idea is not null) {
+    <ResourceList Header="Price" Resources=@Idea.Price />
+
+    @if (!Idea.IsBought)
+    {
+        <BuyButton Buyable=@Idea BuyMethod=@Buy BuyText="Invent" />
+    }
+}
+
+@code {
+    [Inject] public required GameEngine Engine { get; set; }
+    [Parameter] public Idea? Idea { get; set; }
+
+    private void Buy(object? _)
+    {
+        if (Idea is not null)
+        {
+            Engine.TryBuy(Idea);
+        }
+    }
+}

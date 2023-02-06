@@ -4,5 +4,6 @@ public enum Branch
 {
     Population,
     Buildings,
-    Hunting
+    Hunting,
+    Folklore
 }

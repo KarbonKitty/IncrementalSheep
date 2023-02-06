@@ -10,4 +10,5 @@ public class GameStateDto
     public required StructureState[] Structures { get; set; }
     public required SheepState[] Sheep { get; set; }
     public required HuntState[] Hunts { get; set; }
+    public required IdeaState[] Ideas { get; set; }
 }

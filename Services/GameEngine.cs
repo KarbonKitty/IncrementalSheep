@@ -11,7 +11,11 @@ public class GameEngine : IGameEngine
 
     public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
-    private IEnumerable<GameObject> AllGameObjects => State.Hunts.Concat<GameObject>(State.Structures).Concat(State.Jobs);
+    private IEnumerable<GameObject> AllGameObjects
+        => State.Hunts
+            .Concat<GameObject>(State.Structures)
+            .Concat(State.Jobs)
+            .Concat(State.Ideas);
 
     public GameEngine()
     {
@@ -30,7 +34,8 @@ public class GameEngine : IGameEngine
             Sheep = new List<Sheep>(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t, new(t.Id, TimeSpan.Zero))),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
-            Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray()
+            Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray(),
+            Ideas = Templates.Ideas.Select(i => new Idea(i.Value, new(i.Key, false))).ToList()
         };
 
         // Green pastures starting building
@@ -100,14 +105,28 @@ public class GameEngine : IGameEngine
 
     public bool TryBuy(Building building)
     {
-        var canAfford = CanAfford(building);
-        if (canAfford)
+        var canBuy = CanBuy(building);
+        if (canBuy)
         {
             State.Resources.Remove(building.Price);
-            ProcessUnlocking(building);
             building.NumberBuilt++;
             State.Resources.AddStorage(building.AdditionalStorage);
             PostMessage($"A new {building.Name} has been built");
+            return true;
+        }
+        return false;
+    }
+
+    public bool TryBuy(Idea idea)
+    {
+        var canBuy = CanBuy(idea);
+        var isBought = idea.IsBought;
+        if(canBuy && !isBought)
+        {
+            State.Resources.Remove(idea.Price);
+            idea.Buy();
+            PostMessage($"Your sheep have invented {idea.Name}!");
+            ProcessUnlocking(idea);
             return true;
         }
         return false;
@@ -222,7 +241,11 @@ public class GameEngine : IGameEngine
         }
         foreach (var go in AllGameObjects.Where(go => go.Locks.Contains(unlocker.LockToRemove.Value)))
         {
-            go.RemoveLock(unlocker.LockToRemove.Value);
+            var (removed, unlocked) = go.RemoveLock(unlocker.LockToRemove.Value);
+            if (removed && unlocked)
+            {
+                PostMessage($"-> {go.Name} has been unlocked!");
+            }
         }
     }
 

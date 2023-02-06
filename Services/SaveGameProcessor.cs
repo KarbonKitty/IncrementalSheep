@@ -22,7 +22,8 @@ public class SaveGameProcessor
             Sheep = state.Sheep.Select(s => s.SaveState()).ToArray(),
             SelectedStructure = state.SelectedStructure?.Id,
             Structures = state.Structures.Select(b => b.SaveState()).ToArray(),
-            Hunts = state.Hunts.Select(h => h.SaveState()).ToArray()
+            Hunts = state.Hunts.Select(h => h.SaveState()).ToArray(),
+            Ideas = state.Ideas.Select(i => i.SaveState()).ToArray()
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -43,14 +44,30 @@ public class SaveGameProcessor
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceWarehouse(gameStateDto.Resources),
             Jobs = jobs,
-            Sheep = gameStateDto.Sheep.Select(s => new Sheep(s.Id, s.Name, jobs.Single(j => j.Id == s.JobId), s.JobState)).ToList(),
+            Sheep = gameStateDto
+                .Sheep
+                .Select(s => new Sheep(
+                    s.Id,
+                    s.Name,
+                    jobs.Single(j => j.Id == s.JobId),
+                    s.JobState))
+                .ToList(),
             Hunts = gameStateDto.Hunts.Select(h => new Hunt(Templates.Hunts.Single(t => t.Id == h.Id), h)).ToList(),
-            Structures = gameStateDto.Structures.Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b)).ToArray()
+            Structures = gameStateDto
+                .Structures
+                .Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b))
+                .ToArray(),
+            Ideas = gameStateDto
+                .Ideas
+                .Select(i => new Idea(Templates.Ideas[i.Id], i))
+                .ToList()
         };
 
         if (gameStateDto.SelectedStructure is not null)
         {
-            state.SelectedStructure = state.Structures.Single(b => b.Id == gameStateDto.SelectedStructure);
+            state.SelectedStructure = state
+                .Structures
+                .Single(b => b.Id == gameStateDto.SelectedStructure);
         }
 
         return state;
