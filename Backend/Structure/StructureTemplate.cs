@@ -7,4 +7,5 @@ public record StructureTemplate
     public required string Description { get; init; }
     public required SimplePrice ProductionPerSecond { get; init; }
     public required SimplePrice? AdditionalStorage { get; init; }
+    public required Lock[] Locks { get; init; }
 }

@@ -37,5 +37,5 @@ public class Structure : GameObject, ICanStore
     }
 
     public StructureState SaveState()
-        => new(Id, NumberBuilt);
+        => new(Id, NumberBuilt, Locks.ToArray());
 }

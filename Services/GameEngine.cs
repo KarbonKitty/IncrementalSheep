@@ -32,10 +32,10 @@ public class GameEngine : IGameEngine
                 }
             ),
             Sheep = new List<Sheep>(),
-            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t, new(t.Id, TimeSpan.Zero))),
+            Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
-            Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value, new StructureState(b.Key, 0))).ToArray(),
-            Ideas = Templates.Ideas.Select(i => new Idea(i.Value, new(i.Key, false))).ToList()
+            Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value)).ToArray(),
+            Ideas = Templates.Ideas.Select(i => new Idea(i.Value)).ToList()
         };
 
         // Green pastures starting building

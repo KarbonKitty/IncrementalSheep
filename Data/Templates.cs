@@ -9,7 +9,8 @@ public static class Templates
             Name = "Green Pastures",
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
             ProductionPerSecond = new(ResourceId.Food, 5),
-            AdditionalStorage = null
+            AdditionalStorage = null,
+            Locks = Array.Empty<Lock>()
         } },
         { StructureId.FoodTent, new BuildingTemplate() {
             Id = StructureId.FoodTent,
@@ -17,7 +18,8 @@ public static class Templates
             Description = "Description of food tent",
             BasePrice = new(ResourceId.Food, 30),
             ProductionPerSecond = new(),
-            AdditionalStorage = new(ResourceId.Food, 50)
+            AdditionalStorage = new(ResourceId.Food, 50),
+            Locks = Array.Empty<Lock>()
         } },
         { StructureId.WoodGatherer, new BuildingTemplate() {
             Id = StructureId.WoodGatherer,
@@ -25,7 +27,8 @@ public static class Templates
             Description = "Description of wood gatherer",
             BasePrice = new(ResourceId.Wood, 25),
             ProductionPerSecond = new(ResourceId.Wood, 1),
-            AdditionalStorage = null
+            AdditionalStorage = null,
+            Locks = Array.Empty<Lock>()
         } }
     };
 
@@ -45,7 +48,7 @@ public static class Templates
 
     public static readonly Dictionary<IdeaId, IdeaTemplate> Ideas = new()
     {
-        { IdeaId.Atlatl, new(IdeaId.Atlatl, "Atlatl", "Description of atlatl", new(ResourceId.Folklore, 10), LockId.Atlatl) },
-        { IdeaId.FireStarting, new(IdeaId.FireStarting, "Fire starting", "Description of fire starting", new(ResourceId.Folklore, 100), LockId.FireStarting) }
+        { IdeaId.Atlatl, new(IdeaId.Atlatl, "Atlatl", "Description of atlatl", new(ResourceId.Folklore, 10), LockId.Atlatl, Array.Empty<Lock>()) },
+        { IdeaId.FireStarting, new(IdeaId.FireStarting, "Fire starting", "Description of fire starting", new(ResourceId.Folklore, 100), LockId.FireStarting, Array.Empty<Lock>()) }
     };
 }

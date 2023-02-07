@@ -33,9 +33,13 @@ public class Idea : GameObject, IBuyable, ICanUnlock
         IsBought = state.IsBought;
     }
 
+    public Idea(IdeaTemplate template)
+    : this(template, new(template.Id, false, template.Locks))
+    { }
+
     public void Buy()
         => IsBought = true;
 
     public IdeaState SaveState()
-        => new(Id, IsBought);
+        => new(Id, IsBought, Locks.ToArray());
 }

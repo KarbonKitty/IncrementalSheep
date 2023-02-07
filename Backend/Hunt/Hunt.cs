@@ -38,11 +38,15 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         template.Requirements,
         template.Reward,
         template.Duration,
-        template.Locks
+        state.Locks.ToHashSet()
     )
     {
         TimeLeft = state.TimeLeft;
     }
+
+    public Hunt(HuntTemplate template)
+    : this(template, new(template.Id, TimeSpan.Zero, template.Locks.ToArray()))
+    { }
 
     public bool Start()
     {
@@ -69,5 +73,5 @@ public class Hunt : GameObject, IBuyable, ITakeTime
     }
 
     public HuntState SaveState()
-        => new(Id, TimeLeft);
+        => new(Id, TimeLeft, Locks.ToArray());
 }

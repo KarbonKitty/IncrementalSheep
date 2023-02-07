@@ -5,5 +5,6 @@ public record IdeaTemplate(
     string Name,
     string Description,
     SimplePrice Price,
-    Lock? LockToRemove
+    Lock? LockToRemove,
+    Lock[] Locks
 );
