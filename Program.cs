@@ -11,7 +11,7 @@ public static class Program
         builder.RootComponents.Add<App>("#app");
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
-        builder.Services.AddScoped<IToastService, ToastService>();
+        builder.Services.AddSingleton<IToastService, ToastService>();
         builder.Services.AddSingleton(typeof(SaveGameProcessor));
         builder.Services.AddSingleton(typeof(GameEngine));
 

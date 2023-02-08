@@ -4,6 +4,8 @@ using System.Linq;
 
 public class GameEngine : IGameEngine
 {
+    private readonly IToastService _toastService;
+
     public GameState State { get; set; }
 
     public string[] Log { get; } = new string[15];
@@ -17,8 +19,10 @@ public class GameEngine : IGameEngine
             .Concat(State.Jobs)
             .Concat(State.Ideas);
 
-    public GameEngine()
+    public GameEngine(IToastService toastService)
     {
+        _toastService = toastService;
+
         State = new GameState
         {
             LastTick = DateTime.Now,
@@ -244,7 +248,9 @@ public class GameEngine : IGameEngine
             var (removed, unlocked) = go.RemoveLock(unlocker.LockToRemove.Value);
             if (removed && unlocked)
             {
-                PostMessage($"-> {go.Name} has been unlocked!");
+                var msg = $"{go.Name} has been unlocked!";
+                _toastService.ShowToast(msg);
+                PostMessage($"💡 {msg}");
             }
         }
     }
