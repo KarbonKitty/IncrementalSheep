@@ -15,4 +15,5 @@ public class GameState
     public Hunt? SelectedHunt { get; set; }
     public Idea? SelectedIdea { get; set; }
     public required SheepJob[] Jobs { get; set; }
+    public required ulong[] XoshiroState { get; set; }
 }

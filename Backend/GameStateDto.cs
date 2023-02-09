@@ -11,4 +11,5 @@ public class GameStateDto
     public required SheepState[] Sheep { get; set; }
     public required HuntState[] Hunts { get; set; }
     public required IdeaState[] Ideas { get; set; }
+    public required ulong[] XoshiroState { get; set; }
 }

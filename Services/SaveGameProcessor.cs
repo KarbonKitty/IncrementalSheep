@@ -23,7 +23,8 @@ public class SaveGameProcessor
             SelectedStructure = state.SelectedStructure?.Id,
             Structures = state.Structures.Select(b => b.SaveState()).ToArray(),
             Hunts = state.Hunts.Select(h => h.SaveState()).ToArray(),
-            Ideas = state.Ideas.Select(i => i.SaveState()).ToArray()
+            Ideas = state.Ideas.Select(i => i.SaveState()).ToArray(),
+            XoshiroState = state.XoshiroState
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
     }
@@ -60,7 +61,8 @@ public class SaveGameProcessor
             Ideas = gameStateDto
                 .Ideas
                 .Select(i => new Idea(Templates.Ideas[i.Id], i))
-                .ToList()
+                .ToList(),
+            XoshiroState = gameStateDto.XoshiroState
         };
 
         if (gameStateDto.SelectedStructure is not null)

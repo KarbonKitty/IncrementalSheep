@@ -39,7 +39,8 @@ public class GameEngine : IGameEngine
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
             Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
             Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value)).ToArray(),
-            Ideas = Templates.Ideas.Select(i => new Idea(i.Value)).ToList()
+            Ideas = Templates.Ideas.Select(i => new Idea(i.Value)).ToList(),
+            XoshiroState = new ulong[4] { 1, 2, 3, (ulong)DateTime.Now.Ticks }
         };
 
         // Green pastures starting building
@@ -171,6 +172,29 @@ public class GameEngine : IGameEngine
         sheep.SwitchJobs(job);
         PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
         return true;
+    }
+
+    // This and next func based on public domain implementation
+    // of xoshiro256** from https://prng.di.unimi.it/
+    private static ulong RotateLeft(ulong x, int k)
+        => (x << k) | (x >> (64 - k));
+
+    private int Next()
+    {
+        ulong result = RotateLeft(State.XoshiroState[1] * 5, 7) * 9;
+
+        ulong t = State.XoshiroState[1] << 17;
+
+        State.XoshiroState[2] ^= State.XoshiroState[0];
+        State.XoshiroState[3] ^= State.XoshiroState[1];
+        State.XoshiroState[1] ^= State.XoshiroState[2];
+        State.XoshiroState[0] ^= State.XoshiroState[3];
+
+        State.XoshiroState[2] ^= t;
+
+        State.XoshiroState[3] ^= RotateLeft(State.XoshiroState[3], 45);
+
+        return (int)result;
     }
 
     private void FinishHunt(Hunt hunt)
