@@ -6,7 +6,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
 
     public SimplePrice Price { get; }
     public Requirements Requirements { get; }
-    public SimplePrice Reward { get; }
+    public RandomReward Reward { get; }
 
     public TimeSpan Duration { get; }
 
@@ -18,7 +18,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         string description,
         SimplePrice price,
         Requirements requirements,
-        SimplePrice reward,
+        RandomReward reward,
         TimeSpan duration,
         HashSet<Lock> locks
     ) : base(name, description, locks)

@@ -197,6 +197,12 @@ public class GameEngine : IGameEngine
         return (int)result;
     }
 
+    private double NextNormalized()
+    {
+        var x = (uint)Next();
+        return x / Convert.ToDouble(uint.MaxValue);
+    }
+
     private void FinishHunt(Hunt hunt)
     {
         var lockedHunters = State
@@ -205,8 +211,15 @@ public class GameEngine : IGameEngine
             .TakeLast(hunt.Requirements.NumberOfHunters);
         if (lockedHunters.Count() >= hunt.Requirements.NumberOfHunters)
         {
-            PostMessage($"Your sheep have finished the {hunt.Name} and brought the rewards back");
-            State.Resources.Add(hunt.Reward);
+            var actualReward = GetActualReward(hunt.Reward);
+            var formattedReward = string.Join(
+                ", ",
+                actualReward
+                    .AllResources
+                    .Where(kvp => kvp.Value != 0)
+                    .Select(kvp => $"{kvp.Value:N2} {ResourceNames.GetName(kvp.Key)}"));
+            PostMessage($"Your sheep have finished the {hunt.Name} and brought back: {formattedReward}");
+            State.Resources.Add(actualReward);
         }
         else
         {
@@ -216,6 +229,22 @@ public class GameEngine : IGameEngine
         {
             hunter.UnlockJob();
         }
+    }
+
+    private SimplePrice GetActualReward(RandomReward randomReward)
+    {
+        var result = new SimplePrice();
+        foreach (var item in randomReward.Items)
+        {
+            if (NextNormalized() < item.Chance)
+            {
+                var s = NextNormalized();
+                result += new SimplePrice(
+                    item.Resource,
+                    item.Minimum + ((item.Maximum - item.Minimum) * s));
+            }
+        }
+        return result;
     }
 
     private void CheckForStarvation(SimplePrice tickProduction, TimeSpan deltaT)

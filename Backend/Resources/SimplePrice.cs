@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace IncrementalSheep;
 
 public class SimplePrice
@@ -31,13 +33,23 @@ public class SimplePrice
     }
 
     public static SimplePrice operator *(SimplePrice resources, double scale)
-        => new(resources.AllResources.Select(res => (id: res.Key, val: res.Value * scale)).ToDictionary(t => t.id, t => t.val));
+        => new(
+            resources
+            .AllResources
+            .Select(res => (id: res.Key, val: res.Value * scale))
+            .ToDictionary(t => t.id, t => t.val));
 
     public static SimplePrice operator +(SimplePrice left, SimplePrice right)
-        => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] + right[id])).ToDictionary(t => t.id, t => t.val));
+        => new(
+            Enum.GetValues<ResourceId>()
+            .Select(id => (id, val: left[id] + right[id]))
+            .ToDictionary(t => t.id, t => t.val));
 
     public static SimplePrice operator -(SimplePrice left, SimplePrice right)
-        => new(Enum.GetValues<ResourceId>().Select(id => (id, val: left[id] - right[id])).ToDictionary(t => t.id, t => t.val));
+        => new(
+            Enum.GetValues<ResourceId>()
+            .Select(id => (id, val: left[id] - right[id]))
+            .ToDictionary(t => t.id, t => t.val));
 
     public static bool operator <=(SimplePrice left, SimplePrice right)
         => Enum.GetValues<ResourceId>().All(id => left[id] <= right[id]);

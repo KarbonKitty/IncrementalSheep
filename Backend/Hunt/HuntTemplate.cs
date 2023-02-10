@@ -6,7 +6,7 @@ public record HuntTemplate(
     string Description,
     SimplePrice Price,
     Requirements Requirements,
-    SimplePrice Reward,
+    RandomReward Reward,
     TimeSpan Duration,
     HashSet<Lock> Locks
 );

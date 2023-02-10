@@ -41,9 +41,37 @@ public static class Templates
 
     public static readonly List<HuntTemplate> Hunts = new()
     {
-        new(HuntId.SquirrelHunt, "Squirrel Hunt", "Description of squirrel hunt", new(), new(NumberOfHunters: 1), new(ResourceId.Food, 50), new TimeSpan(0, 0, 15), new () { }),
-        new(HuntId.DeerHunt, "Deer Hunt", "Description of deer hunt", new(), new(NumberOfHunters: 2), new(ResourceId.Food, 300), new TimeSpan(0, 1, 0), new() { LockId.Atlatl }),
-        new(HuntId.MammothHunt, "Mammoth Hunt", "Description of mammoth hunt", new(), new(NumberOfHunters: 4), new(ResourceId.Food, 1000), new TimeSpan(0, 3, 0), new() { LockId.Atlatl, LockId.FireStarting })
+        new(
+            HuntId.SquirrelHunt,
+            "Squirrel Hunt",
+            "Description of squirrel hunt",
+            new(),
+            new(NumberOfHunters: 1),
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0) } },
+            new TimeSpan(0, 0, 15),
+            new () { }),
+        new(
+            HuntId.DeerHunt,
+            "Deer Hunt",
+            "Description of deer hunt",
+            new(),
+            new(NumberOfHunters: 2),
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 100, 1.0), new(ResourceId.Food, 0, 100, 0.5) } },
+            new TimeSpan(0, 1, 0),
+            new() { LockId.Atlatl }),
+        new(
+            HuntId.MammothHunt,
+            "Mammoth Hunt",
+            "Description of mammoth hunt",
+            new(),
+            new(NumberOfHunters: 4),
+            new() { Items = new RandomRewardItem[] {
+                new(ResourceId.Food, 300, 300, 1.0),
+                new(ResourceId.Food, 0, 700, 0.5),
+                new(ResourceId.Folklore, 30, 100, 0.7)
+            }},
+            new TimeSpan(0, 3, 0),
+            new() { LockId.Atlatl, LockId.FireStarting })
     };
 
     public static readonly Dictionary<IdeaId, IdeaTemplate> Ideas = new()
