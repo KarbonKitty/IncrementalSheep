@@ -4,6 +4,7 @@ public class CircularBuffer<T>
 {
     private readonly T[] _buffer;
     private int bufferIndex;
+    public int Size => _buffer.Length;
 
     public CircularBuffer(int size)
     {

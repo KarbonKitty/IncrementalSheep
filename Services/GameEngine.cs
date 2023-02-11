@@ -92,6 +92,7 @@ public class GameEngine : IGameEngine
         CheckForStarvation(tickProduction, deltaT);
 
         State.Resources.Add(tickProduction);
+        State.Resources.StoreProductionPerSecond(tickProduction, deltaT);
     }
 
     public bool CanBuy(IBuyable buyable)

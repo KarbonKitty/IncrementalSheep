@@ -3,6 +3,7 @@ namespace IncrementalSheep;
 public class ResourceWarehouse
 {
     private readonly Dictionary<ResourceId, ResourceWithStorage> innerResources;
+    private readonly Dictionary<ResourceId, CircularBuffer<double>> productionMemory;
 
     public double this[ResourceId id] => innerResources.GetValueOrDefault(id)?.Amount ?? 0;
 
@@ -11,9 +12,11 @@ public class ResourceWarehouse
     public ResourceWarehouse(IReadOnlyDictionary<ResourceId, ResourceWithStorage> data)
     {
         innerResources = new Dictionary<ResourceId, ResourceWithStorage>();
+        productionMemory = new Dictionary<ResourceId, CircularBuffer<double>>();
         foreach (var (id, (amount, storage)) in data)
         {
             innerResources[id] = new(amount, storage);
+            productionMemory[id] = new(10);
         }
     }
 
@@ -56,6 +59,9 @@ public class ResourceWarehouse
         }
     }
 
+    public CircularBuffer<double> Memory(ResourceId id)
+        => productionMemory[id];
+
     public void Remove(SimplePrice subtraction)
     {
         foreach (var (id, val) in subtraction.AllResources)
@@ -88,6 +94,14 @@ public class ResourceWarehouse
         foreach (var (resId, removeStorage) in subtraction.AllResources)
         {
             innerResources[resId] = new(innerResources[resId].Amount, innerResources[resId].Storage - removeStorage);
+        }
+    }
+
+    public void StoreProductionPerSecond(SimplePrice production, TimeSpan deltaT)
+    {
+        foreach (var (id, mem) in productionMemory)
+        {
+            mem.Add(production[id] / deltaT.TotalSeconds);
         }
     }
 

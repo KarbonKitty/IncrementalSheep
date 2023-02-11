@@ -1,11 +1,23 @@
 <p><strong>Resources:</strong></p>
+
 <ul class="resources-warehouse">
-    @foreach (var (resId, resource) in Warehouse.AllResources)
+    @foreach (var kvp in Warehouse.AllResources)
     {
-        <li>@ResourceNames.GetName(resId): @resource.Amount.FormatAsMoney() @if(resource.Storage is not null) { @($" / {resource.Storage?.FormatAsMoney()}") }</li>
+        <li>@ResourceStorage(kvp) (@ResourceProduction(Warehouse.Memory(kvp.Key)))</li>
     }
 </ul>
 
 @code {
     [Parameter] public required ResourceWarehouse Warehouse { get; set; }
+
+    private string ResourceStorage(KeyValuePair<ResourceId, ResourceWithStorage> res)
+    {
+        return $"{ResourceNames.GetName(res.Key)}: {res.Value.Amount.FormatAsMoney()} {(res.Value.Storage is {} storage ? $" / {storage.FormatAsMoney()}" : string.Empty)}";
+    }
+
+    private string ResourceProduction(CircularBuffer<double> productionMemory)
+    {
+        var pps = productionMemory.AllItems().Sum() / productionMemory.Size;
+        return $"{pps.ToString("N2")} / s";
+    }
 }
