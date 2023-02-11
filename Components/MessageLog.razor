@@ -1,12 +1,11 @@
 <h4>Message log:</h4>
 <ul>
-    @for (var i = 0; i < Messages.Length; i++)
+    @foreach (var msg in Messages.AllItems())
     {
-        <li>@Messages[(i + FirstMessageIndex) % Messages.Length]</li>
+        <li>@msg</li>
     }
 </ul>
 
 @code {
-    [Parameter] public required string[] Messages { get; set; }
-    [Parameter] public int FirstMessageIndex { get; set; }
+    [Parameter] public required CircularBuffer<string> Messages { get; set; }
 }

@@ -8,8 +8,7 @@ public class GameEngine : IGameEngine
 
     public GameState State { get; set; }
 
-    public string[] Log { get; } = new string[15];
-    public int LogIndex { get; private set; }
+    public CircularBuffer<string> Log { get; } = new(15);
 
     public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
@@ -49,14 +48,7 @@ public class GameEngine : IGameEngine
     }
 
     public void PostMessage(string message)
-    {
-        --LogIndex;
-        if (LogIndex < 0)
-        {
-            LogIndex = Log.Length - 1;
-        }
-        Log[LogIndex] = message;
-    }
+        => Log.Add(message);
 
     public void RecruitNewSheep()
     {
