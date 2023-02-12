@@ -14,10 +14,16 @@
 
     <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
 
-    @foreach (var job in Engine.State.Jobs)
-    {
-        <div class="selectButton" @onclick="@(() => Engine.SwitchJobs(Sheep, job))">
-            <p>@job.Name</p>
+    <select @bind="selectedJobId">
+        @foreach (var job in Engine.State.Jobs)
+        {
+            <option value=@job.Id>@job.Name</option>
+        }
+    </select>
+
+    @if (SelectedJob is not null) {
+        <div class="selectButton" @onclick="@(() => Engine.SwitchJobs(Sheep, SelectedJob))">
+            <p>Become @SelectedJob.Name</p>
         </div>
     }
 }
@@ -25,4 +31,8 @@
 @code {
     [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public Sheep? Sheep { get; set; }
+
+    private SheepJobId selectedJobId;
+    private SheepJob? SelectedJob
+        => Engine.State.Jobs.SingleOrDefault(j => j.Id == selectedJobId);
 }
