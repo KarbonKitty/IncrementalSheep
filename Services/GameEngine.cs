@@ -279,6 +279,7 @@ public class GameEngine : IGameEngine
         void SwitchToFoodGathering(Sheep sheep)
         {
             PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
+            State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
             sheep.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
             sheep.UnlockJob();
         }
