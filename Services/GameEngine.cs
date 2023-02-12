@@ -258,6 +258,7 @@ public class GameEngine : IGameEngine
             if (unlockedNonFoodProducer is not null)
             {
                 SwitchToFoodGathering(unlockedNonFoodProducer);
+                return;
             }
 
             var firstNonFoodProducer = sheepThatDontProduceFood.FirstOrDefault();
