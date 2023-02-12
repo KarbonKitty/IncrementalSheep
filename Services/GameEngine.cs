@@ -96,10 +96,7 @@ public class GameEngine : IGameEngine
     }
 
     public bool CanBuy(IBuyable buyable)
-        => CanAfford(buyable) && FulfillsRequirements(buyable.Requirements);
-
-    public bool CanAfford(IBuyable buyable)
-        => State.Resources >= buyable.Price;
+        => CanPay(buyable.Price) && FulfillsRequirements(buyable.Requirements);
 
     public bool TryBuy(Building building)
     {
@@ -160,6 +157,17 @@ public class GameEngine : IGameEngine
             PostMessage($"{sheep.Name} can't switch jobs now!");
             return false;
         }
+        if (job.Price is not null)
+        {
+            var canAfford = CanPay(job.Price);
+            if (!canAfford)
+            {
+                PostMessage($"You can't afford the training cost for {job.Name}!");
+                return false;
+            }
+            State.Resources.Remove(job.Price);
+        }
+
         State.Resources.AddStorage(job.AdditionalStorage);
         State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
         sheep.SwitchJobs(job);
@@ -223,6 +231,12 @@ public class GameEngine : IGameEngine
             hunter.UnlockJob();
         }
     }
+
+    private bool CanPay(SimplePrice price)
+        => State.Resources >= price;
+
+    private bool CanAfford(IBuyable buyable)
+        => CanPay(buyable.Price);
 
     private SimplePrice GetActualReward(RandomReward randomReward)
     {
