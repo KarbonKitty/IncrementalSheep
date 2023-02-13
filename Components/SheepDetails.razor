@@ -22,8 +22,10 @@
     </select>
 
     @if (SelectedJob is not null) {
-        @if (SelectedJob.Price is not null) {
-            <ResourceList Header=@($"{SelectedJob.Name} training cost") Resources=@SelectedJob.Price />
+        @if (SelectedJob.GetPrice is not null) {
+            <ResourceList
+                Header=@($"{SelectedJob.Name} training cost")
+                Resources=@SelectedJob.GetPrice(Engine.State) />
         }
 
         <div class="selectButton" @onclick="@(() => Engine.SwitchJobs(Sheep, SelectedJob))">

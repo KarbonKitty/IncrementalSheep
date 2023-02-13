@@ -5,7 +5,7 @@ public class SheepJob : GameObject, ICanStore
     public SheepJobId Id { get; init; }
     public SimplePrice ProductionPerSecond { get; init; }
 
-    public SimplePrice? Price { get; init; }
+    public Func<GameState, SimplePrice>? GetPrice { get; init; }
     public SimplePrice? AdditionalStorage { get; init; }
 
     public SheepJob(
@@ -13,12 +13,12 @@ public class SheepJob : GameObject, ICanStore
         string name,
         string description,
         SimplePrice baseProduction,
-        SimplePrice? price,
+        Func<GameState, SimplePrice>? getPrice,
         SimplePrice? additionalStorage) : base(name, description)
         {
             Id = id;
             ProductionPerSecond = baseProduction;
-            Price = price;
+            GetPrice = getPrice;
             AdditionalStorage = additionalStorage;
         }
 }

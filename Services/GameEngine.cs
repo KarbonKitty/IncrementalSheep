@@ -157,15 +157,16 @@ public class GameEngine : IGameEngine
             PostMessage($"{sheep.Name} can't switch jobs now!");
             return false;
         }
-        if (job.Price is not null)
+        if (job.GetPrice is not null)
         {
-            var canAfford = CanPay(job.Price);
+            var price = job.GetPrice(State);
+            var canAfford = CanPay(price);
             if (!canAfford)
             {
                 PostMessage($"You can't afford the training cost for {job.Name}!");
                 return false;
             }
-            State.Resources.Remove(job.Price);
+            State.Resources.Remove(price);
         }
 
         State.Resources.AddStorage(job.AdditionalStorage);
