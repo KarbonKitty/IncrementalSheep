@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace IncrementalSheep;
 
 public class SimplePrice
@@ -42,12 +40,14 @@ public class SimplePrice
     public static SimplePrice operator +(SimplePrice left, SimplePrice right)
         => new(
             Enum.GetValues<ResourceId>()
+            .Where(id => left.AllResources.ContainsKey(id) || right.AllResources.ContainsKey(id))
             .Select(id => (id, val: left[id] + right[id]))
             .ToDictionary(t => t.id, t => t.val));
 
     public static SimplePrice operator -(SimplePrice left, SimplePrice right)
         => new(
             Enum.GetValues<ResourceId>()
+            .Where(id => left.AllResources.ContainsKey(id) || right.AllResources.ContainsKey(id))
             .Select(id => (id, val: left[id] - right[id]))
             .ToDictionary(t => t.id, t => t.val));
 

@@ -218,7 +218,6 @@ public class GameEngine : IGameEngine
                 ", ",
                 actualReward
                     .AllResources
-                    .Where(kvp => kvp.Value != 0)
                     .Select(kvp => $"{kvp.Value:N2} {ResourceNames.GetName(kvp.Key)}"));
             PostMessage($"Your sheep have finished the {hunt.Name} and brought back: {formattedReward}");
             State.Resources.Add(actualReward);
