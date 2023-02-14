@@ -22,12 +22,16 @@ Folklore -> philosophy -> natural philosophy -> scientific method -> Internet
 
 ### Culture
 
+Cave paintings and carvings -> ?
+
 ### Religion
+
+Shamanism/animism -> polytheism -> monotheism? -> secularity
 
 ### Warfare
 
 Hunting -> early armies -> vassalage -> state armies -> industrialized warfare
 
-### Population
+### Population, food and agriculture
 
 Hunter-gatherers (tracking each sheep) -> agricultural (tracking special characters) -> industrialized farming (food as luxury items?)
