@@ -2,7 +2,7 @@
 
 ## General idea
 
-Early Stone Age, including very earlierst settlements, up to invention of agriculture.
+Early-to-middle Stone Age, including very earlierst settlements, up to invention of agriculture.
 
 ## Real-life inspirations
 
@@ -39,7 +39,7 @@ Wood, rock and bone-made huts
 
     Some food security is provided by the "pasture" building that represents sheep grazing land that is the original place where the tribe started.
 
-    Temporary shelters, like tents, are the only structures in this era.
+    Temporary shelters, like tents, are the main structures in this era. Early permanent or semi-permanent structures will show up late in this era.
 
 ### Knowledge
 
