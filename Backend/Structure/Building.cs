@@ -7,7 +7,7 @@ public class Building : Structure, IBuyable
     public Requirements Requirements => new(0);
 
     public Building(
-        StructureId id,
+        GameObjectId id,
         string name,
         string description,
         SimplePrice basePrice,

@@ -1,7 +1,7 @@
 namespace IncrementalSheep;
 
 public record HuntTemplate(
-    HuntId Id,
+    GameObjectId Id,
     string Name,
     string Description,
     SimplePrice Price,

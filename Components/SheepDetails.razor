@@ -38,7 +38,7 @@
     [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public Sheep? Sheep { get; set; }
 
-    private SheepJobId selectedJobId;
+    private GameObjectId selectedJobId;
     private SheepJob? SelectedJob
         => Engine.State.Jobs.SingleOrDefault(j => j.Id == selectedJobId);
 }

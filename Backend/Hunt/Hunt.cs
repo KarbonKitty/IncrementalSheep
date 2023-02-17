@@ -2,8 +2,6 @@ namespace IncrementalSheep;
 
 public class Hunt : GameObject, IBuyable, ITakeTime
 {
-    public HuntId Id { get; }
-
     public SimplePrice Price { get; }
     public Requirements Requirements { get; }
     public RandomReward Reward { get; }
@@ -13,7 +11,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
     public TimeSpan TimeLeft { get; private set; }
 
     public Hunt(
-        HuntId id,
+        GameObjectId id,
         string name,
         string description,
         SimplePrice price,
@@ -21,9 +19,8 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         RandomReward reward,
         TimeSpan duration,
         HashSet<Lock> locks
-    ) : base(name, description, locks)
+    ) : base(id, name, description, locks)
     {
-        Id = id;
         Price = price;
         Requirements = requirements;
         Reward = reward;

@@ -6,7 +6,7 @@
     [Inject] public required GameEngine Engine { get; set; }
     [Parameter] public required Idea Idea { get; set; }
 
-    private void SelectIdea(IdeaId ideaId)
+    private void SelectIdea(GameObjectId ideaId)
     {
         Engine.State.SelectedIdea = Engine.State.Ideas.Single(i => i.Id == ideaId);
     }

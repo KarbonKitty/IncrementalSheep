@@ -2,21 +2,19 @@ namespace IncrementalSheep;
 
 public class Idea : GameObject, IBuyable, ICanUnlock
 {
-    public IdeaId Id { get; }
     public SimplePrice Price { get; }
     public Requirements Requirements => new(0);
     public Lock? LockToRemove { get; }
     public bool IsBought { get; private set; }
 
     public Idea(
-        IdeaId id,
+        GameObjectId id,
         string name,
         string description,
         SimplePrice basePrice,
         Lock? lockToRemove
-    ) : base(name, description)
+    ) : base(id, name, description)
     {
-        Id = id;
         Price = basePrice;
         LockToRemove = lockToRemove;
         IsBought = false;

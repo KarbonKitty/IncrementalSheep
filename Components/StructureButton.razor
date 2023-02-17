@@ -6,7 +6,7 @@
     [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public required Structure Structure { get; set; }
 
-    private void SelectStructure(StructureId structureId)
+    private void SelectStructure(GameObjectId structureId)
     {
         Engine.State.SelectedStructure = Engine.State.Structures.Single(b => b.Id == structureId);
     }

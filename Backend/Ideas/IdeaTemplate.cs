@@ -1,7 +1,7 @@
 namespace IncrementalSheep;
 
 public record IdeaTemplate(
-    IdeaId Id,
+    GameObjectId Id,
     string Name,
     string Description,
     SimplePrice Price,

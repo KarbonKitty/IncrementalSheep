@@ -6,7 +6,7 @@
     [Inject] protected GameEngine Engine { get; set; } = default!;
     [Parameter] public required Hunt Hunt { get; set; }
 
-    private void SelectHunt(HuntId huntId)
+    private void SelectHunt(GameObjectId huntId)
     {
         Engine.State.SelectedHunt = Engine.State.Hunts.Single(h => h.Id == huntId);
     }

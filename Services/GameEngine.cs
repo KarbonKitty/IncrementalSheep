@@ -44,7 +44,7 @@ public class GameEngine : IGameEngine
 
         // Green pastures starting building
 
-        State.Structures.Single(b => b.Id == StructureId.GreenPastures).NumberBuilt = 1;
+        State.Structures.Single(b => b.Id == GameObjectId.GreenPastures).NumberBuilt = 1;
     }
 
     public void PostMessage(string message)
@@ -63,7 +63,7 @@ public class GameEngine : IGameEngine
         State.Sheep.Add(new Sheep(
             lastId + 1,
             SheepData.Names[rand.Next(SheepData.Names.Length)],
-            State.Jobs.Single(j => j.Id == SheepJobId.Gatherer)));
+            State.Jobs.Single(j => j.Id == GameObjectId.Gatherer)));
         PostMessage($"New sheep named {State.Sheep.Last().Name} joins the tribe!");
     }
 
@@ -137,7 +137,7 @@ public class GameEngine : IGameEngine
             State.Resources.Remove(hunt.Price);
             var unlockedHunters = State
                 .Sheep
-                .Where(s => s.Job.Id == SheepJobId.Hunter && !s.JobState.Locked)
+                .Where(s => s.Job.Id == GameObjectId.Hunter && !s.JobState.Locked)
                 .Take(hunt.Requirements.NumberOfHunters);
             foreach (var hunter in unlockedHunters)
             {
@@ -209,7 +209,7 @@ public class GameEngine : IGameEngine
     {
         var lockedHunters = State
             .Sheep
-            .Where(s => s.Job.Id == SheepJobId.Hunter && s.JobState.Locked)
+            .Where(s => s.Job.Id == GameObjectId.Hunter && s.JobState.Locked)
             .TakeLast(hunt.Requirements.NumberOfHunters);
         if (lockedHunters.Count() >= hunt.Requirements.NumberOfHunters)
         {
@@ -294,7 +294,7 @@ public class GameEngine : IGameEngine
         {
             PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
             State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
-            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == SheepJobId.Gatherer));
+            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == GameObjectId.Gatherer));
             sheep.UnlockJob();
         }
     }
@@ -335,7 +335,7 @@ public class GameEngine : IGameEngine
 
     private bool FulfillsRequirements(Requirements req)
     {
-        var enoughHunters = State.Sheep.Count(s => s.Job.Id == SheepJobId.Hunter && !s.JobState.Locked) >= req.NumberOfHunters;
+        var enoughHunters = State.Sheep.Count(s => s.Job.Id == GameObjectId.Hunter && !s.JobState.Locked) >= req.NumberOfHunters;
         return enoughHunters;
     }
 

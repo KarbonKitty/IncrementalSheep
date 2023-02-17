@@ -2,18 +2,18 @@ namespace IncrementalSheep;
 
 public static class Templates
 {
-    public static readonly Dictionary<StructureId, StructureTemplate> Buildings = new()
+    public static readonly Dictionary<GameObjectId, StructureTemplate> Buildings = new()
     {
-        { StructureId.GreenPastures, new() {
-            Id = StructureId.GreenPastures,
+        { GameObjectId.GreenPastures, new() {
+            Id = GameObjectId.GreenPastures,
             Name = "Green Pastures",
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
             ProductionPerSecond = new(ResourceId.Food, 5),
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
         } },
-        { StructureId.FoodTent, new BuildingTemplate() {
-            Id = StructureId.FoodTent,
+        { GameObjectId.FoodTent, new BuildingTemplate() {
+            Id = GameObjectId.FoodTent,
             Name = "Food tent",
             Description = "Description of food tent",
             BasePrice = new(ResourceId.Food, 30),
@@ -21,8 +21,8 @@ public static class Templates
             AdditionalStorage = new(ResourceId.Food, 50),
             Locks = Array.Empty<Lock>()
         } },
-        { StructureId.WoodGatherer, new BuildingTemplate() {
-            Id = StructureId.WoodGatherer,
+        { GameObjectId.WoodGatherer, new BuildingTemplate() {
+            Id = GameObjectId.WoodGatherer,
             Name = "Wood Gatherer",
             Description = "Description of wood gatherer",
             BasePrice = new(ResourceId.Wood, 25),
@@ -32,23 +32,23 @@ public static class Templates
         } }
     };
 
-    public static readonly Dictionary<SheepJobId, SheepJob> Jobs = new()
+    public static readonly Dictionary<GameObjectId, SheepJob> Jobs = new()
     {
-        { SheepJobId.Gatherer, new(SheepJobId.Gatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null, null) },
-        { SheepJobId.Hunter, new(SheepJobId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null, null) },
-        { SheepJobId.Elder, new(
-            SheepJobId.Elder,
+        { GameObjectId.Gatherer, new(GameObjectId.Gatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null, null) },
+        { GameObjectId.Hunter, new(GameObjectId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null, null) },
+        { GameObjectId.Elder, new(
+            GameObjectId.Elder,
             "Elder",
             "An old and wise sheep, that can teach the tribe about wisdom of the ages. Perhaps this can help with learning something new?",
             new(ResourceId.Folklore, 0.66),
-            gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == SheepJobId.Elder),
+            gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100))}
     };
 
     public static readonly List<HuntTemplate> Hunts = new()
     {
         new(
-            HuntId.SquirrelHunt,
+            GameObjectId.SquirrelHunt,
             "Squirrel Hunt",
             "Description of squirrel hunt",
             new(),
@@ -57,16 +57,16 @@ public static class Templates
             new TimeSpan(0, 0, 15),
             new () { }),
         new(
-            HuntId.DeerHunt,
+            GameObjectId.DeerHunt,
             "Deer Hunt",
             "Description of deer hunt",
             new(),
             new(NumberOfHunters: 2),
             new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 100, 1.0), new(ResourceId.Food, 0, 100, 0.5) } },
             new TimeSpan(0, 1, 0),
-            new() { LockId.Atlatl }),
+            new() { GameObjectId.AtlatlLock }),
         new(
-            HuntId.MammothHunt,
+            GameObjectId.MammothHunt,
             "Mammoth Hunt",
             "Description of mammoth hunt",
             new(),
@@ -77,12 +77,12 @@ public static class Templates
                 new(ResourceId.Folklore, 30, 100, 0.7)
             }},
             new TimeSpan(0, 3, 0),
-            new() { LockId.Atlatl, LockId.FireStarting })
+            new() { GameObjectId.AtlatlLock, GameObjectId.FireStartingLock })
     };
 
-    public static readonly Dictionary<IdeaId, IdeaTemplate> Ideas = new()
+    public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
-        { IdeaId.Atlatl, new(IdeaId.Atlatl, "Atlatl", "Description of atlatl", new(ResourceId.Folklore, 10), LockId.Atlatl, Array.Empty<Lock>()) },
-        { IdeaId.FireStarting, new(IdeaId.FireStarting, "Fire starting", "Description of fire starting", new(ResourceId.Folklore, 100), LockId.FireStarting, Array.Empty<Lock>()) }
+        { GameObjectId.Atlatl, new(GameObjectId.Atlatl, "Atlatl", "Description of atlatl", new(ResourceId.Folklore, 10), GameObjectId.AtlatlLock, Array.Empty<Lock>()) },
+        { GameObjectId.FireStarting, new(GameObjectId.FireStarting, "Fire starting", "Description of fire starting", new(ResourceId.Folklore, 100), GameObjectId.FireStartingLock, Array.Empty<Lock>()) }
     };
 }

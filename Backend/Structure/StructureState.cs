@@ -1,7 +1,7 @@
 namespace IncrementalSheep;
 
 public record StructureState(
-    StructureId Id,
+    GameObjectId Id,
     int NumberBuilt,
     Lock[] Locks
 );

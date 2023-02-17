@@ -1,4 +1,4 @@
 namespace IncrementalSheep;
 
-public record IdeaState(IdeaId Id, bool IsBought, Lock[] Locks)
+public record IdeaState(GameObjectId Id, bool IsBought, Lock[] Locks)
     : GameObjectState(Locks);
