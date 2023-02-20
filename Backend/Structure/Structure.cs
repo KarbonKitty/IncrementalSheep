@@ -2,7 +2,7 @@ namespace IncrementalSheep;
 
 public class Structure : GameObject, ICanStore
 {
-    public SimplePrice ProductionPerSecond { get; init; }
+    public ComplexPrice ProductionPerSecond { get; init; }
     public int NumberBuilt { get; set; }
 
     public SimplePrice? AdditionalStorage { get; protected set; }
@@ -15,7 +15,7 @@ public class Structure : GameObject, ICanStore
         SimplePrice? additionalStorage = null,
         int numberBuilt = 0) : base(id, name, description)
     {
-        ProductionPerSecond = baseProduction;
+        ProductionPerSecond = new(baseProduction);
         AdditionalStorage = additionalStorage;
         NumberBuilt = numberBuilt;
     }
@@ -27,7 +27,7 @@ public class Structure : GameObject, ICanStore
             throw new ArgumentException("Template and state must belong to the same structure");
         }
 
-        ProductionPerSecond = template.ProductionPerSecond;
+        ProductionPerSecond = new(template.ProductionPerSecond);
         NumberBuilt = state.NumberBuilt;
         AdditionalStorage = template.AdditionalStorage;
     }
