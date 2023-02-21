@@ -6,7 +6,7 @@
 <p>@Structure?.Description</p>
 
 @if (Structure is not null) {
-    <ResourceList Header="Production per second" Resources=@Structure.ProductionPerSecond />
+    <ResourceList Header="Production per second" Resources=@Structure.ProductionPerSecond.Total() />
 }
 
 @if (Structure is Building building)

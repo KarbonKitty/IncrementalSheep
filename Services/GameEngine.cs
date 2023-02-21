@@ -322,7 +322,7 @@ public class GameEngine : IGameEngine
         var totalProducedResources = new SimplePrice();
         foreach (var building in State.Structures)
         {
-            var resourcesProduced = building.ProductionPerSecond * building.NumberBuilt * deltaT.TotalSeconds;
+            var resourcesProduced = building.ProductionPerSecond.Total() * building.NumberBuilt * deltaT.TotalSeconds;
             totalProducedResources += resourcesProduced;
         }
         foreach (var sheep in State.Sheep)
