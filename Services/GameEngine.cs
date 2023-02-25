@@ -305,6 +305,7 @@ public class GameEngine : IGameEngine
         {
             return;
         }
+
         foreach (var go in AllGameObjects.Where(go => go.Locks.Contains(unlocker.LockToRemove.Value)))
         {
             var (removed, unlocked) = go.RemoveLock(unlocker.LockToRemove.Value);
