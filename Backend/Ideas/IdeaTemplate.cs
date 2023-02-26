@@ -6,5 +6,6 @@ public record IdeaTemplate(
     string Description,
     SimplePrice Price,
     Lock? LockToRemove,
+    Upgrade? Upgrade,
     Lock[] Locks
 );

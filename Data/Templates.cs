@@ -82,7 +82,21 @@ public static class Templates
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
-        { GameObjectId.Atlatl, new(GameObjectId.Atlatl, "Atlatl", "Description of atlatl", new(ResourceId.Folklore, 10), GameObjectId.AtlatlLock, Array.Empty<Lock>()) },
-        { GameObjectId.FireStarting, new(GameObjectId.FireStarting, "Fire starting", "Description of fire starting", new(ResourceId.Folklore, 100), GameObjectId.FireStartingLock, Array.Empty<Lock>()) }
+        { GameObjectId.Atlatl, new(
+            GameObjectId.Atlatl,
+            "Atlatl",
+            "Description of atlatl",
+            new(ResourceId.Folklore, 10),
+            GameObjectId.AtlatlLock,
+            new(GameObjectId.GreenPastures, UpgradeProperty.Production, new(ResourceId.Food, 1)),
+            Array.Empty<Lock>()) },
+        { GameObjectId.FireStarting, new(
+            GameObjectId.FireStarting,
+            "Fire starting",
+            "Description of fire starting",
+            new(ResourceId.Folklore, 100),
+            GameObjectId.FireStartingLock,
+            null,
+            Array.Empty<Lock>()) }
     };
 }

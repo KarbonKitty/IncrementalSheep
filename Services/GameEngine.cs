@@ -122,6 +122,7 @@ public class GameEngine : IGameEngine
             idea.Buy();
             PostMessage($"Your sheep have invented {idea.Name}!");
             ProcessUnlocking(idea);
+            ProcessUpgrades(idea);
             return true;
         }
         return false;
@@ -315,6 +316,26 @@ public class GameEngine : IGameEngine
                 _toastService.ShowToast(msg);
                 PostMessage($"💡 {msg}");
             }
+        }
+    }
+
+    private void ProcessUpgrades(ICanUpgrade upgrader)
+    {
+        if (upgrader.Upgrade is null)
+        {
+            return;
+        }
+
+        var upgradee = AllGameObjects.Single(go => go.Id == upgrader.Upgrade.Upgradee);
+
+        if (upgradee is Structure producer)
+        {
+            producer.ProductionPerSecond.AddBonus(upgrader.Upgrade.UpgradeEffect);
+            PostMessage($"{upgradee.Name} has been upgraded!");
+        }
+        else
+        {
+            throw new ArgumentException("Can't upgrade a non-structure");
         }
     }
 

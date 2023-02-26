@@ -1,10 +1,11 @@
 namespace IncrementalSheep;
 
-public class Idea : GameObject, IBuyable, ICanUnlock
+public class Idea : GameObject, IBuyable, ICanUnlock, ICanUpgrade
 {
     public SimplePrice Price { get; }
     public Requirements Requirements => new(0);
     public Lock? LockToRemove { get; }
+    public Upgrade? Upgrade { get; }
     public bool IsBought { get; private set; }
 
     public Idea(
@@ -12,11 +13,13 @@ public class Idea : GameObject, IBuyable, ICanUnlock
         string name,
         string description,
         SimplePrice basePrice,
-        Lock? lockToRemove
+        Lock? lockToRemove,
+        Upgrade? upgrade
     ) : base(id, name, description)
     {
         Price = basePrice;
         LockToRemove = lockToRemove;
+        Upgrade = upgrade;
         IsBought = false;
     }
 
@@ -26,7 +29,8 @@ public class Idea : GameObject, IBuyable, ICanUnlock
         template.Name,
         template.Description,
         template.Price,
-        template.LockToRemove)
+        template.LockToRemove,
+        template.Upgrade)
     {
         IsBought = state.IsBought;
     }
