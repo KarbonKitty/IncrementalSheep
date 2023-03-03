@@ -15,15 +15,16 @@ public enum GameObjectId
     GreenPastures = GameObjectIdConstants.StructureIdStart + 2,
     FoodTent = GameObjectIdConstants.StructureIdStart + 3,
 
-    Gatherer = GameObjectIdConstants.SheepJobIdStart + 1,
+    FoodGatherer = GameObjectIdConstants.SheepJobIdStart + 1,
     Hunter = GameObjectIdConstants.SheepJobIdStart + 2,
     Elder = GameObjectIdConstants.SheepJobIdStart + 3,
 
-    AtlatlLock = GameObjectIdConstants.LockIdStart + 1,
-    FireStartingLock = GameObjectIdConstants.LockIdStart + 2,
+    ImpossibleLock = GameObjectIdConstants.LockIdStart + 1,
+    AtlatlLock = GameObjectIdConstants.LockIdStart + 2,
+    BetterGrass = GameObjectIdConstants.LockIdStart + 3,
 
     Atlatl = GameObjectIdConstants.IdeaIdStart + 1,
-    FireStarting = GameObjectIdConstants.IdeaIdStart + 2,
+    RootingForTubers = GameObjectIdConstants.IdeaIdStart + 2,
 
     SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
     DeerHunt = GameObjectIdConstants.HundIdStart + 2,

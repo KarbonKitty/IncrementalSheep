@@ -1,6 +1,6 @@
 @using IncrementalSheep.Components.Buttons
 
-@foreach (var idea in Ideas)
+@foreach (var idea in Ideas.Where(i => !i.IsLocked))
 {
     <IdeaButton Idea=@idea />
 }

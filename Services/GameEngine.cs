@@ -63,7 +63,7 @@ public class GameEngine : IGameEngine
         State.Sheep.Add(new Sheep(
             lastId + 1,
             SheepData.Names[rand.Next(SheepData.Names.Length)],
-            State.Jobs.Single(j => j.Id == GameObjectId.Gatherer)));
+            State.Jobs.Single(j => j.Id == GameObjectId.FoodGatherer)));
         PostMessage($"New sheep named {State.Sheep.Last().Name} joins the tribe!");
     }
 
@@ -295,7 +295,7 @@ public class GameEngine : IGameEngine
         {
             PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
             State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
-            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == GameObjectId.Gatherer));
+            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == GameObjectId.FoodGatherer));
             sheep.UnlockJob();
         }
     }

@@ -14,8 +14,9 @@ public class Idea : GameObject, IBuyable, ICanUnlock, ICanUpgrade
         string description,
         SimplePrice basePrice,
         Lock? lockToRemove,
-        Upgrade? upgrade
-    ) : base(id, name, description)
+        Upgrade? upgrade,
+        IEnumerable<Lock> locks
+    ) : base(id, name, description, locks)
     {
         Price = basePrice;
         LockToRemove = lockToRemove;
@@ -30,7 +31,8 @@ public class Idea : GameObject, IBuyable, ICanUnlock, ICanUpgrade
         template.Description,
         template.Price,
         template.LockToRemove,
-        template.Upgrade)
+        template.Upgrade,
+        state.Locks)
     {
         IsBought = state.IsBought;
     }

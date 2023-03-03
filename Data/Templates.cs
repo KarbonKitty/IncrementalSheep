@@ -34,7 +34,7 @@ public static class Templates
 
     public static readonly Dictionary<GameObjectId, SheepJob> Jobs = new()
     {
-        { GameObjectId.Gatherer, new(GameObjectId.Gatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null, null) },
+        { GameObjectId.FoodGatherer, new(GameObjectId.FoodGatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null, null) },
         { GameObjectId.Hunter, new(GameObjectId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null, null) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
@@ -77,7 +77,7 @@ public static class Templates
                 new(ResourceId.Folklore, 30, 100, 0.7)
             }},
             new TimeSpan(0, 3, 0),
-            new() { GameObjectId.AtlatlLock, GameObjectId.FireStartingLock })
+            new() { GameObjectId.AtlatlLock, GameObjectId.ImpossibleLock })
     };
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
@@ -88,15 +88,26 @@ public static class Templates
             "Description of atlatl",
             new(ResourceId.Folklore, 10),
             GameObjectId.AtlatlLock,
-            new(GameObjectId.GreenPastures, UpgradeProperty.Production, new(ResourceId.Food, 1)),
-            Array.Empty<Lock>()) },
-        { GameObjectId.FireStarting, new(
-            GameObjectId.FireStarting,
-            "Fire starting",
-            "Description of fire starting",
-            new(ResourceId.Folklore, 100),
-            GameObjectId.FireStartingLock,
             null,
-            Array.Empty<Lock>()) }
+            Array.Empty<Lock>()) },
+        {
+            GameObjectId.BetterGrass, new(
+                GameObjectId.BetterGrass,
+                "Better grass",
+                "This is a test upgrade",
+                new(ResourceId.Folklore, 10),
+                null,
+                new(GameObjectId.GreenPastures, UpgradeProperty.Production, new(ResourceId.Food, 1)),
+                Array.Empty<Lock>()
+            )
+        },
+        { GameObjectId.RootingForTubers, new(
+            GameObjectId.RootingForTubers,
+            "Rooting for tubers",
+            "The sheep have learned that some of the plants have tubers underground, which are both tasty and nutritious.",
+            new(ResourceId.Folklore, 100),
+            null,
+            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.Food, 0.25)),
+            new Lock[] { GameObjectId.ImpossibleLock }) }
     };
 }
