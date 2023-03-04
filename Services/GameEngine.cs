@@ -50,6 +50,15 @@ public class GameEngine : IGameEngine
     public void PostMessage(string message)
         => Log.Add(message);
 
+    public void IngestLoadedState(GameState state)
+    {
+        State = state;
+        foreach (var idea in State.Ideas.Where(i => i.Upgrade is not null))
+        {
+            ProcessUpgrades(idea);
+        }
+    }
+
     public void RecruitNewSheep()
     {
         var canAfford = State.Resources >= NewSheepPrice;

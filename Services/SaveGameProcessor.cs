@@ -53,7 +53,10 @@ public class SaveGameProcessor
                     jobs.Single(j => j.Id == s.JobId),
                     s.JobState))
                 .ToList(),
-            Hunts = gameStateDto.Hunts.Select(h => new Hunt(Templates.Hunts.Single(t => t.Id == h.Id), h)).ToList(),
+            Hunts = gameStateDto
+                .Hunts
+                .Select(h => new Hunt(Templates.Hunts.Single(t => t.Id == h.Id), h))
+                .ToList(),
             Structures = gameStateDto
                 .Structures
                 .Select(b => ServiceHelpers.StructureFactory(Templates.Buildings[b.Id], b))

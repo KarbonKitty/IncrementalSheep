@@ -129,7 +129,7 @@
         if (serializedState is not null)
         {
             var state = SaveGameProcessor.LoadGame(serializedState);
-            Engine.State = state;
+            Engine.IngestLoadedState(state);
             ToastService.ShowToast("Game loaded");
         }
     }
