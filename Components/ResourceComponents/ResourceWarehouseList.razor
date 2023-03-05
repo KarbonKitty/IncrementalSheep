@@ -12,7 +12,7 @@
 
     private string ResourceStorage(KeyValuePair<ResourceId, ResourceWithStorage> res)
     {
-        return $"{ResourceNames.GetName(res.Key)}: {res.Value.Amount.FormatAsMoney()} {(res.Value.Storage is {} storage ? $" / {storage.FormatAsMoney()}" : string.Empty)}";
+        return $"{EnumNames.GetName(res.Key)}: {res.Value.Amount.FormatAsMoney()} {(res.Value.Storage is {} storage ? $" / {storage.FormatAsMoney()}" : string.Empty)}";
     }
 
     private string ResourceProduction(CircularBuffer<double> productionMemory)

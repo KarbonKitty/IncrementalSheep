@@ -5,7 +5,7 @@
 <ul>
     @foreach (var (id, amnt) in Resources.AllResources)
     {
-        <li>@ResourceNames.GetName(id): @amnt.FormatAsMoney()</li>
+        <li>@EnumNames.GetName(id): @amnt.FormatAsMoney()</li>
     }
 </ul>
 }

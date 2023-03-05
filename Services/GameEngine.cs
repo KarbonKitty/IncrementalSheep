@@ -47,6 +47,9 @@ public class GameEngine : IGameEngine
         State.Structures.Single(b => b.Id == GameObjectId.GreenPastures).NumberBuilt = 1;
     }
 
+    public string GameObjectName(GameObjectId id)
+        => AllGameObjects.FirstOrDefault(go => go.Id == id)?.Name ?? "NO SUCH OBJECT";
+
     public void PostMessage(string message)
         => Log.Add(message);
 
@@ -228,7 +231,7 @@ public class GameEngine : IGameEngine
                 ", ",
                 actualReward
                     .AllResources
-                    .Select(kvp => $"{kvp.Value:N2} {ResourceNames.GetName(kvp.Key)}"));
+                    .Select(kvp => $"{kvp.Value:N2} {EnumNames.GetName(kvp.Key)}"));
             PostMessage($"Your sheep have finished the {hunt.Name} and brought back: {formattedReward}");
             State.Resources.Add(actualReward);
         }

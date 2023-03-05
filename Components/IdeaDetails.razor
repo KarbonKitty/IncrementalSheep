@@ -8,6 +8,16 @@
 @if (Idea is not null) {
     <ResourceList Header="Price" Resources=@Idea.Price />
 
+    @if (Idea.LockToRemove is not null)
+    {
+        <p><strong>It will unlock new items when bought.</strong></p>
+    }
+
+    @if (Idea.Upgrade is not null)
+    {
+        <UpgradeInfo Upgrade=@Idea.Upgrade />
+    }
+
     @if (!Idea.IsBought)
     {
         <BuyButton Buyable=@Idea BuyMethod=@Buy BuyText="Invent" />

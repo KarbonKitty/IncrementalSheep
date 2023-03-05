@@ -3,7 +3,7 @@
 <ul>
     @foreach (var item in Reward.Items)
     {
-        <li>@ResourceNames.GetName(item.Resource): @item.Minimum - @item.Maximum (@FormatChance(item))</li>
+        <li>@EnumNames.GetName(item.Resource): @item.Minimum - @item.Maximum (@FormatChance(item))</li>
     }
 </ul>
 
