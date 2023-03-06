@@ -14,17 +14,18 @@
 
 .branches {
     background-color: var(--base02);
-    grid-area: branches
+    grid-area: branches;
 }
 
 .buildings {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-area: objects
+    grid-area: objects;
 }
 
 .details {
     background-color: var(--base02);
-    grid-area: details
+    grid-area: details;
+    overflow: auto;
 }

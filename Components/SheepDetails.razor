@@ -14,6 +14,10 @@
 
     <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
 
+    <hr />
+
+    <h4>Job change:</h4>
+
     <select @bind="selectedJobId">
         @foreach (var job in Engine.State.Jobs)
         {
@@ -22,6 +26,12 @@
     </select>
 
     @if (SelectedJob is not null) {
+        <p>@SelectedJob.Description</p>
+
+        <ResourceList
+            Header="Production per second"
+            Resources=@SelectedJob.ProductionPerSecond />
+
         @if (SelectedJob.GetPrice is not null) {
             <ResourceList
                 Header=@($"{SelectedJob.Name} training cost")

@@ -10,7 +10,8 @@ public class GameEngine : IGameEngine
 
     public CircularBuffer<string> Log { get; } = new(15);
 
-    public SimplePrice NewSheepPrice => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
+    public SimplePrice NewSheepPrice
+        => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
     private IEnumerable<GameObject> AllGameObjects
         => State.Hunts
