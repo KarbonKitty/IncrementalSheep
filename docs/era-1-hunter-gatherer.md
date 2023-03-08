@@ -61,3 +61,14 @@ Wood, rock and bone-made huts
 
     In this early era, there is no warfare, as the territory is effectively unlimited for the tribes. The role of warfare and adventure is taken up by the hunting.
 
+## Items to implement
+
+Gatherers and their improvements (ideas about collecting new types of food, slowly increasing the production of the gatherers).
+
+Elders, that might need inventing (food gatherers will provide a slow trickle of folklore for that). They won't get any upgrades, at least until writing.
+
+Hunters, which will need inventing, as well as different hunts (starting from small game, through fishing expeditions and bigger game).
+
+Tool makers, which can be invented somewhat later, and who will produce the tools necessary for advanced hunts as well as higher-level inventions.
+
+Basic shelters, that will slightly increase the amount of stuff that can be stored (or offer some other marginal benefit)?
