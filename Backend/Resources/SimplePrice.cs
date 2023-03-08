@@ -20,6 +20,11 @@ public class SimplePrice
         innerResources = new Dictionary<ResourceId, double> { { id, value } };
     }
 
+    public SimplePrice(params (ResourceId id, double value)[] items)
+    {
+        innerResources = items.ToDictionary(i => i.id, i => i.value);
+    }
+
     public SimplePrice(SimplePrice value)
     {
         innerResources = new Dictionary<ResourceId, double>(value.AllResources);
