@@ -2,9 +2,10 @@ namespace IncrementalSheep;
 
 public class Building : Structure, IBuyable
 {
-    public SimplePrice BasePrice { get; init; }
-    public SimplePrice Price => BasePrice * Math.Pow(1.15, NumberBuilt);
+    public SimplePrice Price => innerPrice.Total() * Math.Pow(1.15, NumberBuilt);
     public Requirements Requirements => new(0);
+
+    private ComplexPrice innerPrice;
 
     public Building(
         GameObjectId id,
@@ -15,11 +16,14 @@ public class Building : Structure, IBuyable
         SimplePrice? additionalStorage = null,
         int numberBuilt = 0) : base(id, name, description, baseProduction, additionalStorage, numberBuilt)
     {
-        BasePrice = basePrice;
+        innerPrice = new(basePrice);
     }
 
     public Building(BuildingTemplate template, StructureState state) : base(template, state)
     {
-        BasePrice = template.BasePrice;
+        innerPrice = new(template.BasePrice);
     }
+
+    public void ModifyPrice(SimplePrice upgradeEffect)
+        => innerPrice.AddBonus(upgradeEffect);
 }

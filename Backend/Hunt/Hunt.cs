@@ -2,13 +2,15 @@ namespace IncrementalSheep;
 
 public class Hunt : GameObject, IBuyable, ITakeTime
 {
-    public SimplePrice Price { get; }
+    public SimplePrice Price => innerPrice.Total();
     public Requirements Requirements { get; }
     public RandomReward Reward { get; }
 
     public TimeSpan Duration { get; }
 
     public TimeSpan TimeLeft { get; private set; }
+
+    private ComplexPrice innerPrice;
 
     public Hunt(
         GameObjectId id,
@@ -21,7 +23,7 @@ public class Hunt : GameObject, IBuyable, ITakeTime
         HashSet<Lock> locks
     ) : base(id, name, description, locks)
     {
-        Price = price;
+        innerPrice = new(price);
         Requirements = requirements;
         Reward = reward;
         Duration = duration;
@@ -44,6 +46,9 @@ public class Hunt : GameObject, IBuyable, ITakeTime
     public Hunt(HuntTemplate template)
     : this(template, new(template.Id, TimeSpan.Zero, template.Locks.ToArray()))
     { }
+
+    public void ModifyPrice(SimplePrice upgradeEffect)
+        => innerPrice.AddBonus(upgradeEffect);
 
     public bool Start()
     {
