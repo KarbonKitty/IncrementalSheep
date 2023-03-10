@@ -129,7 +129,7 @@ public class GameEngine : IGameEngine
     {
         var canBuy = CanBuy(idea);
         var isBought = idea.IsBought;
-        if(canBuy && !isBought)
+        if (canBuy && !isBought)
         {
             State.Resources.Remove(idea.Price);
             idea.Buy();
@@ -339,16 +339,36 @@ public class GameEngine : IGameEngine
             return;
         }
 
+        var upgrade = upgrader.Upgrade;
         var upgradee = AllGameObjects.Single(go => go.Id == upgrader.Upgrade.Upgradee);
 
-        if (upgradee is Structure producer)
+        if (upgrade.Property == UpgradeProperty.Production)
         {
-            producer.ProductionPerSecond.AddBonus(upgrader.Upgrade.UpgradeEffect);
-            PostMessage($"{upgradee.Name} has been upgraded!");
+            if (upgradee is Structure producer)
+            {
+                producer.ProductionPerSecond.AddBonus(upgrader.Upgrade.UpgradeEffect);
+                PostMessage($"{upgradee.Name} has been upgraded!");
+            }
+            else
+            {
+                throw new ArgumentException("Can't upgrade a non-structure");
+            }
+        }
+        else if (upgrade.Property == UpgradeProperty.Price)
+        {
+            if (upgradee is IBuyable buyable)
+            {
+                buyable.ModifyPrice(upgrade.UpgradeEffect);
+                PostMessage($"{upgradee.Name} has been upgraded!");
+            }
+            else
+            {
+                throw new ArgumentException("Can't change price of a non-buyable!");
+            }
         }
         else
         {
-            throw new ArgumentException("Can't upgrade a non-structure");
+            throw new Exception("Missing handling for upgrade property!");
         }
     }
 

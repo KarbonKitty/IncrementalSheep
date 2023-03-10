@@ -113,6 +113,17 @@ public static class Templates
                 Array.Empty<Lock>()
             )
         },
+        {
+            GameObjectId.CaveUse, new(
+                GameObjectId.CaveUse,
+                "Use of caves",
+                "Storing food in caves makes it cheaper to make more food storage",
+                new(ResourceId.Folklore, 25),
+                null,
+                new(GameObjectId.FoodTent, UpgradeProperty.Price, new(ResourceId.Food, -5)),
+                Array.Empty<Lock>()
+            )
+        },
         { GameObjectId.RootingForTubers, new(
             GameObjectId.RootingForTubers,
             "Rooting for tubers",

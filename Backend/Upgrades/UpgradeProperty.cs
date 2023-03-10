@@ -2,5 +2,6 @@ namespace IncrementalSheep;
 
 public enum UpgradeProperty
 {
-    Production
+    Production,
+    Price
 }

@@ -14,7 +14,8 @@ public static class EnumNames
 
     public static Dictionary<UpgradeProperty, string> PropertyNameDict { get; } = new()
     {
-        { UpgradeProperty.Production, "production" }
+        { UpgradeProperty.Production, "production" },
+        { UpgradeProperty.Price, "price" }
     };
 
     public static string GetName(UpgradeProperty prop)
