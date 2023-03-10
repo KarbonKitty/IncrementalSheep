@@ -34,8 +34,20 @@ public static class Templates
 
     public static readonly Dictionary<GameObjectId, SheepJob> Jobs = new()
     {
-        { GameObjectId.FoodGatherer, new(GameObjectId.FoodGatherer, "Food gatherer", "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.", new(ResourceId.Food, 2.25), null, null) },
-        { GameObjectId.Hunter, new(GameObjectId.Hunter, "Hunter", "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.", new(), null, null) },
+        { GameObjectId.FoodGatherer, new(
+            GameObjectId.FoodGatherer,
+            "Food gatherer",
+            "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.",
+            new((ResourceId.Food, 2.25), (ResourceId.Folklore, 0.03)),
+            null,
+            null) },
+        { GameObjectId.Hunter, new(
+            GameObjectId.Hunter,
+            "Hunter",
+            "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.",
+            new(),
+            null,
+            null) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
             "Elder",
