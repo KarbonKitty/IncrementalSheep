@@ -379,6 +379,12 @@ public class GameEngine : IGameEngine
         {
             var resourcesProduced = building.ProductionPerSecond.Total() * building.NumberBuilt * deltaT.TotalSeconds;
             totalProducedResources += resourcesProduced;
+            var isConsumer = building.ConsumptionPerSecond is not null;
+            if (isConsumer)
+            {
+                var resourcesConsumed = building.ConsumptionPerSecond!.Total() * building.NumberBuilt * deltaT.TotalSeconds;
+                totalProducedResources -= resourcesConsumed;
+            }
         }
         foreach (var sheep in State.Sheep)
         {

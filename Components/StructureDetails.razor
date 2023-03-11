@@ -7,6 +7,11 @@
 
 @if (Structure is not null) {
     <ResourceList Header="Production per second" Resources=@Structure.ProductionPerSecond.Total() />
+
+    @if (Structure.ConsumptionPerSecond is not null)
+    {
+        <ResourceList Header="Consumption per second" Resources=@Structure.ConsumptionPerSecond.Total() />
+    }
 }
 
 @if (Structure is Building building)

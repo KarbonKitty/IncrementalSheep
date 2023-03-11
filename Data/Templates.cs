@@ -9,6 +9,7 @@ public static class Templates
             Name = "Green Pastures",
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
             ProductionPerSecond = new(ResourceId.Food, 5),
+            ConsumptionPerSecond = null,
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
         } },
@@ -18,6 +19,7 @@ public static class Templates
             Description = "Description of food tent",
             BasePrice = new(ResourceId.Food, 30),
             ProductionPerSecond = new(),
+            ConsumptionPerSecond = new(ResourceId.Food, 0.05),
             AdditionalStorage = new(ResourceId.Food, 50),
             Locks = Array.Empty<Lock>()
         } },
@@ -27,6 +29,7 @@ public static class Templates
             Description = "Description of wood gatherer",
             BasePrice = new(ResourceId.Wood, 25),
             ProductionPerSecond = new(ResourceId.Wood, 1),
+            ConsumptionPerSecond = null,
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
         } }
