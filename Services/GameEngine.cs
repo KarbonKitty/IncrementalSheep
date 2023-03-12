@@ -366,6 +366,22 @@ public class GameEngine : IGameEngine
                 throw new ArgumentException("Can't change price of a non-buyable!");
             }
         }
+        else if (upgrade.Property == UpgradeProperty.Consumption)
+        {
+            if (upgradee is ICanConsume consumer)
+            {
+                if (consumer.ConsumptionPerSecond is null)
+                {
+                    throw new ArgumentException($"Can't change consumption of a {upgradee.Name}");
+                }
+                consumer.ConsumptionPerSecond.AddBonus(upgrade.UpgradeEffect);
+                PostMessage($"{upgradee.Name} has been upgraded!");
+            }
+            else
+            {
+                throw new ArgumentException("Can't change the consumption of a non-consumer!");
+            }
+        }
         else
         {
             throw new Exception("Missing handling for upgrade property!");

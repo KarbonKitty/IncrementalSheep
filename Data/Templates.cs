@@ -134,6 +134,18 @@ public static class Templates
             new(ResourceId.Folklore, 100),
             null,
             new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.Food, 0.25)),
-            new Lock[] { GameObjectId.ImpossibleLock }) }
+            new Lock[] { GameObjectId.ImpossibleLock })
+        },
+        {
+            GameObjectId.CookingWithFire, new(
+                GameObjectId.CookingWithFire,
+                "Cooking with fire",
+                "Description of cooking with fire",
+                new(ResourceId.Folklore, 10),
+                null,
+                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, new(ResourceId.Food, -0.03)),
+                Array.Empty<Lock>()
+            )
+        }
     };
 }

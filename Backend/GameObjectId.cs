@@ -26,6 +26,7 @@ public enum GameObjectId
     Atlatl = GameObjectIdConstants.IdeaIdStart + 1,
     RootingForTubers = GameObjectIdConstants.IdeaIdStart + 2,
     CaveUse = GameObjectIdConstants.IdeaIdStart + 3,
+    CookingWithFire = GameObjectIdConstants.IdeaIdStart + 4,
 
     SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
     DeerHunt = GameObjectIdConstants.HundIdStart + 2,
