@@ -72,3 +72,14 @@ Hunters, which will need inventing, as well as different hunts (starting from sm
 Tool makers, which can be invented somewhat later, and who will produce the tools necessary for advanced hunts as well as higher-level inventions.
 
 Basic shelters, that will slightly increase the amount of stuff that can be stored (or offer some other marginal benefit)?
+
+## Flow of the earliest part of the game
+
+The tribe starts with a green pastures "ancestral" structure (do we consider this to be the focal point of the tribe, moreso than the sheep?), and some food already in place.
+This gives the player a few seconds to take a look around, possibly read some instructions in later builds.
+After that, enough food for a first sheep is gathered; this sheep will be a food gatherer by default.
+Hunters are unlocked from the start - but not elders.
+Food gatherers will produce the folklore very slowly, but steadily, like food.
+Hunters will produce it in bursts, also like food.
+This will be frequently lost because of insufficient storage.
+Elders will be the first idea to be figured out - without them, the base folklore storage will not be enough to come up with anything else, even if it's visible.
