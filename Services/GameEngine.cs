@@ -342,31 +342,39 @@ public class GameEngine : IGameEngine
         var upgrade = upgrader.Upgrade;
         var upgradee = AllGameObjects.Single(go => go.Id == upgrader.Upgrade.Upgradee);
 
-        if (upgrade.Property == UpgradeProperty.Production)
+        var result = upgrade.Property switch
+        {
+            UpgradeProperty.Production => UpgradeProduction(upgrade, upgradee),
+            UpgradeProperty.Price => UpgradePrice(upgrade, upgradee),
+            UpgradeProperty.Consumption => UpgradeConsumption(upgrade, upgradee),
+            _ => throw new Exception("Missing upgrade property handler")
+        };
+
+        bool UpgradeProduction(Upgrade upgrade, GameObject upgradee)
         {
             if (upgradee is Structure producer)
             {
-                producer.ProductionPerSecond.AddBonus(upgrader.Upgrade.UpgradeEffect);
+                producer.ProductionPerSecond.AddBonus(upgrade.UpgradeEffect);
                 PostMessage($"{upgradee.Name} has been upgraded!");
+                return true;
             }
-            else
-            {
-                throw new ArgumentException("Can't upgrade a non-structure");
-            }
+
+            throw new ArgumentException("Can't upgrade a non-structure");
         }
-        else if (upgrade.Property == UpgradeProperty.Price)
+
+        bool UpgradePrice(Upgrade upgrade, GameObject upgradee)
         {
             if (upgradee is IBuyable buyable)
             {
                 buyable.ModifyPrice(upgrade.UpgradeEffect);
                 PostMessage($"{upgradee.Name} has been upgraded!");
+                return true;
             }
-            else
-            {
-                throw new ArgumentException("Can't change price of a non-buyable!");
-            }
+
+            throw new ArgumentException("Can't change price of a non-buyable!");
         }
-        else if (upgrade.Property == UpgradeProperty.Consumption)
+
+        bool UpgradeConsumption(Upgrade upgrade, GameObject upgradee)
         {
             if (upgradee is ICanConsume consumer)
             {
@@ -376,15 +384,10 @@ public class GameEngine : IGameEngine
                 }
                 consumer.ConsumptionPerSecond.AddBonus(upgrade.UpgradeEffect);
                 PostMessage($"{upgradee.Name} has been upgraded!");
+                return true;
             }
-            else
-            {
-                throw new ArgumentException("Can't change the consumption of a non-consumer!");
-            }
-        }
-        else
-        {
-            throw new Exception("Missing handling for upgrade property!");
+
+            throw new ArgumentException("Can't change consumption of non-consumer");
         }
     }
 
