@@ -65,9 +65,9 @@ Wood, rock and bone-made huts
 
 Gatherers and their improvements (ideas about collecting new types of food, slowly increasing the production of the gatherers).
 
-Elders, that might need inventing (food gatherers will provide a slow trickle of folklore for that). They won't get any upgrades, at least until writing.
-
 Hunters, which will need inventing, as well as different hunts (starting from small game, through fishing expeditions and bigger game).
+
+Elders, that might need inventing (food gatherers will provide a slow trickle of folklore for that). They won't get any upgrades, at least until writing.
 
 Tool makers, which can be invented somewhat later, and who will produce the tools necessary for advanced hunts as well as higher-level inventions.
 
@@ -83,3 +83,10 @@ Food gatherers will produce the folklore very slowly, but steadily, like food.
 Hunters will produce it in bursts, also like food.
 This will be frequently lost because of insufficient storage.
 Elders will be the first idea to be figured out - without them, the base folklore storage will not be enough to come up with anything else, even if it's visible.
+After elders increase the folklore storage, a few new avenues open.
+An upgrade for gatherers, that allows them to gather a little more food.
+An upgrade for hunters, that allows them a new hunt (those are generally longer, but also more productive).
+And finally, an idea of movable shelter, which allows more food storage (and requires new resources, wood, which is slowly gathered by gatherers, and hides, which are produced by successful hunts).
+With extra food storage, the tribe can grow, and more elders can be sustained, opening the next step, which is specialization; this allows the player to unlock the tool makers.
+Tools become a new input into the inventions, allowing more upgrades to gatherers, so they can bring more food and wood, and also upgrades to hunts and new hunts, which start consuming tools, but also provide better bounty.
+Another new invention would be more types of shelter, which in combination with increased food production, will open up the final part of this era, which is agriculture.
