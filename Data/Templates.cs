@@ -18,8 +18,8 @@ public static class Templates
             Name = "Food tent",
             Description = "Description of food tent",
             BasePrice = new(ResourceId.Food, 30),
-            ProductionPerSecond = new(),
-            ConsumptionPerSecond = new(ResourceId.Food, 0.05),
+            ProductionPerSecond = new(ResourceId.Food, 0.1),
+            ConsumptionPerSecond = new(ResourceId.Wood, 0.05),
             AdditionalStorage = new(ResourceId.Food, 50),
             Locks = Array.Empty<Lock>()
         } },

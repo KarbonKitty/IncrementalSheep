@@ -32,7 +32,7 @@ public class GameEngine : IGameEngine
                 {
                     { ResourceId.Food, new(100, 300) },
                     { ResourceId.Folklore, new(0, 10) },
-                    { ResourceId.Wood, new(100, null) }
+                    { ResourceId.Wood, new(0, null) }
                 }
             ),
             Sheep = new List<Sheep>(),
@@ -396,13 +396,26 @@ public class GameEngine : IGameEngine
         var totalProducedResources = new SimplePrice();
         foreach (var building in State.Structures)
         {
-            var resourcesProduced = building.ProductionPerSecond.Total() * building.NumberBuilt * deltaT.TotalSeconds;
-            totalProducedResources += resourcesProduced;
+            var canProduce = true;
+
             var isConsumer = building.ConsumptionPerSecond is not null;
             if (isConsumer)
             {
                 var resourcesConsumed = building.ConsumptionPerSecond!.Total() * building.NumberBuilt * deltaT.TotalSeconds;
-                totalProducedResources -= resourcesConsumed;
+                if (CanPay(resourcesConsumed))
+                {
+                    totalProducedResources -= resourcesConsumed;
+                }
+                else
+                {
+                    canProduce = false;
+                }
+            }
+
+            if (canProduce)
+            {
+                var resourcesProduced = building.ProductionPerSecond.Total() * building.NumberBuilt * deltaT.TotalSeconds;
+                totalProducedResources += resourcesProduced;
             }
         }
         foreach (var sheep in State.Sheep)
