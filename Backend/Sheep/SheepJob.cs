@@ -13,7 +13,8 @@ public class SheepJob : GameObject, ICanStore
         string description,
         SimplePrice baseProduction,
         Func<GameState, SimplePrice>? getPrice,
-        SimplePrice? additionalStorage) : base(id, name, description)
+        SimplePrice? additionalStorage,
+        HashSet<Lock>? locks) : base(id, name, description, locks)
         {
             ProductionPerSecond = baseProduction;
             GetPrice = getPrice;

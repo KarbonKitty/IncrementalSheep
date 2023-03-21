@@ -19,7 +19,7 @@
     <h4>Job change:</h4>
 
     <select @bind="selectedJobId">
-        @foreach (var job in Engine.State.Jobs)
+        @foreach (var job in Engine.State.Jobs.Where(j => !j.IsLocked))
         {
             <option value=@job.Id>@job.Name</option>
         }
