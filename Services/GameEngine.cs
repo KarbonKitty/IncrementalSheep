@@ -57,7 +57,7 @@ public class GameEngine : IGameEngine
     public void IngestLoadedState(GameState state)
     {
         State = state;
-        foreach (var idea in State.Ideas.Where(i => i.Upgrade is not null))
+        foreach (var idea in State.Ideas.Where(i => i.IsBought && i.Upgrade is not null))
         {
             ProcessUpgrades(idea);
         }
