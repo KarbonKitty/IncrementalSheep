@@ -1,11 +1,11 @@
 namespace IncrementalSheep;
 
-public class SheepJob : GameObject, ICanStore
+public class SheepJob : GameObject, ICanStore, ICanProduce
 {
-    public SimplePrice ProductionPerSecond { get; init; }
-
     public Func<GameState, SimplePrice>? GetPrice { get; init; }
     public SimplePrice? AdditionalStorage { get; init; }
+
+    public ComplexPrice ProductionPerSecond { get; init; }
 
     public SheepJob(
         GameObjectId id,
@@ -16,7 +16,7 @@ public class SheepJob : GameObject, ICanStore
         SimplePrice? additionalStorage,
         HashSet<Lock>? locks) : base(id, name, description, locks)
         {
-            ProductionPerSecond = baseProduction;
+            ProductionPerSecond = new(baseProduction);
             GetPrice = getPrice;
             AdditionalStorage = additionalStorage;
         }

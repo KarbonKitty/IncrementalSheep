@@ -280,7 +280,7 @@ public class GameEngine : IGameEngine
                 return;
             }
 
-            var sheepThatDontProduceFood = State.Sheep.Where(s => s.Job.ProductionPerSecond[ResourceId.Food] <= 0);
+            var sheepThatDontProduceFood = State.Sheep.Where(s => s.Job.ProductionPerSecond.Total()[ResourceId.Food] <= 0);
             var unlockedNonFoodProducer = sheepThatDontProduceFood.FirstOrDefault(s => !s.JobState.Locked);
 
             if (unlockedNonFoodProducer is not null)
@@ -352,8 +352,12 @@ public class GameEngine : IGameEngine
 
         bool UpgradeProduction(Upgrade upgrade, GameObject upgradee)
         {
-            if (upgradee is Structure producer)
+            if (upgradee is ICanProduce producer)
             {
+                if (producer.ProductionPerSecond is null)
+                {
+                    throw new ArgumentException($"Can't change production of {upgradee.Name}");
+                }
                 producer.ProductionPerSecond.AddBonus(upgrade.UpgradeEffect);
                 PostMessage($"{upgradee.Name} has been upgraded!");
                 return true;
@@ -394,6 +398,7 @@ public class GameEngine : IGameEngine
     private SimplePrice ProduceResources(TimeSpan deltaT)
     {
         var totalProducedResources = new SimplePrice();
+
         foreach (var building in State.Structures)
         {
             var canProduce = true;
@@ -418,9 +423,10 @@ public class GameEngine : IGameEngine
                 totalProducedResources += resourcesProduced;
             }
         }
+
         foreach (var sheep in State.Sheep)
         {
-            var resourcesProduced = sheep.Job.ProductionPerSecond * deltaT.TotalSeconds;
+            var resourcesProduced = sheep.Job.ProductionPerSecond.Total() * deltaT.TotalSeconds;
             totalProducedResources += resourcesProduced;
         }
         return totalProducedResources;

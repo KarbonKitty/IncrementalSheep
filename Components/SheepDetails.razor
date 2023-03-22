@@ -12,7 +12,7 @@
         <p><strong>Currently working, can't be reassigned</strong></p>
     }
 
-    <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond />
+    <ResourceList Header="Production per second" Resources=@Sheep.Job.ProductionPerSecond.Total() />
 
     <hr />
 
@@ -30,7 +30,7 @@
 
         <ResourceList
             Header="Production per second"
-            Resources=@SelectedJob.ProductionPerSecond />
+            Resources=@SelectedJob.ProductionPerSecond.Total() />
 
         @if (SelectedJob.GetPrice is not null) {
             <ResourceList

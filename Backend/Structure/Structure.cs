@@ -1,9 +1,10 @@
 namespace IncrementalSheep;
 
-public class Structure : GameObject, ICanStore, ICanConsume
+public class Structure : GameObject, ICanStore, ICanConsume, ICanProduce
 {
     public ComplexPrice ProductionPerSecond { get; init; }
     public ComplexPrice? ConsumptionPerSecond { get; init; }
+
     public int NumberBuilt { get; set; }
 
     public SimplePrice? AdditionalStorage { get; protected set; }
