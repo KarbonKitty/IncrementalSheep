@@ -4,5 +4,5 @@ public interface IBuyable
 {
     SimplePrice Price { get; }
     Requirements Requirements { get; }
-    void ModifyPrice(SimplePrice upgradeEffect);
+    void ModifyPrice(SimplePrice upgradeEffect, UpgradeType upgradeType);
 }

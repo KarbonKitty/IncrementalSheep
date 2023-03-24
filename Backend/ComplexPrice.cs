@@ -14,8 +14,21 @@ public class ComplexPrice
         AdditivePrice = additivePrice ?? new();
     }
 
-    public void AddBonus(SimplePrice bonus)
-        => AdditivePrice += bonus;
+    public void ApplyUpgrade(SimplePrice upgradeEffect, UpgradeType upgradeType)
+    {
+        if (upgradeType == UpgradeType.Additive)
+        {
+            AdditivePrice += upgradeEffect;
+        }
+        else if (upgradeType == UpgradeType.Multiplicative)
+        {
+            // TODO: implement
+        }
+        else
+        {
+            throw new ArgumentException($"Unhandled UpgradeType: {upgradeType}");
+        }
+    }
 
     public SimplePrice Total()
     {

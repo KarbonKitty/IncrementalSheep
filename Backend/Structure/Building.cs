@@ -26,6 +26,6 @@ public class Building : Structure, IBuyable
         innerPrice = new(template.BasePrice);
     }
 
-    public void ModifyPrice(SimplePrice upgradeEffect)
-        => innerPrice.AddBonus(upgradeEffect);
+    public void ModifyPrice(SimplePrice upgradeEffect, UpgradeType upgradeType)
+        => innerPrice.ApplyUpgrade(upgradeEffect, upgradeType);
 }

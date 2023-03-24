@@ -3,7 +3,9 @@
 <p><strong>Upgrade effect:</strong></p>
 
 <p>@Engine.GameObjectName(@Upgrade.Upgradee) @PropertyName:</p>
-<ResourceList Header="Change" Resources=@Upgrade.UpgradeEffect />
+<ResourceList Header="Change" Resources=@Upgrade.Effect />
+
+@* TODO: show multiplicative upgrade *@
 
 @code {
     [Inject] public required GameEngine Engine { get; set; }

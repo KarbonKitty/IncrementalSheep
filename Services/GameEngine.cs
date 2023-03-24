@@ -358,7 +358,7 @@ public class GameEngine : IGameEngine
                 {
                     throw new ArgumentException($"Can't change production of {upgradee.Name}");
                 }
-                producer.ProductionPerSecond.AddBonus(upgrade.UpgradeEffect);
+                producer.ProductionPerSecond.ApplyUpgrade(upgrade.Effect, upgrade.Type);
                 PostMessage($"{upgradee.Name} has been upgraded!");
                 return true;
             }
@@ -370,7 +370,7 @@ public class GameEngine : IGameEngine
         {
             if (upgradee is IBuyable buyable)
             {
-                buyable.ModifyPrice(upgrade.UpgradeEffect);
+                buyable.ModifyPrice(upgrade.Effect, upgrade.Type);
                 PostMessage($"{upgradee.Name} has been upgraded!");
                 return true;
             }
@@ -386,7 +386,7 @@ public class GameEngine : IGameEngine
                 {
                     throw new ArgumentException($"Can't change consumption of a {upgradee.Name}");
                 }
-                consumer.ConsumptionPerSecond.AddBonus(upgrade.UpgradeEffect);
+                consumer.ConsumptionPerSecond.ApplyUpgrade(upgrade.Effect, upgrade.Type);
                 PostMessage($"{upgradee.Name} has been upgraded!");
                 return true;
             }
