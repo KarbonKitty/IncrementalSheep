@@ -4,4 +4,5 @@ public record Upgrade(
     GameObjectId Upgradee,
     UpgradeProperty Property,
     UpgradeType Type,
-    SimplePrice Effect);
+    SimplePrice? AdditiveEffect,
+    PriceMultiplier? MultiplicativeEffect);

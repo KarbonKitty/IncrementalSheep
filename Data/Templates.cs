@@ -115,7 +115,7 @@ public static class Templates
                 "This is a test upgrade",
                 new(ResourceId.Folklore, 10),
                 null,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 1)),
+                new(GameObjectId.GreenPastures, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 1), null),
                 Array.Empty<Lock>()
             )
         },
@@ -126,7 +126,7 @@ public static class Templates
                 "Storing food in caves makes it cheaper to make more food storage",
                 new(ResourceId.Folklore, 25),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Price, UpgradeType.Additive, new(ResourceId.Food, -5)),
+                new(GameObjectId.FoodTent, UpgradeProperty.Price, UpgradeType.Additive, new(ResourceId.Food, -5), null),
                 Array.Empty<Lock>()
             )
         },
@@ -136,7 +136,7 @@ public static class Templates
             "The sheep have learned that some of the plants have tubers underground, which are both tasty and nutritious.",
             new(ResourceId.Folklore, 100),
             null,
-            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 0.25)),
+            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 0.25), null),
             new Lock[] { GameObjectId.ImpossibleLock })
         },
         {
@@ -146,7 +146,7 @@ public static class Templates
                 "Description of cooking with fire",
                 new(ResourceId.Folklore, 10),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, UpgradeType.Additive, new(ResourceId.Food, -0.03)),
+                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, UpgradeType.Additive, new(ResourceId.Food, -0.03), null),
                 Array.Empty<Lock>()
             )
         }

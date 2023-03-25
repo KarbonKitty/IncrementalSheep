@@ -47,8 +47,8 @@ public class Hunt : GameObject, IBuyable, ITakeTime
     : this(template, new(template.Id, TimeSpan.Zero, template.Locks.ToArray()))
     { }
 
-    public void ModifyPrice(SimplePrice upgradeEffect, UpgradeType upgradeType)
-        => innerPrice.ApplyUpgrade(upgradeEffect, upgradeType);
+    public void ModifyPrice(Upgrade upgrade)
+        => innerPrice.ApplyUpgrade(upgrade);
 
     public bool Start()
     {

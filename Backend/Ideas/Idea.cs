@@ -43,8 +43,8 @@ public class Idea : GameObject, IBuyable, ICanUnlock, ICanUpgrade
     : this(template, new(template.Id, false, template.Locks))
     { }
 
-    public void ModifyPrice(SimplePrice upgradeEffect, UpgradeType upgradeType)
-        => innerPrice.ApplyUpgrade(upgradeEffect, upgradeType);
+    public void ModifyPrice(Upgrade upgrade)
+        => innerPrice.ApplyUpgrade(upgrade);
 
     public void Buy()
         => IsBought = true;
