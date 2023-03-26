@@ -34,7 +34,7 @@ public class PriceMultiplier
     }
 
     public void AddMultiplier(ResourceId id, double scale)
-        => multipliers[id] = this[id] + (1.0 - scale);
+        => multipliers[id] = this[id] + (scale - 1.0);
 
     public void AddMultiplier(PriceMultiplier multiplier)
     {

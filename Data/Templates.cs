@@ -100,14 +100,17 @@ public static class Templates
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
-        { GameObjectId.Atlatl, new(
-            GameObjectId.Atlatl,
-            "Atlatl",
-            "Description of atlatl",
-            new(ResourceId.Folklore, 10),
-            GameObjectId.AtlatlLock,
-            null,
-            Array.Empty<Lock>()) },
+        {
+            GameObjectId.TestUpgrade1, new(
+                GameObjectId.TestUpgrade1,
+                "XXX",
+                "Description",
+                new(ResourceId.Folklore, 1),
+                GameObjectId.AtlatlLock,
+                new(GameObjectId.GreenPastures, UpgradeProperty.Production, multiplicativeEffect: new (ResourceId.Food, 1.5)),
+                Array.Empty<Lock>()
+            )
+        },
         {
             GameObjectId.BetterGrass, new(
                 GameObjectId.BetterGrass,
@@ -115,9 +118,19 @@ public static class Templates
                 "This is a test upgrade",
                 new(ResourceId.Folklore, 10),
                 null,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 1), null),
+                new(GameObjectId.GreenPastures, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 1)),
                 Array.Empty<Lock>()
             )
+        },
+        {
+            GameObjectId.Atlatl, new(
+                GameObjectId.Atlatl,
+                "Atlatl",
+                "Description of atlatl",
+                new(ResourceId.Folklore, 10),
+                GameObjectId.AtlatlLock,
+                new(GameObjectId.GreenPastures, UpgradeProperty.Production, multiplicativeEffect: new(ResourceId.Food, 2)),
+                Array.Empty<Lock>())
         },
         {
             GameObjectId.CaveUse, new(
@@ -126,7 +139,7 @@ public static class Templates
                 "Storing food in caves makes it cheaper to make more food storage",
                 new(ResourceId.Folklore, 25),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Price, UpgradeType.Additive, new(ResourceId.Food, -5), null),
+                new(GameObjectId.FoodTent, UpgradeProperty.Price, additiveEffect: new(ResourceId.Food, -5)),
                 Array.Empty<Lock>()
             )
         },
@@ -136,7 +149,7 @@ public static class Templates
             "The sheep have learned that some of the plants have tubers underground, which are both tasty and nutritious.",
             new(ResourceId.Folklore, 100),
             null,
-            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, UpgradeType.Additive, new(ResourceId.Food, 0.25), null),
+            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.25)),
             new Lock[] { GameObjectId.ImpossibleLock })
         },
         {
@@ -146,7 +159,7 @@ public static class Templates
                 "Description of cooking with fire",
                 new(ResourceId.Folklore, 10),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, UpgradeType.Additive, new(ResourceId.Food, -0.03), null),
+                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, additiveEffect: new(ResourceId.Food, -0.03)),
                 Array.Empty<Lock>()
             )
         }

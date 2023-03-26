@@ -21,12 +21,13 @@ public enum GameObjectId
 
     ImpossibleLock = GameObjectIdConstants.LockIdStart + 1,
     AtlatlLock = GameObjectIdConstants.LockIdStart + 2,
-    BetterGrass = GameObjectIdConstants.LockIdStart + 3,
 
     Atlatl = GameObjectIdConstants.IdeaIdStart + 1,
     RootingForTubers = GameObjectIdConstants.IdeaIdStart + 2,
     CaveUse = GameObjectIdConstants.IdeaIdStart + 3,
     CookingWithFire = GameObjectIdConstants.IdeaIdStart + 4,
+    BetterGrass = GameObjectIdConstants.IdeaIdStart + 5,
+    TestUpgrade1 = GameObjectIdConstants.IdeaIdStart + 256,
 
     SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
     DeerHunt = GameObjectIdConstants.HundIdStart + 2,

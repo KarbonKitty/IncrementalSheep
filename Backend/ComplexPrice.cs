@@ -4,7 +4,7 @@ public class ComplexPrice
 {
     private SimplePrice BasePrice { get; }
     private SimplePrice AdditivePrice { get; set; }
-    private PriceMultiplier Multiplier { get; set; }
+    private PriceMultiplier Multiplier { get; }
 
     private SimplePrice CachedTotal = new();
 
@@ -24,17 +24,13 @@ public class ComplexPrice
     public void ApplyUpgrade(Upgrade upgrade)
     {
         dirty = true;
-        if (upgrade.Type == UpgradeType.Additive)
+        if (upgrade.AdditiveEffect is not null)
         {
-            ApplyAdditiveUpgrade(upgrade.AdditiveEffect!);
+            ApplyAdditiveUpgrade(upgrade.AdditiveEffect);
         }
-        else if (upgrade.Type == UpgradeType.Multiplicative)
+        if (upgrade.MultiplicativeEffect is not null)
         {
-            ApplyMultiplicativeUpgrade(upgrade.MultiplicativeEffect!);
-        }
-        else
-        {
-            throw new ArgumentException($"Upgrade type unhandled: {upgrade.Type}");
+            ApplyMultiplicativeUpgrade(upgrade.MultiplicativeEffect);
         }
     }
 
