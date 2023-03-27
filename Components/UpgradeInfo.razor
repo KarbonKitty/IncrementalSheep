@@ -3,9 +3,23 @@
 <p><strong>Upgrade effect:</strong></p>
 
 <p>@Engine.GameObjectName(@Upgrade.Upgradee) @PropertyName:</p>
-<ResourceList Header="Change" Resources=@Upgrade.AdditiveEffect />
+@if (Upgrade.AdditiveEffect is not null) {
+    <ul>
+        @foreach (var (id, amnt) in Upgrade.AdditiveEffect.AllResources)
+        {
+            <li>@EnumNames.GetName(id): @amnt.ToString("+0.00;-0.00;0")</li>
+        }
+    </ul>
+}
 
-@* TODO: show multiplicative upgrade *@
+@if (Upgrade.MultiplicativeEffect is not null) {
+    <ul>
+        @foreach (var (id, scale) in Upgrade.MultiplicativeEffect.AllMultipliers)
+        {
+            <li>@EnumNames.GetName(id): ×@($"{scale:N2}")</li>
+        }
+    </ul>
+}
 
 @code {
     [Inject] public required GameEngine Engine { get; set; }
