@@ -52,7 +52,7 @@ public static class Templates
             new(),
             null,
             null,
-            new() { }) },
+            new() { GameObjectId.HunterLock }) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
             "Elder",
@@ -60,7 +60,7 @@ public static class Templates
             new(ResourceId.Folklore, 0.66),
             gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100),
-            new () { })}
+            new () { GameObjectId.ElderLock })}
     };
 
     public static readonly List<HuntTemplate> Hunts = new()
@@ -73,94 +73,53 @@ public static class Templates
             new(NumberOfHunters: 1),
             new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0) } },
             new TimeSpan(0, 0, 15),
-            new () { }),
-        new(
-            GameObjectId.DeerHunt,
-            "Deer Hunt",
-            "Description of deer hunt",
-            new(),
-            new(NumberOfHunters: 2),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 100, 1.0), new(ResourceId.Food, 0, 100, 0.5) } },
-            new TimeSpan(0, 1, 0),
-            new() { GameObjectId.AtlatlLock }),
-        new(
-            GameObjectId.MammothHunt,
-            "Mammoth Hunt",
-            "Description of mammoth hunt",
-            new(),
-            new(NumberOfHunters: 4),
-            new() { Items = new RandomRewardItem[] {
-                new(ResourceId.Food, 300, 300, 1.0),
-                new(ResourceId.Food, 0, 700, 0.5),
-                new(ResourceId.Folklore, 30, 100, 0.7)
-            }},
-            new TimeSpan(0, 3, 0),
-            new() { GameObjectId.AtlatlLock, GameObjectId.ImpossibleLock })
+            new () { GameObjectId.HunterLock })
     };
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
         {
-            GameObjectId.TestUpgrade1, new(
-                GameObjectId.TestUpgrade1,
-                "XXX",
-                "Description",
+            GameObjectId.TryNewFoods, new(
+                GameObjectId.TryNewFoods,
+                "Try new foods",
+                "Your sheep are growing discontent from just eating grass, and they want to try something else. Maybe that's actually a good idea?",
                 new(ResourceId.Folklore, 1),
-                GameObjectId.AtlatlLock,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Production, multiplicativeEffect: new (ResourceId.Food, 1.5)),
+                GameObjectId.ExperimentsLock,
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.05)),
                 Array.Empty<Lock>()
             )
         },
         {
-            GameObjectId.BetterGrass, new(
-                GameObjectId.BetterGrass,
-                "Better grass",
-                "This is a test upgrade",
-                new(ResourceId.Folklore, 10),
+            GameObjectId.Hunting, new(
+                GameObjectId.Hunting,
+                "Start hunting",
+                "The new food experiments have made the sheep long for the fresh meat. It's time to go hunting.",
+                new(ResourceId.Folklore, 3),
+                GameObjectId.HunterLock,
                 null,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 1)),
-                Array.Empty<Lock>()
+                new Lock[] { GameObjectId.ExperimentsLock }
             )
         },
         {
-            GameObjectId.Atlatl, new(
-                GameObjectId.Atlatl,
-                "Atlatl",
-                "Description of atlatl",
-                new(ResourceId.Folklore, 10),
-                GameObjectId.AtlatlLock,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Production, multiplicativeEffect: new(ResourceId.Food, 2)),
-                Array.Empty<Lock>())
-        },
-        {
-            GameObjectId.CaveUse, new(
-                GameObjectId.CaveUse,
-                "Use of caves",
-                "Storing food in caves makes it cheaper to make more food storage",
-                new(ResourceId.Folklore, 25),
+            GameObjectId.FruitGathering, new(
+                GameObjectId.FruitGathering,
+                "Fruit gathering",
+                "All those delicious fruits on trees and bushes are just waiting to be picked...",
+                new(ResourceId.Folklore, 3),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Price, additiveEffect: new(ResourceId.Food, -5)),
-                Array.Empty<Lock>()
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
+                new Lock[] { GameObjectId.ExperimentsLock }
             )
         },
-        { GameObjectId.RootingForTubers, new(
-            GameObjectId.RootingForTubers,
-            "Rooting for tubers",
-            "The sheep have learned that some of the plants have tubers underground, which are both tasty and nutritious.",
-            new(ResourceId.Folklore, 100),
-            null,
-            new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.25)),
-            new Lock[] { GameObjectId.ImpossibleLock })
-        },
         {
-            GameObjectId.CookingWithFire, new(
-                GameObjectId.CookingWithFire,
-                "Cooking with fire",
-                "Description of cooking with fire",
-                new(ResourceId.Folklore, 10),
+            GameObjectId.RootingForTubers, new(
+                GameObjectId.RootingForTubers,
+                "Rooting for tubers",
+                "With a little bit of elbow grease and a sensitive nose, there are many treasures to be found underground. Some of them edible.",
+                new(ResourceId.Folklore, 3),
                 null,
-                new(GameObjectId.FoodTent, UpgradeProperty.Consumption, additiveEffect: new(ResourceId.Food, -0.03)),
-                Array.Empty<Lock>()
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
+                new Lock[] { GameObjectId.ExperimentsLock }
             )
         }
     };

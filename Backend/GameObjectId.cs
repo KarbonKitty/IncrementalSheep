@@ -20,14 +20,14 @@ public enum GameObjectId
     Elder = GameObjectIdConstants.SheepJobIdStart + 3,
 
     ImpossibleLock = GameObjectIdConstants.LockIdStart + 1,
-    AtlatlLock = GameObjectIdConstants.LockIdStart + 2,
+    HunterLock = GameObjectIdConstants.LockIdStart + 2,
+    ExperimentsLock = GameObjectIdConstants.LockIdStart + 3,
+    ElderLock = GameObjectIdConstants.LockIdStart + 4,
 
-    Atlatl = GameObjectIdConstants.IdeaIdStart + 1,
-    RootingForTubers = GameObjectIdConstants.IdeaIdStart + 2,
-    CaveUse = GameObjectIdConstants.IdeaIdStart + 3,
-    CookingWithFire = GameObjectIdConstants.IdeaIdStart + 4,
-    BetterGrass = GameObjectIdConstants.IdeaIdStart + 5,
-    TestUpgrade1 = GameObjectIdConstants.IdeaIdStart + 256,
+    TryNewFoods = GameObjectIdConstants.IdeaIdStart + 1,
+    Hunting = GameObjectIdConstants.IdeaIdStart + 2,
+    FruitGathering = GameObjectIdConstants.IdeaIdStart + 3,
+    RootingForTubers = GameObjectIdConstants.IdeaIdStart + 4,
 
     SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
     DeerHunt = GameObjectIdConstants.HundIdStart + 2,
