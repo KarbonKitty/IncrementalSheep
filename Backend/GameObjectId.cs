@@ -4,7 +4,8 @@ public static class GameObjectIdConstants
 {
     public const int StructureIdStart = 1 << 24;
     public const int SheepJobIdStart = 2 << 24;
-    public const int LockIdStart = 3 << 24;
+    // Locks have their own enum now
+    // public const int LockIdStart = 3 << 24;
     public const int IdeaIdStart = 4 << 24;
     public const int HundIdStart = 5 << 24;
 }
@@ -19,15 +20,12 @@ public enum GameObjectId
     Hunter = GameObjectIdConstants.SheepJobIdStart + 2,
     Elder = GameObjectIdConstants.SheepJobIdStart + 3,
 
-    ImpossibleLock = GameObjectIdConstants.LockIdStart + 1,
-    HunterLock = GameObjectIdConstants.LockIdStart + 2,
-    ExperimentsLock = GameObjectIdConstants.LockIdStart + 3,
-    ElderLock = GameObjectIdConstants.LockIdStart + 4,
-
     TryNewFoods = GameObjectIdConstants.IdeaIdStart + 1,
     Hunting = GameObjectIdConstants.IdeaIdStart + 2,
     FruitGathering = GameObjectIdConstants.IdeaIdStart + 3,
     RootingForTubers = GameObjectIdConstants.IdeaIdStart + 4,
+    TribeElders = GameObjectIdConstants.IdeaIdStart + 5,
+    StoneTools = GameObjectIdConstants.IdeaIdStart + 6,
 
     SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
     DeerHunt = GameObjectIdConstants.HundIdStart + 2,

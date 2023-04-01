@@ -5,7 +5,7 @@ public static class EnumNames
     public static Dictionary<ResourceId, string> NameDict { get; } = new()
     {
         { ResourceId.Food, "Food" },
-        { ResourceId.Wood, "Wood" },
+        { ResourceId.StoneTools, "Stole tools" },
         { ResourceId.Folklore, "Folklore" }
     };
 

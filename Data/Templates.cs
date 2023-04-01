@@ -12,26 +12,6 @@ public static class Templates
             ConsumptionPerSecond = null,
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
-        } },
-        { GameObjectId.FoodTent, new BuildingTemplate() {
-            Id = GameObjectId.FoodTent,
-            Name = "Food tent",
-            Description = "Description of food tent",
-            BasePrice = new(ResourceId.Food, 30),
-            ProductionPerSecond = new(ResourceId.Food, 0.1),
-            ConsumptionPerSecond = new(ResourceId.Wood, 0.05),
-            AdditionalStorage = new(ResourceId.Food, 50),
-            Locks = Array.Empty<Lock>()
-        } },
-        { GameObjectId.WoodGatherer, new BuildingTemplate() {
-            Id = GameObjectId.WoodGatherer,
-            Name = "Wood Gatherer",
-            Description = "Description of wood gatherer",
-            BasePrice = new(ResourceId.Wood, 25),
-            ProductionPerSecond = new(ResourceId.Wood, 1),
-            ConsumptionPerSecond = null,
-            AdditionalStorage = null,
-            Locks = Array.Empty<Lock>()
         } }
     };
 
@@ -52,7 +32,7 @@ public static class Templates
             new(),
             null,
             null,
-            new() { GameObjectId.HunterLock }) },
+            new() { LockId.HunterLock }) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
             "Elder",
@@ -60,7 +40,7 @@ public static class Templates
             new(ResourceId.Folklore, 0.66),
             gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100),
-            new () { GameObjectId.ElderLock })}
+            new () { LockId.ElderLock }) }
     };
 
     public static readonly List<HuntTemplate> Hunts = new()
@@ -73,7 +53,7 @@ public static class Templates
             new(NumberOfHunters: 1),
             new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0) } },
             new TimeSpan(0, 0, 15),
-            new () { GameObjectId.HunterLock })
+            new () { LockId.HunterLock })
     };
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
@@ -84,7 +64,7 @@ public static class Templates
                 "Try new foods",
                 "Your sheep are growing discontent from just eating grass, and they want to try something else. Maybe that's actually a good idea?",
                 new(ResourceId.Folklore, 1),
-                GameObjectId.ExperimentsLock,
+                LockId.ExperimentsLock,
                 new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.05)),
                 Array.Empty<Lock>()
             )
@@ -95,9 +75,9 @@ public static class Templates
                 "Start hunting",
                 "The new food experiments have made the sheep long for the fresh meat. It's time to go hunting.",
                 new(ResourceId.Folklore, 3),
-                GameObjectId.HunterLock,
+                LockId.HunterLock,
                 null,
-                new Lock[] { GameObjectId.ExperimentsLock }
+                new Lock[] { LockId.ExperimentsLock }
             )
         },
         {
@@ -108,7 +88,7 @@ public static class Templates
                 new(ResourceId.Folklore, 3),
                 null,
                 new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
-                new Lock[] { GameObjectId.ExperimentsLock }
+                new Lock[] { LockId.ExperimentsLock }
             )
         },
         {
@@ -119,7 +99,18 @@ public static class Templates
                 new(ResourceId.Folklore, 3),
                 null,
                 new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
-                new Lock[] { GameObjectId.ExperimentsLock }
+                new Lock[] { LockId.ExperimentsLock }
+            )
+        },
+        {
+            GameObjectId.StoneTools, new(
+                GameObjectId.StoneTools,
+                "Develop stone tools",
+                "Hunting without any weapons or tools is very tiring and not very effective. Maybe it's time to try and use some of those stones that lie around?",
+                new(ResourceId.Folklore, 50),
+                LockId.ToolmakerLock,
+                null,
+                new Lock[] { LockId.HunterLock }
             )
         }
     };

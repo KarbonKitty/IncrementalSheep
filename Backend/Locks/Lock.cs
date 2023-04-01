@@ -2,8 +2,8 @@ namespace IncrementalSheep;
 
 public readonly struct Lock
 {
-    public required GameObjectId Id { get; init; }
+    public required LockId Id { get; init; }
 
-    public static implicit operator Lock(GameObjectId id)
+    public static implicit operator Lock(LockId id)
         => new() { Id = id };
 }
