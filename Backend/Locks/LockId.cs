@@ -7,4 +7,5 @@ public enum LockId
     ExperimentsLock = 3,
     ElderLock = 4,
     ToolmakerLock = 5,
+    ShelterLock = 6,
 }

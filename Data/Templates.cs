@@ -8,7 +8,7 @@ public static class Templates
             Id = GameObjectId.GreenPastures,
             Name = "Green Pastures",
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
-            ProductionPerSecond = new(ResourceId.Food, 5),
+            ProductionPerSecond = new(ResourceId.Food, 4),
             ConsumptionPerSecond = null,
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
@@ -40,20 +40,39 @@ public static class Templates
             new(ResourceId.Folklore, 0.66),
             gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100),
-            new () { LockId.ElderLock }) }
+            new () { LockId.ElderLock }) },
+        { GameObjectId.Toolmaker, new(
+            GameObjectId.Toolmaker,
+            "Toolmaker",
+            "Shaping stone into useful forms is somewhere between art and craft, and to prepare tools requires skill and patientce, which is why some sheep specialize in their production.",
+            new(),
+            gs => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
+            null,
+            new() { LockId.ToolmakerLock }
+        ) }
     };
 
     public static readonly List<HuntTemplate> Hunts = new()
     {
         new(
-            GameObjectId.SquirrelHunt,
+            GameObjectId.SmallGameHunt,
             "Squirrel Hunt",
-            "Description of squirrel hunt",
+            "Sheep are fast and stealthy, they can hunt small game like squirels without too much trouble... But they are no big catches to be had this way.",
             new(),
             new(NumberOfHunters: 1),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0) } },
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0), new(ResourceId.Folklore, 1, 5, 0.5) } },
             new TimeSpan(0, 0, 15),
-            new () { LockId.HunterLock })
+            new () { LockId.HunterLock }),
+        new(
+            GameObjectId.LargeGameHunt,
+            "Deer hunt",
+            "With some spears, sheep are perfectly capable of hunting antelopes and deer. This takes longer time to stalk the prey and prepare the hunt, but the bounty of meat, hides and tall tales is nothing to sneeze at.",
+            new(ResourceId.StoneTools, 1.0),
+            new(NumberOfHunters: 2),
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 30, 60, 1.0), new(ResourceId.Food, 50, 100, 0.5), new(ResourceId.Folklore, 2, 10, 1.0), new(ResourceId.Folklore, 5, 20, 0.3), new(ResourceId.BuildingMaterials, 5, 7, 0.7) } },
+            new TimeSpan(0, 5, 0),
+            new() { LockId.ToolmakerLock }
+        )
     };
 
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
@@ -109,6 +128,17 @@ public static class Templates
                 "Hunting without any weapons or tools is very tiring and not very effective. Maybe it's time to try and use some of those stones that lie around?",
                 new(ResourceId.Folklore, 50),
                 LockId.ToolmakerLock,
+                null,
+                new Lock[] { LockId.HunterLock }
+            )
+        },
+        {
+            GameObjectId.FoodStorage, new(
+                GameObjectId.FoodStorage,
+                "Build food storage",
+                "As the tribe gets bigger, and the hunting becomes more important source of food, storing this food becomes more and more of an issue. Coming up with new ways to keep it from spoiling might be useful.",
+                new(ResourceId.Folklore, 75),
+                LockId.ShelterLock,
                 null,
                 new Lock[] { LockId.HunterLock }
             )

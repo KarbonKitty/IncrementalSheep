@@ -32,7 +32,8 @@ public class GameEngine : IGameEngine
                 {
                     { ResourceId.Food, new(100, 300) },
                     { ResourceId.Folklore, new(0, 10) },
-                    { ResourceId.StoneTools, new(0, null) }
+                    { ResourceId.StoneTools, new(0, null) },
+                    { ResourceId.BuildingMaterials, new(0, null) }
                 }
             ),
             Sheep = new List<Sheep>(),

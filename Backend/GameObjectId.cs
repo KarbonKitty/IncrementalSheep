@@ -19,6 +19,7 @@ public enum GameObjectId
     FoodGatherer = GameObjectIdConstants.SheepJobIdStart + 1,
     Hunter = GameObjectIdConstants.SheepJobIdStart + 2,
     Elder = GameObjectIdConstants.SheepJobIdStart + 3,
+    Toolmaker = GameObjectIdConstants.SheepJobIdStart + 4,
 
     TryNewFoods = GameObjectIdConstants.IdeaIdStart + 1,
     Hunting = GameObjectIdConstants.IdeaIdStart + 2,
@@ -26,8 +27,9 @@ public enum GameObjectId
     RootingForTubers = GameObjectIdConstants.IdeaIdStart + 4,
     TribeElders = GameObjectIdConstants.IdeaIdStart + 5,
     StoneTools = GameObjectIdConstants.IdeaIdStart + 6,
+    FoodStorage = GameObjectIdConstants.IdeaIdStart + 7,
 
-    SquirrelHunt = GameObjectIdConstants.HundIdStart + 1,
-    DeerHunt = GameObjectIdConstants.HundIdStart + 2,
+    SmallGameHunt = GameObjectIdConstants.HundIdStart + 1,
+    LargeGameHunt = GameObjectIdConstants.HundIdStart + 2,
     MammothHunt = GameObjectIdConstants.HundIdStart + 3,
 }
