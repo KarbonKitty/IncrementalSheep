@@ -10,7 +10,7 @@ public abstract class GameObject
     public HashSet<Lock> Locks { get; }
     public bool IsLocked => Locks.Count > 0;
 
-    protected GameObject(GameObjectId id, string name, string description, IEnumerable<Lock>? locks = null)
+    protected GameObject(GameObjectId id, string name, string description, IEnumerable<Lock>? locks)
     {
         Id = id;
         Name = name;

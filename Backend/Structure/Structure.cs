@@ -15,9 +15,10 @@ public class Structure : GameObject, ICanStore, ICanConsume, ICanProduce
         string description,
         SimplePrice baseProduction,
         SimplePrice? baseConsumption,
+        Lock[] locks,
         SimplePrice? additionalStorage = null,
         int numberBuilt = 0)
-    : base(id, name, description)
+    : base(id, name, description, locks)
     {
         ProductionPerSecond = new(baseProduction);
         ConsumptionPerSecond = baseConsumption is null ? null : new(baseConsumption);
@@ -26,7 +27,7 @@ public class Structure : GameObject, ICanStore, ICanConsume, ICanProduce
     }
 
     public Structure(StructureTemplate template, StructureState state)
-    : base(template.Id, template.Name, template.Description)
+    : base(template.Id, template.Name, template.Description, template.Locks)
     {
         if (template.Id != state.Id)
         {

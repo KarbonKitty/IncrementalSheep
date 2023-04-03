@@ -14,9 +14,10 @@ public class Building : Structure, IBuyable
         SimplePrice basePrice,
         SimplePrice baseProduction,
         SimplePrice? baseConsumption,
+        Lock[] locks,
         SimplePrice? additionalStorage = null,
         int numberBuilt = 0)
-        : base(id, name, description, baseProduction, baseConsumption, additionalStorage, numberBuilt)
+        : base(id, name, description, baseProduction, baseConsumption, locks, additionalStorage, numberBuilt)
     {
         innerPrice = new(basePrice);
     }
