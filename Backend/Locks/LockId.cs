@@ -8,4 +8,7 @@ public enum LockId
     ElderLock = 4,
     ToolmakerLock = 5,
     ShelterLock = 6,
+    TentLock = 7,
+    WoodGatheringLock = 8,
+    LeanToLock = 9,
 }

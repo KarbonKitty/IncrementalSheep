@@ -12,9 +12,9 @@ public static class GameObjectIdConstants
 
 public enum GameObjectId
 {
-    WoodGatherer = GameObjectIdConstants.StructureIdStart + 1,
-    GreenPastures = GameObjectIdConstants.StructureIdStart + 2,
-    FoodTent = GameObjectIdConstants.StructureIdStart + 3,
+    GreenPastures = GameObjectIdConstants.StructureIdStart + 1,
+    Tent = GameObjectIdConstants.StructureIdStart + 2,
+    LeanTo = GameObjectIdConstants.StructureIdStart + 3,
 
     FoodGatherer = GameObjectIdConstants.SheepJobIdStart + 1,
     Hunter = GameObjectIdConstants.SheepJobIdStart + 2,
@@ -28,6 +28,8 @@ public enum GameObjectId
     TribeElders = GameObjectIdConstants.IdeaIdStart + 5,
     StoneTools = GameObjectIdConstants.IdeaIdStart + 6,
     FoodStorage = GameObjectIdConstants.IdeaIdStart + 7,
+    TentIdea = GameObjectIdConstants.IdeaIdStart + 8,
+    LeanToIdea = GameObjectIdConstants.IdeaIdStart + 9,
 
     SmallGameHunt = GameObjectIdConstants.HundIdStart + 1,
     LargeGameHunt = GameObjectIdConstants.HundIdStart + 2,

@@ -12,7 +12,31 @@ public static class Templates
             ConsumptionPerSecond = null,
             AdditionalStorage = null,
             Locks = Array.Empty<Lock>()
-        } }
+        } },
+        {
+            GameObjectId.Tent, new BuildingTemplate {
+                Id = GameObjectId.Tent,
+                Name = "Hide tent",
+                Description = "Shelter for sheep and a place to keep food from spoiling, made out of raw animal hides. It's a very simple construction, that can be easily packed and moved, so it can travel with the tribe.",
+                BasePrice = new(ResourceId.BuildingMaterials, 30),
+                ProductionPerSecond = new(),
+                ConsumptionPerSecond = null,
+                AdditionalStorage = new(ResourceId.Food, 50),
+                Locks = new Lock[] { LockId.TentLock }
+            }
+        },
+        {
+            GameObjectId.LeanTo, new BuildingTemplate() {
+                Id = GameObjectId.LeanTo,
+                Name = "Lean-to",
+                Description = "Simple construction made from sticks and leaves leaning against a tree or a rock, providing some cover for sheep and their food. It can be easily disassembled and rebuilt elsewhere.",
+                BasePrice = new(ResourceId.BuildingMaterials, 25),
+                ProductionPerSecond = new(),
+                ConsumptionPerSecond = null,
+                AdditionalStorage = new((ResourceId.Food, 20), (ResourceId.StoneTools, 5), (ResourceId.BuildingMaterials, 10)),
+                Locks = new Lock[] { LockId.LeanToLock }
+            }
+        }
     };
 
     public static readonly Dictionary<GameObjectId, SheepJob> Jobs = new()
@@ -139,6 +163,39 @@ public static class Templates
                 "As the tribe gets bigger, and the hunting becomes more important source of food, storing this food becomes more and more of an issue. Coming up with new ways to keep it from spoiling might be useful.",
                 new(ResourceId.Folklore, 75),
                 LockId.ShelterLock,
+                null,
+                new Lock[] { LockId.HunterLock }
+            )
+        },
+        {
+            GameObjectId.TentIdea, new(
+                GameObjectId.TentIdea,
+                "Make a tent",
+                "Maybe the tribe could use all those hides that the hunters are bringing back from the hunts for something else than just decoration?",
+                new((ResourceId.Folklore, 75), (ResourceId.BuildingMaterials, 10)),
+                LockId.TentLock,
+                null,
+                new Lock[] { LockId.ShelterLock }
+            )
+        },
+        {
+            GameObjectId.LeanToIdea, new(
+                GameObjectId.LeanToIdea,
+                "Make a lean-to",
+                "This fallen tree that rests against the rock is a good place to hide from the rain. Maybe the sheep could construct something similar with a bunch of sticks and dry grass?",
+                new((ResourceId.Folklore, 75), (ResourceId.Food, 50)),
+                LockId.LeanToLock,
+                null,
+                new Lock[] { LockId.ShelterLock }
+            )
+        },
+        {
+            GameObjectId.TribeElders, new(
+                GameObjectId.TribeElders,
+                "Tribe elders",
+                "Now that the tribes knows more and more about the world, this knowledge is wider than the sheep who works can keep in her head. The tribe needs some sheep who will keep the knowledge, allowing the learn more of the world.",
+                new(ResourceId.Folklore, 10),
+                LockId.ElderLock,
                 null,
                 new Lock[] { LockId.HunterLock }
             )

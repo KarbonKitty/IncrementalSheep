@@ -6,7 +6,8 @@ public static class EnumNames
     {
         { ResourceId.Food, "Food" },
         { ResourceId.StoneTools, "Stole tools" },
-        { ResourceId.Folklore, "Folklore" }
+        { ResourceId.Folklore, "Folklore" },
+        { ResourceId.BuildingMaterials, "Building materials" }
     };
 
     public static string GetName(ResourceId id)

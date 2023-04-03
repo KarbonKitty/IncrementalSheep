@@ -30,10 +30,10 @@ public class GameEngine : IGameEngine
             Resources = new ResourceWarehouse(
                 new Dictionary<ResourceId, ResourceWithStorage>
                 {
-                    { ResourceId.Food, new(100, 300) },
+                    { ResourceId.Food, new(100, 200) },
                     { ResourceId.Folklore, new(0, 10) },
-                    { ResourceId.StoneTools, new(0, null) },
-                    { ResourceId.BuildingMaterials, new(0, null) }
+                    { ResourceId.StoneTools, new(0, 50) },
+                    { ResourceId.BuildingMaterials, new(0, 50) }
                 }
             ),
             Sheep = new List<Sheep>(),
