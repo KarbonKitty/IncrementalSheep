@@ -20,4 +20,21 @@ public class SheepJob : GameObject, ICanStore, ICanProduce
             GetPrice = getPrice;
             AdditionalStorage = additionalStorage;
         }
+
+    public SheepJob(SheepJobTemplate template, SheepJobState state)
+        : this(
+            template.Id,
+            template.Name,
+            template.Description,
+            template.BaseProduction,
+            template.PriceFunction,
+            template.AdditionalStorage,
+            state.Locks.ToHashSet()
+        ) { }
+
+    public SheepJob(SheepJobTemplate template)
+        : this(template, new(template.Id, template.Locks)) { }
+
+    public SheepJobState SaveState()
+        => new(Id, Locks.ToArray());
 }

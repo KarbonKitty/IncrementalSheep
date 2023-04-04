@@ -24,6 +24,7 @@ public class SaveGameProcessor
             Structures = state.Structures.Select(b => b.SaveState()).ToArray(),
             Hunts = state.Hunts.Select(h => h.SaveState()).ToArray(),
             Ideas = state.Ideas.Select(i => i.SaveState()).ToArray(),
+            Jobs = state.Jobs.Select(j => j.SaveState()).ToArray(),
             XoshiroState = state.XoshiroState
         };
         await JS.InvokeVoidAsync("localStorage.setItem", "data", JsonSerializer.Serialize(gameStateDto));
@@ -38,10 +39,14 @@ public class SaveGameProcessor
     public static GameState LoadGame(string serializedState)
     {
         var gameStateDto = JsonSerializer.Deserialize<GameStateDto>(serializedState);
-        var jobs = Templates.Jobs.Select(t => t.Value).ToArray();
+        // var jobs = Templates.Jobs.Select(t => t.Value).ToArray();
+        var jobs = gameStateDto!
+            .Jobs
+            .Select(j => new SheepJob(Templates.Jobs[j.Id], j))
+            .ToArray();
         var state = new GameState
         {
-            LastTick = new DateTime(gameStateDto!.LastTick),
+            LastTick = new DateTime(gameStateDto.LastTick),
             LastDiff = gameStateDto.LastDiff,
             Resources = new ResourceWarehouse(gameStateDto.Resources),
             Jobs = jobs,

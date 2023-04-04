@@ -39,7 +39,7 @@ public static class Templates
         }
     };
 
-    public static readonly Dictionary<GameObjectId, SheepJob> Jobs = new()
+    public static readonly Dictionary<GameObjectId, SheepJobTemplate> Jobs = new()
     {
         { GameObjectId.FoodGatherer, new(
             GameObjectId.FoodGatherer,
@@ -48,7 +48,7 @@ public static class Templates
             new((ResourceId.Food, 2.25), (ResourceId.Folklore, 0.03)),
             null,
             null,
-            new() {}) },
+            Array.Empty<Lock>()) },
         { GameObjectId.Hunter, new(
             GameObjectId.Hunter,
             "Hunter",
@@ -56,7 +56,7 @@ public static class Templates
             new(),
             null,
             null,
-            new() { LockId.HunterLock }) },
+            new Lock[] { LockId.HunterLock }) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
             "Elder",
@@ -64,15 +64,15 @@ public static class Templates
             new(ResourceId.Folklore, 0.66),
             gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100),
-            new () { LockId.ElderLock }) },
+            new Lock[] { LockId.ElderLock }) },
         { GameObjectId.Toolmaker, new(
             GameObjectId.Toolmaker,
             "Toolmaker",
             "Shaping stone into useful forms is somewhere between art and craft, and to prepare tools requires skill and patientce, which is why some sheep specialize in their production.",
             new(),
-            gs => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
+            _ => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
             null,
-            new() { LockId.ToolmakerLock }
+            new Lock[] { LockId.ToolmakerLock }
         ) }
     };
 

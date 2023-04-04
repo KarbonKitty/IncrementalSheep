@@ -38,7 +38,7 @@ public class GameEngine : IGameEngine
             ),
             Sheep = new List<Sheep>(),
             Hunts = Templates.Hunts.ConvertAll(t => new Hunt(t)),
-            Jobs = Templates.Jobs.Select(t => t.Value).ToArray(),
+            Jobs = Templates.Jobs.Select(t => new SheepJob(t.Value)).ToArray(),
             Structures = Templates.Buildings.Select(b => ServiceHelpers.StructureFactory(b.Value)).ToArray(),
             Ideas = Templates.Ideas.Select(i => new Idea(i.Value)).ToList(),
             XoshiroState = new ulong[4] { 1, 2, 3, (ulong)DateTime.Now.Ticks }
