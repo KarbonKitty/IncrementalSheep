@@ -38,9 +38,9 @@
                 Resources=@SelectedJob.GetPrice(Engine.State) />
         }
 
-        <div class="selectButton" @onclick="@(() => Engine.SwitchJobs(Sheep, SelectedJob))">
-            <p>Become @SelectedJob.Name</p>
-        </div>
+        <button class="btn" @onclick="@(() => Engine.SwitchJobs(Sheep, SelectedJob))">
+            Become @SelectedJob.Name
+        </button>
     }
 }
 

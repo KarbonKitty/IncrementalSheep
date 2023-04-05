@@ -9,6 +9,7 @@ public enum LockId
     ToolmakerLock = 5,
     ShelterLock = 6,
     TentLock = 7,
-    WoodGatheringLock = 8,
     LeanToLock = 9,
+    FishingLock = 10,
+    AgricultureLock = 11,
 }

@@ -61,7 +61,7 @@ public static class Templates
             GameObjectId.Elder,
             "Elder",
             "An old and wise sheep, that can teach the tribe about wisdom of the ages. Perhaps this can help with learning something new?",
-            new(ResourceId.Folklore, 0.66),
+            new(ResourceId.Folklore, 0.05),
             gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
             new(ResourceId.Folklore, 100),
             new Lock[] { LockId.ElderLock }) },
@@ -69,7 +69,7 @@ public static class Templates
             GameObjectId.Toolmaker,
             "Toolmaker",
             "Shaping stone into useful forms is somewhere between art and craft, and to prepare tools requires skill and patientce, which is why some sheep specialize in their production.",
-            new(),
+            new(ResourceId.StoneTools, 0.1),
             _ => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
             null,
             new Lock[] { LockId.ToolmakerLock }
@@ -96,6 +96,16 @@ public static class Templates
             new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 30, 60, 1.0), new(ResourceId.Food, 50, 100, 0.5), new(ResourceId.Folklore, 2, 10, 1.0), new(ResourceId.Folklore, 5, 20, 0.3), new(ResourceId.BuildingMaterials, 5, 7, 0.7) } },
             new TimeSpan(0, 5, 0),
             new() { LockId.ToolmakerLock }
+        ),
+        new(
+            GameObjectId.FishingHunt,
+            "Fishing expedition",
+            "With nets and fishing spears, the sheep can fish close to the shore. With fish more plentiful and more evenly spread than the land animals, this is a boring, but sure way to build up the food stores for the tribe",
+            new(ResourceId.StoneTools, 0.5),
+            new(NumberOfHunters: 2),
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 40, 50, 1.0), new(ResourceId.Folklore, 1, 2, 1.0)}},
+            new TimeSpan(0, 5, 0),
+            new() { LockId.FishingLock }
         )
     };
 
@@ -198,6 +208,39 @@ public static class Templates
                 LockId.ElderLock,
                 null,
                 new Lock[] { LockId.HunterLock }
+            )
+        },
+        {
+            GameObjectId.WoodGathering, new(
+                GameObjectId.WoodGathering,
+                "Wood gathering",
+                "When the sheep are out and about gathering food, they can also gather other stuff, like wood to build the shelters from.",
+                new(ResourceId.Folklore, 30),
+                null,
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.BuildingMaterials, 0.05)),
+                new Lock[] { LockId.ToolmakerLock, LockId.ShelterLock }
+            )
+        },
+        {
+            GameObjectId.FishingIdea, new(
+                GameObjectId.FishingIdea,
+                "Fishing",
+                "While meat is tasty and the tales of the hunts are heroic, the fish can be easier and more consistent source of protein for the sheep - but they won't be easy to catch without tools.",
+                new((ResourceId.Folklore, 70), (ResourceId.StoneTools, 10)),
+                LockId.FishingLock,
+                null,
+                new Lock[] { LockId.ToolmakerLock }
+            )
+        },
+        {
+            GameObjectId.Agriculture, new(
+                GameObjectId.Agriculture,
+                "Agriculture",
+                "As the sheep gather more types of food, hunt, and fish, build shelters, and make tools, a new radical idea starts to form - what if instead of just using whatever the nature provides, the tribe would try and reshape the nature in a way that would be helpful? For example, leaving seeds in the ground and caring for them, so they would grow up to be edible plants, without having to travel and find new grass..",
+                new((ResourceId.Folklore, 200), (ResourceId.Food, 200), (ResourceId.StoneTools, 50)),
+                LockId.AgricultureLock,
+                null,
+                new Lock[] { LockId.ShelterLock, LockId.FishingLock, LockId.ToolmakerLock }
             )
         }
     };

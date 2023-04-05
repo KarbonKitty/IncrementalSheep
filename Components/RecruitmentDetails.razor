@@ -8,7 +8,9 @@
 
 <ResourceList Header="Price" Resources=@Engine.NewSheepPrice />
 
-<button class="btn" @onclick=@(() => Engine.RecruitNewSheep())>Recruit</button>
+<button class="btn" @onclick=@(() => Engine.RecruitNewSheep()) disabled=@(!Engine.CanAffordNewSheep())>
+    Recruit
+</button>
 
 @code
 {

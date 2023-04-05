@@ -30,8 +30,11 @@ public enum GameObjectId
     FoodStorage = GameObjectIdConstants.IdeaIdStart + 7,
     TentIdea = GameObjectIdConstants.IdeaIdStart + 8,
     LeanToIdea = GameObjectIdConstants.IdeaIdStart + 9,
+    WoodGathering = GameObjectIdConstants.IdeaIdStart + 10,
+    FishingIdea = GameObjectIdConstants.IdeaIdStart + 11,
+    Agriculture = GameObjectIdConstants.IdeaIdStart + 12,
 
     SmallGameHunt = GameObjectIdConstants.HundIdStart + 1,
     LargeGameHunt = GameObjectIdConstants.HundIdStart + 2,
-    MammothHunt = GameObjectIdConstants.HundIdStart + 3,
+    FishingHunt = GameObjectIdConstants.HundIdStart + 3,
 }

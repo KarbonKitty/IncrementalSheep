@@ -64,9 +64,12 @@ public class GameEngine : IGameEngine
         }
     }
 
+    public bool CanAffordNewSheep()
+        => CanPay(NewSheepPrice);
+
     public void RecruitNewSheep()
     {
-        var canAfford = State.Resources >= NewSheepPrice;
+        var canAfford = CanPay(NewSheepPrice);
         if (!canAfford)
         {
             return;
