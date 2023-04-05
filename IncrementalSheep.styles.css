@@ -1,0 +1,41 @@
+/* /Components/MessageLog.razor.rz.scp.css */
+ul[b-n1rvrytrxe] {
+    list-style: none;
+    text-indent: -2rem;
+}
+/* /Components/RecruitButton.razor.rz.scp.css */
+.newSheepButton[b-sygfbte24h] {
+    margin-bottom: 2rem;
+}
+/* /Pages/Index.razor.rz.scp.css */
+.title[b-drfgljy7kl] {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topbar-buttons[b-drfgljy7kl] {
+    display: flex;
+    margin: auto 0;
+}
+
+.topbar-buttons>a[b-drfgljy7kl] {
+    padding: 0 1rem;
+}
+
+.branches[b-drfgljy7kl] {
+    background-color: var(--base02);
+    grid-area: branches;
+}
+
+.buildings[b-drfgljy7kl] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-area: objects;
+}
+
+.details[b-drfgljy7kl] {
+    background-color: var(--base02);
+    grid-area: details;
+    overflow: auto;
+}
