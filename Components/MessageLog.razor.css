@@ -1,4 +1,6 @@
 ul {
     list-style: none;
     text-indent: -2rem;
+    overflow-y: auto;
+    max-height: 45vh;
 }
