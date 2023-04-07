@@ -39,7 +39,6 @@ public class SaveGameProcessor
     public static GameState LoadGame(string serializedState)
     {
         var gameStateDto = JsonSerializer.Deserialize<GameStateDto>(serializedState);
-        // var jobs = Templates.Jobs.Select(t => t.Value).ToArray();
         var jobs = gameStateDto!
             .Jobs
             .Select(j => new SheepJob(Templates.Jobs[j.Id], j))
