@@ -10,7 +10,7 @@ public static class Templates
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
             ProductionPerSecond = new(ResourceId.Food, 4),
             ConsumptionPerSecond = null,
-            AdditionalStorage = null,
+            AdditionalStorage = new((ResourceId.Food, 100), (ResourceId.StoneTools, 10), (ResourceId.BuildingMaterials, 10)),
             Locks = Array.Empty<Lock>()
         } },
         {
@@ -47,7 +47,7 @@ public static class Templates
             "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.",
             new((ResourceId.Food, 2.25), (ResourceId.Folklore, 0.03)),
             null,
-            null,
+            new(ResourceId.Folklore, 2),
             Array.Empty<Lock>()) },
         { GameObjectId.Hunter, new(
             GameObjectId.Hunter,
@@ -55,7 +55,7 @@ public static class Templates
             "One would expect sheep to be rather mellow, but needs must, and they too can pick up sticks and stones to hunt.",
             new(),
             null,
-            null,
+            new(ResourceId.Folklore, 2),
             new Lock[] { LockId.HunterLock }) },
         { GameObjectId.Elder, new(
             GameObjectId.Elder,
@@ -71,7 +71,7 @@ public static class Templates
             "Shaping stone into useful forms is somewhere between art and craft, and to prepare tools requires skill and patientce, which is why some sheep specialize in their production.",
             new(ResourceId.StoneTools, 0.1),
             _ => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
-            null,
+            new(ResourceId.Folklore, 2),
             new Lock[] { LockId.ToolmakerLock }
         ) }
     };

@@ -11,7 +11,7 @@ public class GameEngine : IGameEngine
     public CircularBuffer<string> Log { get; } = new(15);
 
     public SimplePrice NewSheepPrice
-        => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
+        => SheepData.NewSheepBasePrice * Math.Pow(1.20, State.Sheep.Count);
 
     private IEnumerable<GameObject> AllGameObjects
         => State.Hunts
@@ -30,10 +30,10 @@ public class GameEngine : IGameEngine
             Resources = new ResourceWarehouse(
                 new Dictionary<ResourceId, ResourceWithStorage>
                 {
-                    { ResourceId.Food, new(100, 200) },
-                    { ResourceId.Folklore, new(0, 10) },
-                    { ResourceId.StoneTools, new(0, 50) },
-                    { ResourceId.BuildingMaterials, new(0, 50) }
+                    { ResourceId.Food, new(100, 0) },
+                    { ResourceId.Folklore, new(0, 0) },
+                    { ResourceId.StoneTools, new(0, 0) },
+                    { ResourceId.BuildingMaterials, new(0, 0) }
                 }
             ),
             Sheep = new List<Sheep>(),
@@ -47,6 +47,8 @@ public class GameEngine : IGameEngine
         // Green pastures starting building
 
         State.Structures.Single(b => b.Id == GameObjectId.GreenPastures).NumberBuilt = 1;
+
+        RecalculateStorage();
     }
 
     public string GameObjectName(GameObjectId id)
@@ -62,6 +64,7 @@ public class GameEngine : IGameEngine
         {
             ProcessUpgrades(idea, silent: true);
         }
+        RecalculateStorage();
     }
 
     public bool CanAffordNewSheep()
@@ -81,6 +84,7 @@ public class GameEngine : IGameEngine
             lastId + 1,
             SheepData.Names[rand.Next(SheepData.Names.Length)],
             State.Jobs.Single(j => j.Id == GameObjectId.FoodGatherer)));
+        RecalculateStorage();
         PostMessage($"New sheep named {State.Sheep.Last().Name} joins the tribe!");
     }
 
@@ -122,8 +126,8 @@ public class GameEngine : IGameEngine
         {
             State.Resources.Remove(building.Price);
             building.NumberBuilt++;
-            State.Resources.AddStorage(building.AdditionalStorage);
             PostMessage($"A new {building.Name} has been built");
+            RecalculateStorage();
             return true;
         }
         return false;
@@ -187,9 +191,8 @@ public class GameEngine : IGameEngine
             State.Resources.Remove(price);
         }
 
-        State.Resources.AddStorage(job.AdditionalStorage);
-        State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
         sheep.SwitchJobs(job);
+        RecalculateStorage();
         PostMessage($"{sheep.Name} is now {sheep.Job.Name}");
         return true;
     }
@@ -298,8 +301,8 @@ public class GameEngine : IGameEngine
             if (firstNonFoodProducer is null)
             {
                 var lastSheep = State.Sheep[^1];
-                State.Resources.RemoveStorage(lastSheep.Job.AdditionalStorage);
                 State.Sheep.Remove(lastSheep);
+                RecalculateStorage();
                 PostMessage($"Your sheep are hungry! {lastSheep.Name} decides to leave the tribe!");
             }
             else
@@ -311,8 +314,7 @@ public class GameEngine : IGameEngine
         void SwitchToFoodGathering(Sheep sheep)
         {
             PostMessage($"Your sheep are hungry! {sheep.Name} decides to gather some food for themselves!");
-            State.Resources.RemoveStorage(sheep.Job.AdditionalStorage);
-            sheep.SwitchJobs(State.Jobs.Single(j => j.Id == GameObjectId.FoodGatherer));
+            SwitchJobs(sheep, State.Jobs.Single(j => j.Id == GameObjectId.FoodGatherer));
             sheep.UnlockJob();
         }
     }
@@ -453,4 +455,24 @@ public class GameEngine : IGameEngine
 
     private SimplePrice FeedTheSheep(TimeSpan deltaT)
         => SheepData.SheepBaseConsumption * State.Sheep.Count * deltaT.TotalSeconds;
+
+    private void RecalculateStorage()
+    {
+        foreach (var (resId, _) in State.Resources.AllResources)
+        {
+            var storageSum = 0.0;
+            foreach (var sheep in State.Sheep)
+            {
+                storageSum += sheep.Job.AdditionalStorage?[resId] ?? 0;
+            }
+            // TODO: can we do this better?
+            // main problem is that we don't have the count
+            // of sheep having a particular job
+            foreach (var storager in AllGameObjects.OfType<Structure>())
+            {
+                storageSum += (storager.AdditionalStorage?[resId] ?? 0) * storager.NumberBuilt;
+            }
+            State.Resources.SetStorage(resId, storageSum);
+        }
+    }
 }

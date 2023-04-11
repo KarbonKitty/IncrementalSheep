@@ -97,6 +97,9 @@ public class ResourceWarehouse
         }
     }
 
+    public void SetStorage(ResourceId resource, double newValue)
+        => innerResources[resource] = new(innerResources[resource].Amount, newValue);
+
     public void StoreProductionPerSecond(SimplePrice production, TimeSpan deltaT)
     {
         foreach (var (id, mem) in productionMemory)
