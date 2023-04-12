@@ -2,5 +2,5 @@ namespace IncrementalSheep;
 
 public interface ICanStore
 {
-    SimplePrice? AdditionalStorage { get; }
+    ComplexPrice? AdditionalStorage { get; }
 }

@@ -4,5 +4,6 @@ public enum UpgradeProperty
 {
     Production,
     Price,
-    Consumption
+    Consumption,
+    Storage
 }

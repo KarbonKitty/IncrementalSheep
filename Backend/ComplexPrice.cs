@@ -49,4 +49,10 @@ public class ComplexPrice
         CachedTotal = (BasePrice + AdditivePrice) * Multiplier;
         return CachedTotal;
     }
+
+    public static implicit operator SimplePrice?(ComplexPrice? cp)
+        => cp?.Total();
+
+    public static implicit operator ComplexPrice?(SimplePrice? sp)
+        => sp is null ? null : new(sp);
 }

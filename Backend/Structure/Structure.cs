@@ -7,7 +7,7 @@ public class Structure : GameObject, ICanStore, ICanConsume, ICanProduce
 
     public int NumberBuilt { get; set; }
 
-    public SimplePrice? AdditionalStorage { get; protected set; }
+    public ComplexPrice? AdditionalStorage { get; protected set; }
 
     public Structure(
         GameObjectId id,

@@ -353,8 +353,14 @@ public class GameEngine : IGameEngine
             UpgradeProperty.Production => UpgradeProduction(upgrade, upgradee),
             UpgradeProperty.Price => UpgradePrice(upgrade, upgradee),
             UpgradeProperty.Consumption => UpgradeConsumption(upgrade, upgradee),
+            UpgradeProperty.Storage => UpgradeStorage(upgrade, upgradee),
             _ => throw new Exception("Missing upgrade property handler")
         };
+
+        if (result && !silent)
+        {
+            PostMessage($"{upgradee.Name} has been upgraded!");
+        }
 
         bool UpgradeProduction(Upgrade upgrade, GameObject upgradee)
         {
@@ -365,10 +371,6 @@ public class GameEngine : IGameEngine
                     throw new ArgumentException($"Can't change production of {upgradee.Name}");
                 }
                 producer.ProductionPerSecond.ApplyUpgrade(upgrade);
-                if (!silent)
-                {
-                    PostMessage($"{upgradee.Name} has been upgraded!");
-                }
                 return true;
             }
 
@@ -380,10 +382,6 @@ public class GameEngine : IGameEngine
             if (upgradee is IBuyable buyable)
             {
                 buyable.ModifyPrice(upgrade);
-                if (!silent)
-                {
-                    PostMessage($"{upgradee.Name} has been upgraded!");
-                }
                 return true;
             }
 
@@ -399,14 +397,26 @@ public class GameEngine : IGameEngine
                     throw new ArgumentException($"Can't change consumption of a {upgradee.Name}");
                 }
                 consumer.ConsumptionPerSecond.ApplyUpgrade(upgrade);
-                if (!silent)
-                {
-                    PostMessage($"{upgradee.Name} has been upgraded!");
-                }
                 return true;
             }
 
             throw new ArgumentException("Can't change consumption of non-consumer");
+        }
+
+        bool UpgradeStorage(Upgrade upgrade, GameObject upgradee)
+        {
+            if (upgradee is ICanStore storager)
+            {
+                if (storager.AdditionalStorage is null)
+                {
+                    throw new ArgumentException($"Can't change storage of a {upgradee.Name}");
+                }
+                storager.AdditionalStorage.ApplyUpgrade(upgrade);
+                RecalculateStorage();
+                return true;
+            }
+
+            throw new ArgumentException("Can't change storage of non-storager");
         }
     }
 
@@ -463,14 +473,14 @@ public class GameEngine : IGameEngine
             var storageSum = 0.0;
             foreach (var sheep in State.Sheep)
             {
-                storageSum += sheep.Job.AdditionalStorage?[resId] ?? 0;
+                storageSum += sheep.Job.AdditionalStorage?.Total()[resId] ?? 0;
             }
             // TODO: can we do this better?
             // main problem is that we don't have the count
             // of sheep having a particular job
             foreach (var storager in AllGameObjects.OfType<Structure>())
             {
-                storageSum += (storager.AdditionalStorage?[resId] ?? 0) * storager.NumberBuilt;
+                storageSum += (storager.AdditionalStorage?.Total()[resId] ?? 0) * storager.NumberBuilt;
             }
             State.Resources.SetStorage(resId, storageSum);
         }

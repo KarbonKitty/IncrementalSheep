@@ -112,6 +112,17 @@ public static class Templates
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
         {
+            GameObjectId.CaveStorage, new(
+                GameObjectId.CaveStorage,
+                "Cave storage",
+                "With the number of sheep in the tribe growing, newcomers will want to see more food before they can be convinced that joining the tribe is a good idea. Maybe we could store some extra food somewhere to keep it from spoiling...",
+                new(ResourceId.Folklore, 1),
+                null,
+                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, additiveEffect: new(ResourceId.Food, 100)),
+                Array.Empty<Lock>()
+            )
+        },
+        {
             GameObjectId.TryNewFoods, new(
                 GameObjectId.TryNewFoods,
                 "Try new foods",

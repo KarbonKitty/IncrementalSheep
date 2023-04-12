@@ -3,7 +3,7 @@ namespace IncrementalSheep;
 public class SheepJob : GameObject, ICanStore, ICanProduce
 {
     public Func<GameState, SimplePrice>? GetPrice { get; init; }
-    public SimplePrice? AdditionalStorage { get; init; }
+    public ComplexPrice? AdditionalStorage { get; init; }
 
     public ComplexPrice ProductionPerSecond { get; init; }
 
