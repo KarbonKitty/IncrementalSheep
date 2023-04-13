@@ -8,9 +8,9 @@ public static class Templates
             Id = GameObjectId.GreenPastures,
             Name = "Green Pastures",
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
-            ProductionPerSecond = new(ResourceId.Food, 4),
+            ProductionPerSecond = new(ResourceId.Food, 2),
             ConsumptionPerSecond = null,
-            AdditionalStorage = new((ResourceId.Food, 100), (ResourceId.StoneTools, 10), (ResourceId.BuildingMaterials, 10)),
+            AdditionalStorage = new((ResourceId.Food, 1000), (ResourceId.StoneTools, 10), (ResourceId.BuildingMaterials, 10)),
             Locks = Array.Empty<Lock>()
         } },
         {
@@ -21,7 +21,7 @@ public static class Templates
                 BasePrice = new(ResourceId.BuildingMaterials, 30),
                 ProductionPerSecond = new(),
                 ConsumptionPerSecond = null,
-                AdditionalStorage = new(ResourceId.Food, 50),
+                AdditionalStorage = new(ResourceId.Food, 500),
                 Locks = new Lock[] { LockId.TentLock }
             }
         },
@@ -33,7 +33,7 @@ public static class Templates
                 BasePrice = new(ResourceId.BuildingMaterials, 25),
                 ProductionPerSecond = new(),
                 ConsumptionPerSecond = null,
-                AdditionalStorage = new((ResourceId.Food, 20), (ResourceId.StoneTools, 5), (ResourceId.BuildingMaterials, 10)),
+                AdditionalStorage = new((ResourceId.Food, 200), (ResourceId.StoneTools, 5), (ResourceId.BuildingMaterials, 10)),
                 Locks = new Lock[] { LockId.LeanToLock }
             }
         }
@@ -84,7 +84,7 @@ public static class Templates
             "Sheep are fast and stealthy, they can hunt small game like squirels without too much trouble... But they are no big catches to be had this way.",
             new(),
             new(NumberOfHunters: 1),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 25, 50, 1.0), new(ResourceId.Folklore, 1, 5, 0.5) } },
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 200, 1.0), new(ResourceId.Folklore, 1, 5, 0.5) } },
             new TimeSpan(0, 0, 15),
             new () { LockId.HunterLock }),
         new(
@@ -93,7 +93,7 @@ public static class Templates
             "With some spears, sheep are perfectly capable of hunting antelopes and deer. This takes longer time to stalk the prey and prepare the hunt, but the bounty of meat, hides and tall tales is nothing to sneeze at.",
             new(ResourceId.StoneTools, 1.0),
             new(NumberOfHunters: 2),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 30, 60, 1.0), new(ResourceId.Food, 50, 100, 0.5), new(ResourceId.Folklore, 2, 10, 1.0), new(ResourceId.Folklore, 5, 20, 0.3), new(ResourceId.BuildingMaterials, 5, 7, 0.7) } },
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 150, 300, 1.0), new(ResourceId.Food, 200, 300, 0.5), new(ResourceId.Folklore, 2, 10, 1.0), new(ResourceId.Folklore, 5, 20, 0.3), new(ResourceId.BuildingMaterials, 5, 7, 0.7) } },
             new TimeSpan(0, 5, 0),
             new() { LockId.ToolmakerLock }
         ),
@@ -103,7 +103,7 @@ public static class Templates
             "With nets and fishing spears, the sheep can fish close to the shore. With fish more plentiful and more evenly spread than the land animals, this is a boring, but sure way to build up the food stores for the tribe",
             new(ResourceId.StoneTools, 0.5),
             new(NumberOfHunters: 2),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 40, 50, 1.0), new(ResourceId.Folklore, 1, 2, 1.0)}},
+            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 80, 100, 1.0), new(ResourceId.Folklore, 1, 2, 1.0)}},
             new TimeSpan(0, 5, 0),
             new() { LockId.FishingLock }
         )
@@ -116,10 +116,10 @@ public static class Templates
                 GameObjectId.CaveStorage,
                 "Cave storage",
                 "With the number of sheep in the tribe growing, newcomers will want to see more food before they can be convinced that joining the tribe is a good idea. Maybe we could store some extra food somewhere to keep it from spoiling...",
-                new(ResourceId.Folklore, 1),
+                new(ResourceId.Folklore, 8),
                 null,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, additiveEffect: new(ResourceId.Food, 100)),
-                Array.Empty<Lock>()
+                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, additiveEffect: new(ResourceId.Food, 1000)),
+                new Lock[] { LockId.HunterLock }
             )
         },
         {
@@ -248,7 +248,7 @@ public static class Templates
                 GameObjectId.Agriculture,
                 "Agriculture",
                 "As the sheep gather more types of food, hunt, and fish, build shelters, and make tools, a new radical idea starts to form - what if instead of just using whatever the nature provides, the tribe would try and reshape the nature in a way that would be helpful? For example, leaving seeds in the ground and caring for them, so they would grow up to be edible plants, without having to travel and find new grass..",
-                new((ResourceId.Folklore, 200), (ResourceId.Food, 200), (ResourceId.StoneTools, 50)),
+                new((ResourceId.Folklore, 200), (ResourceId.Food, 2000), (ResourceId.StoneTools, 50)),
                 LockId.AgricultureLock,
                 null,
                 new Lock[] { LockId.ShelterLock, LockId.FishingLock, LockId.ToolmakerLock }
