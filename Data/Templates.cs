@@ -62,7 +62,7 @@ public static class Templates
             "Elder",
             "An old and wise sheep, that can teach the tribe about wisdom of the ages. Perhaps this can help with learning something new?",
             new(ResourceId.Folklore, 0.05),
-            gs => new SimplePrice(ResourceId.Folklore, 100) * gs.Sheep.Count(s => s.Job.Id == GameObjectId.Elder),
+            gs => new SimplePrice(ResourceId.Folklore, gs.Resources.AllResources[ResourceId.Folklore].Storage!.Value),
             new(ResourceId.Folklore, 100),
             new Lock[] { LockId.ElderLock }) },
         { GameObjectId.Toolmaker, new(
