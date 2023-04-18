@@ -1,6 +1,10 @@
 @using IncrementalSheep.Components.Buttons
 
-@foreach (var idea in Ideas.Where(i => !i.IsLocked))
+@foreach (var idea in Ideas.Where(i => !i.IsLocked && !i.IsBought))
+{
+    <IdeaButton Idea=@idea />
+}
+@foreach (var idea in Ideas.Where(i => !i.IsLocked && i.IsBought))
 {
     <IdeaButton Idea=@idea />
 }
