@@ -1,4 +1,4 @@
-<div class="selectButton" @onclick="@(() => SelectHunt(Hunt.Id))">
+<div class="selectButton @AvailabilityClass" @onclick="@(() => SelectHunt(Hunt.Id))">
     <p>@Hunt.Name @(Hunt.TimeLeft != TimeSpan.Zero ? $"({Hunt.TimeLeft.ToString(@"mm\:ss")})" : string.Empty)</p>
 </div>
 
@@ -10,4 +10,7 @@
     {
         Engine.State.SelectedHunt = Engine.State.Hunts.Single(h => h.Id == huntId);
     }
+
+    private string AvailabilityClass =>
+        (Engine.CanBuy(Hunt) && !Hunt.IsLocked) ? "available" : "unavailable";
 }

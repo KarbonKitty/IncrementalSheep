@@ -1,4 +1,4 @@
-<div class="selectButton newSheepButton" @onclick=@(() => Engine.State.SelectedSheep = null)>
+<div class="selectButton newSheepButton @AvailabilityClass" @onclick=@(() => Engine.State.SelectedSheep = null)>
     <p>Recruit new sheep</p>
 </div>
 
@@ -6,5 +6,6 @@
 {
     [Inject] protected GameEngine Engine { get; set; } = default!;
 
-    public SimplePrice Price => Engine.NewSheepPrice;
+    public string AvailabilityClass =>
+        Engine.CanAffordNewSheep() ? "available" : "unavailable";
 }

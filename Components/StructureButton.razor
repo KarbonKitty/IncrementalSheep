@@ -1,4 +1,4 @@
-<div class="selectButton" @onclick="@(e => SelectStructure(Structure.Id))">
+<div class="selectButton @AvailabilityClass" @onclick="@(e => SelectStructure(Structure.Id))">
     <p>@Structure.Name (@Structure.NumberBuilt)</p>
 </div>
 
@@ -10,4 +10,7 @@
     {
         Engine.State.SelectedStructure = Engine.State.Structures.Single(b => b.Id == structureId);
     }
+
+    private string AvailabilityClass =>
+        (Structure is Building b && Engine.CanBuy(b)) ? "available" : "unavailable";
 }

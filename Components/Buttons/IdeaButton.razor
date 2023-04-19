@@ -1,4 +1,4 @@
-<div class="selectButton" @onclick="@(() => SelectIdea(Idea.Id))">
+<div class="selectButton @AvailabilityClass" @onclick="@(() => SelectIdea(Idea.Id))">
     <p>@Idea.Name @(Idea.IsBought ? "✓" : "")</p>
 </div>
 
@@ -10,4 +10,7 @@
     {
         Engine.State.SelectedIdea = Engine.State.Ideas.Single(i => i.Id == ideaId);
     }
+
+    private string AvailabilityClass =>
+        (Engine.CanBuy(Idea) && !Idea.IsBought) ? "available" : "unavailable";
 }
