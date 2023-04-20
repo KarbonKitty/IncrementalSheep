@@ -17,7 +17,8 @@ public static class EnumNames
     {
         { UpgradeProperty.Production, "production" },
         { UpgradeProperty.Price, "price" },
-        { UpgradeProperty.Consumption, "consumption" }
+        { UpgradeProperty.Consumption, "consumption" },
+        { UpgradeProperty.Storage, "storage" }
     };
 
     public static string GetName(UpgradeProperty prop)
