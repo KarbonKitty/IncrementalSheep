@@ -23,7 +23,9 @@
     <div class="branches">
         <BranchButton Branch=@Branch.Population Text="Sheep management" />
         <BranchButton Branch=@Branch.Buildings Text="Camp" />
-        <BranchButton Branch=@Branch.Hunting Text="Hunting" />
+        @if (@Engine.State.Hunts.Count(h => !h.IsLocked) > 0) {
+            <BranchButton Branch=@Branch.Hunting Text="Hunting" />
+        }
         <BranchButton Branch=@Branch.Folklore Text="Folklore" />
     </div>
 

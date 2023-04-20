@@ -13,7 +13,9 @@
 }
 
 .branches {
-    background-color: var(--base02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-area: branches;
 }
 
@@ -25,7 +27,6 @@
 }
 
 .details {
-    background-color: var(--base02);
     grid-area: details;
     overflow: auto;
 }
