@@ -85,7 +85,7 @@ public static class Templates
             new(),
             new(NumberOfHunters: 1),
             new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 200, 1.0), new(ResourceId.Folklore, 1, 5, 0.5) } },
-            new TimeSpan(0, 0, 15),
+            new TimeSpan(0, 1, 0),
             new () { LockId.HunterLock }),
         new(
             GameObjectId.LargeGameHunt,
@@ -112,17 +112,6 @@ public static class Templates
     public static readonly Dictionary<GameObjectId, IdeaTemplate> Ideas = new()
     {
         {
-            GameObjectId.CaveStorage, new(
-                GameObjectId.CaveStorage,
-                "Cave storage",
-                "With the number of sheep in the tribe growing, newcomers will want to see more food before they can be convinced that joining the tribe is a good idea. Maybe we could store some extra food somewhere to keep it from spoiling...",
-                new(ResourceId.Folklore, 8),
-                null,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, additiveEffect: new(ResourceId.Food, 1000)),
-                new Lock[] { LockId.HunterLock }
-            )
-        },
-        {
             GameObjectId.TryNewFoods, new(
                 GameObjectId.TryNewFoods,
                 "Try new foods",
@@ -131,6 +120,17 @@ public static class Templates
                 LockId.ExperimentsLock,
                 new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.05)),
                 Array.Empty<Lock>()
+            )
+        },
+        {
+            GameObjectId.FruitGathering, new(
+                GameObjectId.FruitGathering,
+                "Fruit gathering",
+                "All those delicious fruits on trees and bushes are just waiting to be picked...",
+                new(ResourceId.Folklore, 2),
+                null,
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
+                new Lock[] { LockId.ExperimentsLock }
             )
         },
         {
@@ -145,25 +145,47 @@ public static class Templates
             )
         },
         {
-            GameObjectId.FruitGathering, new(
-                GameObjectId.FruitGathering,
-                "Fruit gathering",
-                "All those delicious fruits on trees and bushes are just waiting to be picked...",
-                new(ResourceId.Folklore, 3),
+            GameObjectId.RootingForTubers, new(
+                GameObjectId.RootingForTubers,
+                "Rooting for tubers",
+                "With a little bit of elbow grease and a sensitive nose, there are many treasures to be found underground. Some of them edible.",
+                new(ResourceId.Folklore, 4),
                 null,
                 new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
                 new Lock[] { LockId.ExperimentsLock }
             )
         },
         {
-            GameObjectId.RootingForTubers, new(
-                GameObjectId.RootingForTubers,
-                "Rooting for tubers",
-                "With a little bit of elbow grease and a sensitive nose, there are many treasures to be found underground. Some of them edible.",
-                new(ResourceId.Folklore, 3),
+            GameObjectId.CaveStorage, new(
+                GameObjectId.CaveStorage,
+                "Cave storage",
+                "With the number of sheep in the tribe growing, newcomers will want to see more food before they can be convinced that joining the tribe is a good idea. Maybe we could store some extra food somewhere to keep it from spoiling...",
+                new(ResourceId.Folklore, 8),
                 null,
-                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, additiveEffect: new(ResourceId.Food, 0.1)),
-                new Lock[] { LockId.ExperimentsLock }
+                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, additiveEffect: new(ResourceId.Food, 1000)),
+                new Lock[] { LockId.HunterLock }
+            )
+        },
+        {
+            GameObjectId.TribeElders, new(
+                GameObjectId.TribeElders,
+                "Tribe elders",
+                "Now that the tribes knows more and more about the world, this knowledge is wider than the sheep who works can keep in her head. The tribe needs some sheep who will keep the knowledge, allowing the learn more of the world.",
+                new(ResourceId.Folklore, 10),
+                LockId.ElderLock,
+                null,
+                new Lock[] { LockId.HunterLock }
+            )
+        },
+        {
+            GameObjectId.WoodGathering, new(
+                GameObjectId.WoodGathering,
+                "Wood gathering",
+                "When the sheep are out and about gathering food, they can also gather other stuff, like wood to build the shelters from.",
+                new(ResourceId.Folklore, 30),
+                null,
+                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.BuildingMaterials, 0.05)),
+                new Lock[] { LockId.ToolmakerLock, LockId.ShelterLock }
             )
         },
         {
@@ -208,28 +230,6 @@ public static class Templates
                 LockId.LeanToLock,
                 null,
                 new Lock[] { LockId.ShelterLock }
-            )
-        },
-        {
-            GameObjectId.TribeElders, new(
-                GameObjectId.TribeElders,
-                "Tribe elders",
-                "Now that the tribes knows more and more about the world, this knowledge is wider than the sheep who works can keep in her head. The tribe needs some sheep who will keep the knowledge, allowing the learn more of the world.",
-                new(ResourceId.Folklore, 10),
-                LockId.ElderLock,
-                null,
-                new Lock[] { LockId.HunterLock }
-            )
-        },
-        {
-            GameObjectId.WoodGathering, new(
-                GameObjectId.WoodGathering,
-                "Wood gathering",
-                "When the sheep are out and about gathering food, they can also gather other stuff, like wood to build the shelters from.",
-                new(ResourceId.Folklore, 30),
-                null,
-                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.BuildingMaterials, 0.05)),
-                new Lock[] { LockId.ToolmakerLock, LockId.ShelterLock }
             )
         },
         {
