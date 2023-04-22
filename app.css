@@ -84,7 +84,7 @@ a:active {
 
 .container {
   display: grid;
-  grid-template-columns: 15rem 1fr 1fr 1fr;
+  grid-template-columns: minmax(15rem, 1fr) 1fr 1fr 1fr;
   grid-template-rows: 4rem minmax(12rem, 80vh);
   column-gap: 2rem;
   grid-template-areas:
