@@ -2,6 +2,8 @@
 ul[b-n1rvrytrxe] {
     list-style: none;
     text-indent: -2rem;
+    overflow-y: auto;
+    max-height: 45vh;
 }
 /* /Components/RecruitButton.razor.rz.scp.css */
 .newSheepButton[b-sygfbte24h] {
@@ -23,7 +25,9 @@ ul[b-n1rvrytrxe] {
 }
 
 .branches[b-drfgljy7kl] {
-    background-color: var(--base02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     grid-area: branches;
 }
 
@@ -35,7 +39,6 @@ ul[b-n1rvrytrxe] {
 }
 
 .details[b-drfgljy7kl] {
-    background-color: var(--base02);
     grid-area: details;
     overflow: auto;
 }

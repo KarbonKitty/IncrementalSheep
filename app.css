@@ -52,13 +52,13 @@ a:active {
 .btn {
   border: 0;
   border-radius: 4px;
-  font-size: 16px;
-  padding: 6px 12px 6px 12px;
-  height: 28px;
+  padding: 0rem 1rem;
+  height: 2rem;
   text-decoration: none;
   cursor: pointer;
   color: var(--base2);
   background: var(--blue);
+  font-size: medium;
 }
 
 .btn:hover {
@@ -126,15 +126,18 @@ a:active {
   border-radius: 4px;
   width: 200px;
   cursor: pointer;
+
+  font-weight: bold;
+  background: var(--base02);
 }
 
 .selectButton > p {
   margin: 0.5rem 0;
 }
 
-.selectButton.available {
-  font-weight: bold;
-  background: var(--base02);
+.selectButton.unavailable {
+  font-weight: normal;
+  background: var(--base03);
 }
 
 .resources-warehouse {
