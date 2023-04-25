@@ -10,7 +10,7 @@ public static class Templates
             Description = "A land that the sheep grazed on for generations, providing them with free food.",
             ProductionPerSecond = new(ResourceId.Food, 2),
             ConsumptionPerSecond = null,
-            AdditionalStorage = new((ResourceId.Food, 1000), (ResourceId.StoneTools, 10), (ResourceId.BuildingMaterials, 10)),
+            AdditionalStorage = new((ResourceId.Food, 1000), (ResourceId.StoneTools, 10)),
             Locks = Array.Empty<Lock>()
         } },
         {
@@ -45,7 +45,7 @@ public static class Templates
             GameObjectId.FoodGatherer,
             "Food gatherer",
             "Sheep with no training, wandering around the familiar territory, gathering food for herself and others.",
-            new((ResourceId.Food, 2.25), (ResourceId.Folklore, 0.03)),
+            new((ResourceId.Food, 2.25), (ResourceId.Folklore, 0.02)),
             null,
             new(ResourceId.Folklore, 2),
             Array.Empty<Lock>()) },
@@ -61,7 +61,7 @@ public static class Templates
             GameObjectId.Elder,
             "Elder",
             "An old and wise sheep, that can teach the tribe about wisdom of the ages. Perhaps this can help with learning something new?",
-            new(ResourceId.Folklore, 0.05),
+            new(ResourceId.Folklore, 0.03),
             gs => new SimplePrice(ResourceId.Folklore, gs.Resources.AllResources[ResourceId.Folklore].Storage!.Value),
             new(ResourceId.Folklore, 100),
             new Lock[] { LockId.ElderLock }) },
@@ -69,7 +69,7 @@ public static class Templates
             GameObjectId.Toolmaker,
             "Toolmaker",
             "Shaping stone into useful forms is somewhere between art and craft, and to prepare tools requires skill and patientce, which is why some sheep specialize in their production.",
-            new(ResourceId.StoneTools, 0.1),
+            new((ResourceId.StoneTools, 0.1), (ResourceId.Folklore, 0.02)),
             _ => new SimplePrice((ResourceId.Food, 50), (ResourceId.Folklore, 10)),
             new(ResourceId.Folklore, 2),
             new Lock[] { LockId.ToolmakerLock }
@@ -206,7 +206,7 @@ public static class Templates
                 "As the tribe gets bigger, and the hunting becomes more important source of food, storing this food becomes more and more of an issue. Coming up with new ways to keep it from spoiling might be useful.",
                 new(ResourceId.Folklore, 75),
                 LockId.ShelterLock,
-                null,
+                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, new(ResourceId.BuildingMaterials, 50)),
                 new Lock[] { LockId.HunterLock }
             )
         },

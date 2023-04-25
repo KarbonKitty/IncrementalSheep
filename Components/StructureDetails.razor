@@ -12,6 +12,11 @@
     {
         <ResourceList Header="Consumption per second" Resources=@Structure.ConsumptionPerSecond.Total() />
     }
+
+    @if (Structure.AdditionalStorage is not null)
+    {
+        <ResourceList Header="Storage" Resources=@Structure.AdditionalStorage />
+    }
 }
 
 @if (Structure is Building building)
