@@ -13,6 +13,10 @@ public class GameEngine : IGameEngine
     public SimplePrice NewSheepPrice
         => SheepData.NewSheepBasePrice * Math.Pow(1.15, State.Sheep.Count);
 
+    private const int MaxTickTimeInMs = 5000;
+
+    private readonly TimeSpan MaxAccumulatedTime = new(24, 0, 0);
+
     private IEnumerable<GameObject> AllGameObjects
         => State.Hunts
             .Concat<GameObject>(State.Structures)
@@ -91,10 +95,18 @@ public class GameEngine : IGameEngine
     public void ProcessTime(DateTime newTime)
     {
         var deltaT = newTime - State.LastTick;
-        if (deltaT.TotalMilliseconds > 1000)
+
+        if (deltaT > MaxAccumulatedTime)
         {
-            deltaT = TimeSpan.FromMilliseconds(1000);
+            State.LastTick = newTime - MaxAccumulatedTime;
+            deltaT = MaxAccumulatedTime;
         }
+
+        if (deltaT.TotalMilliseconds > MaxTickTimeInMs)
+        {
+            deltaT = TimeSpan.FromMilliseconds(MaxTickTimeInMs);
+        }
+
         State.LastDiff = deltaT.TotalMilliseconds;
         State.LastTick += deltaT;
 
