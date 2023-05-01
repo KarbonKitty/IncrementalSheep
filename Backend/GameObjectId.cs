@@ -34,6 +34,7 @@ public enum GameObjectId
     FishingIdea = GameObjectIdConstants.IdeaIdStart + 11,
     Agriculture = GameObjectIdConstants.IdeaIdStart + 12,
     CaveStorage = GameObjectIdConstants.IdeaIdStart + 13,
+    GatheringTools = GameObjectIdConstants.IdeaIdStart + 14,
 
     SmallGameHunt = GameObjectIdConstants.HundIdStart + 1,
     LargeGameHunt = GameObjectIdConstants.HundIdStart + 2,

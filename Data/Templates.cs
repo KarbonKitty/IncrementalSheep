@@ -84,17 +84,30 @@ public static class Templates
             "Sheep are fast and stealthy, they can hunt small game like squirels without too much trouble... But they are no big catches to be had this way.",
             new(),
             new(NumberOfHunters: 1),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 100, 200, 1.0), new(ResourceId.Folklore, 1, 5, 0.5) } },
-            new TimeSpan(0, 1, 0),
+            new() {
+                Items = new RandomRewardItem[] {
+                    new(ResourceId.Food, 200, 300, 1.0),
+                    new(ResourceId.Folklore, 3, 10, 0.5)
+                    }
+                },
+            new TimeSpan(0, 5, 0),
             new () { LockId.HunterLock }),
         new(
             GameObjectId.LargeGameHunt,
             "Deer hunt",
             "With some spears, sheep are perfectly capable of hunting antelopes and deer. This takes longer time to stalk the prey and prepare the hunt, but the bounty of meat, hides and tall tales is nothing to sneeze at.",
             new(ResourceId.StoneTools, 1.0),
-            new(NumberOfHunters: 2),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 150, 300, 1.0), new(ResourceId.Food, 200, 300, 0.5), new(ResourceId.Folklore, 2, 10, 1.0), new(ResourceId.Folklore, 5, 20, 0.3), new(ResourceId.BuildingMaterials, 5, 7, 0.7) } },
-            new TimeSpan(0, 5, 0),
+            new(NumberOfHunters: 1),
+            new() {
+                Items = new RandomRewardItem[] {
+                    new(ResourceId.Food, 150, 300, 1.0),
+                    new(ResourceId.Food, 250, 400, 0.5),
+                    new(ResourceId.Folklore, 2, 10, 1.0),
+                    new(ResourceId.Folklore, 5, 20, 0.3),
+                    new(ResourceId.BuildingMaterials, 5, 7, 0.7)
+                    }
+                },
+            new TimeSpan(0, 15, 0),
             new() { LockId.ToolmakerLock }
         ),
         new(
@@ -102,9 +115,14 @@ public static class Templates
             "Fishing expedition",
             "With nets and fishing spears, the sheep can fish close to the shore. With fish more plentiful and more evenly spread than the land animals, this is a boring, but sure way to build up the food stores for the tribe",
             new(ResourceId.StoneTools, 0.5),
-            new(NumberOfHunters: 2),
-            new() { Items = new RandomRewardItem[] { new(ResourceId.Food, 80, 100, 1.0), new(ResourceId.Folklore, 1, 2, 1.0)}},
-            new TimeSpan(0, 5, 0),
+            new(NumberOfHunters: 1),
+            new() {
+                Items = new RandomRewardItem[] {
+                    new(ResourceId.Food, 350, 750, 1.0),
+                    new(ResourceId.Folklore, 3, 5, 1.0)
+                    }
+                },
+            new TimeSpan(0, 15, 0),
             new() { LockId.FishingLock }
         )
     };
@@ -184,7 +202,10 @@ public static class Templates
                 "When the sheep are out and about gathering food, they can also gather other stuff, like wood to build the shelters from.",
                 new(ResourceId.Folklore, 30),
                 null,
-                new(GameObjectId.FoodGatherer, UpgradeProperty.Production, new(ResourceId.BuildingMaterials, 0.05)),
+                new(
+                    GameObjectId.FoodGatherer,
+                    UpgradeProperty.Production,
+                    new(ResourceId.BuildingMaterials, 0.05)),
                 new Lock[] { LockId.ToolmakerLock, LockId.ShelterLock }
             )
         },
@@ -200,13 +221,31 @@ public static class Templates
             )
         },
         {
+            GameObjectId.GatheringTools, new(
+                GameObjectId.GatheringTools,
+                "Stone tools for food gathering",
+                "",
+                new((ResourceId.Folklore, 75),(ResourceId.StoneTools, 5)),
+                null,
+                new(
+                    GameObjectId.FoodGatherer,
+                    UpgradeProperty.Production,
+                    null,
+                    new(ResourceId.Food, 1.1)),
+                new Lock[] { LockId.ToolmakerLock }
+                )
+        },
+        {
             GameObjectId.FoodStorage, new(
                 GameObjectId.FoodStorage,
                 "Build food storage",
                 "As the tribe gets bigger, and the hunting becomes more important source of food, storing this food becomes more and more of an issue. Coming up with new ways to keep it from spoiling might be useful.",
                 new(ResourceId.Folklore, 75),
                 LockId.ShelterLock,
-                new(GameObjectId.GreenPastures, UpgradeProperty.Storage, new(ResourceId.BuildingMaterials, 50)),
+                new(
+                    GameObjectId.GreenPastures,
+                    UpgradeProperty.Storage,
+                    new(ResourceId.BuildingMaterials, 50)),
                 new Lock[] { LockId.HunterLock }
             )
         },
