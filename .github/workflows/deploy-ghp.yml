@@ -41,4 +41,3 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
         folder: release/wwwroot
-        force: false
