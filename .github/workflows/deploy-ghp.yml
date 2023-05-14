@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
-# Run workflow on every push to the master branch
+# Run workflow on every push to the dev branch
+# This gets a 'beta' version out to the GitHub Pages
 on:
   push:
-    branches: [ master ]
+    branches: [ dev ]
 
 jobs:
   deploy-to-github-pages:
@@ -12,6 +13,8 @@ jobs:
     steps:
     # uses GitHub's checkout action to checkout code form the master branch
     - uses: actions/checkout@v2
+      with:
+        ref: dev
     
     # sets up .NET Core SDK
     - name: Setup .NET Core SDK
