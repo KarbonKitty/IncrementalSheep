@@ -22,6 +22,6 @@ jobs:
       uses: dswistowski/surge-sh-action@v1
       with:
         domain: incremental-sheep.surge.sh
-        project: 'bin/Release/net7.0/publish/wwwroot'
+        project: 'release/wwwroot'
         login: ${{ secrets.surge_login }}
         token: ${{ secrets.surge_token }}
